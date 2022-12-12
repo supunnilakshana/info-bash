@@ -61,7 +61,7 @@ class StartState extends State<SplashScreen> {
             height: size.height * 0.22,
           ),
           Text(
-            "Copyright 2022 © Smart Fair",
+            "Copyright 2022 © Info Bash",
             style: TextStyle(
               fontSize: size.width * 0.035,
               fontWeight: FontWeight.w500,
