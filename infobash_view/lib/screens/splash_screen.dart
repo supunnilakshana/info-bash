@@ -3,10 +3,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:infobash_view/screens/timescreen.dart';
 
-import '../../constants/constraints.dart';
+import '../constants/constraints.dart';
 
 class SplashScreen extends StatefulWidget {
+  static const routName = 'splash-screen';
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
@@ -33,8 +35,7 @@ class StartState extends State<SplashScreen> {
   }
 
   route() {
-    // Navigator.pushReplacement(
-    //     context, MaterialPageRoute(builder: (context) => CheckSignIn()));
+    Navigator.of(context).pushReplacementNamed(TimeScreen.routName);
   }
 
   initScreen(BuildContext context) {

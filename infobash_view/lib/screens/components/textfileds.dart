@@ -9,14 +9,13 @@ class Gtextformfiled extends StatelessWidget {
   final TextInputType keybordtype;
   final TextEditingController controller;
   final String hintText;
-  final IconData icon;
+
 
   final Function(String) onchange;
   final Function(String?) save;
   final String? Function(String?) valid;
   const Gtextformfiled({
     this.hintText = "Text",
-    this.icon = Icons.person,
     required this.onchange,
     required this.valid,
     required this.save,
@@ -28,26 +27,32 @@ class Gtextformfiled extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      // initialValue: "sdsd",
-      keyboardType: keybordtype,
-      onChanged: onchange,
-      onSaved: save,
-      controller: controller,
-      validator: valid,
-      decoration: InputDecoration(
-        icon: Icon(icon),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: BorderSide(color: kPrimaryColordark, width: 1.5),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: TextFormField(
+        // initialValue: "sdsd",
+        keyboardType: keybordtype,
+        onChanged: onchange,
+        onSaved: save,
+        controller: controller,
+        validator: valid,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Color(0xFFE3E3E3FF),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15.0),
+            borderSide: BorderSide(color: Color(0xFFE3E3E3FF), width: 1.5),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15.0),
+            borderSide: const BorderSide(color: Color(0xFFE3E3E3FF), width: 1.5),
+          ),
+          labelText: label,
+          labelStyle: TextStyle(
+            color: Colors.black
+          ),
+          border: const OutlineInputBorder(),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(color: Colors.black, width: 1.5),
-        ),
-        hintText: hintText,
-        labelText: label,
-        border: const OutlineInputBorder(),
       ),
     );
   }
@@ -98,7 +103,7 @@ class _GpasswordformfiledState extends State<Gpasswordformfiled> {
         labelText: widget.hintText,
         // icon: Icon(widget.icon),
         suffixIcon:
-            InkWell(onTap: _viewPassword, child: const Icon(Icons.visibility)),
+        InkWell(onTap: _viewPassword, child: const Icon(Icons.visibility)),
         border: const OutlineInputBorder(),
       ),
     );
@@ -116,7 +121,6 @@ class _GpasswordformfiledState extends State<Gpasswordformfiled> {
 
 ///////////////////////////////np icon /////////////////////////////
 ///
-
 class Gnoiconformfiled extends StatelessWidget {
   final String label;
   final TextEditingController controller;
