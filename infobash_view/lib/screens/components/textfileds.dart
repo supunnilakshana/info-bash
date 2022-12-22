@@ -92,13 +92,15 @@ class _GpasswordformfiledState extends State<Gpasswordformfiled> {
       onSaved: widget.save,
       //initialValue: '',
       decoration: InputDecoration(
+        filled: true,
+        fillColor: Color(0xFFE3E3E3FF),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(color: kPrimaryColordark, width: 1.5),
+          borderSide: const BorderSide(color: Color(0xFFE3E3E3FF), width: 1.5),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(color: Colors.black, width: 1.5),
+          borderSide: const BorderSide(color: Color(0xFFE3E3E3FF), width: 1.5),
         ),
         labelText: widget.hintText,
         // icon: Icon(widget.icon),
