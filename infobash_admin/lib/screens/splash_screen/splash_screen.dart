@@ -3,10 +3,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:infobash_admin/screens/loginscreen.dart';
+import 'package:infobash_admin/screens/requestscreen.dart';
 
 import '../../constants/constraints.dart';
 
 class SplashScreen extends StatefulWidget {
+  static const routName = 'splash-screen';
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
@@ -33,8 +36,7 @@ class StartState extends State<SplashScreen> {
   }
 
   route() {
-    // Navigator.pushReplacement(
-    //     context, MaterialPageRoute(builder: (context) => CheckSignIn()));
+    Navigator.of(context).pushReplacementNamed(LogInScreen.routName);
   }
 
   initScreen(BuildContext context) {
