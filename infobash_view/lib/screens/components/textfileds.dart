@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../constants/constraints.dart';
 import '../../services/validator/validate_handeler.dart';
 
