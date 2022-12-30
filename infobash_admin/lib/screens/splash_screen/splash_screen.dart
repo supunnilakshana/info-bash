@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:infobash_admin/screens/auth/check_signIn.dart';
 import 'package:infobash_admin/screens/loginscreen.dart';
 import 'package:infobash_admin/screens/requestscreen.dart';
 
@@ -36,7 +37,7 @@ class StartState extends State<SplashScreen> {
   }
 
   route() {
-    Navigator.of(context).pushReplacementNamed(LogInScreen.routName);
+    Navigator.of(context).pushReplacementNamed(CheckSignIn.routName);
   }
 
   initScreen(BuildContext context) {

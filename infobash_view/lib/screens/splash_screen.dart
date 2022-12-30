@@ -3,9 +3,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:infobash_view/screens/score_screen.dart';
 import 'package:infobash_view/screens/timescreen.dart';
 
 import '../constants/constraints.dart';
+import 'components/bottom_navigationbar.dart';
 
 class SplashScreen extends StatefulWidget {
   static const routName = 'splash-screen';
@@ -35,7 +37,7 @@ class StartState extends State<SplashScreen> {
   }
 
   route() {
-    Navigator.of(context).pushReplacementNamed(TimeScreen.routName);
+    Navigator.of(context).pushReplacementNamed(BottomNavigation.routName);
   }
 
   initScreen(BuildContext context) {
