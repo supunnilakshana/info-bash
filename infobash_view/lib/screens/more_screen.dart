@@ -15,7 +15,7 @@ class _MoreScreenState extends State<MoreScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text("More"),
+
         toolbarHeight: size.height * 0.09,
         backgroundColor: kPrimaryColordark,
         actions: [

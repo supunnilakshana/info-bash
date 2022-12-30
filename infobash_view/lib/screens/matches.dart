@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:infobash_view/screens/components/matchCard.dart';
 
 import '../constants/constraints.dart';
 
@@ -13,15 +14,38 @@ class _MatchesScreenState extends State<MatchesScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-
-        toolbarHeight: size.height * 0.09,
-        backgroundColor: kPrimaryColordark,
-        actions: [
-          Image.asset("assets/icons/app_icon.png"),
-        ],
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: kPrimaryColordark,
+          actions: [
+            Image.asset("assets/icons/app_icon.png"),
+          ],
+          bottom: TabBar(
+            indicatorColor: Colors.white,
+            indicatorWeight: 4,
+            tabs: [
+              Tab(text: "Upcoming",),
+              Tab(text:"Recent",)
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            _buildUpcomingScreen(),
+            _buildRecentScreen(),
+          ],
+        ),
       ),
     );
   }
+  Widget _buildUpcomingScreen(){
+
+    return MatchCard();
+  }
+  Widget _buildRecentScreen(){
+    return MatchCard();
+  }
+
 }
