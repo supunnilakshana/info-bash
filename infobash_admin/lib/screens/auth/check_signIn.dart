@@ -22,7 +22,7 @@ class CheckSignIn extends StatelessWidget {
             child: Text("Somthing wrong!!"),
           );
         } else {
-          return Container();
+          return Container(); // add screen to navigate  if sign in
         }
       },
     ));
