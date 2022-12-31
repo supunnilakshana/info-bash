@@ -1,3 +1,4 @@
+// ignore: file_names
 class PlayerModel {
   String id;
   String name;

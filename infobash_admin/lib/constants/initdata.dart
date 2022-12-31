@@ -19,14 +19,34 @@ class CollectionPath {
   static const postpath = "post";
 }
 
-class ItemType {
-  static const bakery = "b";
-  static const coffe = "c";
+class Resultype {
+  static const wicket = "W";
+  static const iDilivary = "I";
+  static const marks = "W";
 }
 
-const int maxad = 15;
+class Idelivertype {
+  static const wide = "WB";
+  static const noball = "NB";
+  static const dead = "DB";
+}
 
-enum UserRole { farmer, fofficer, expert }
+class Wickettype {
+  static const bowled = "BO";
+  static const stump = "SO";
+  static const runout = "RO";
+  static const hitwicket = "HW";
+  static const catchout = "CO";
+}
+
+class Marktype {
+  static const six = "6M";
+  static const four = "4M";
+  static const dot = "0M";
+  static const one = "1M";
+  static const two = "2M";
+  static const three = "3M";
+}
 
 String getpossition(String role) {
   int r = int.parse(role);

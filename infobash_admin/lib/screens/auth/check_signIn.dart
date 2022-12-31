@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:infobash_admin/screens/loginscreen.dart';
+import 'package:infobash_admin/screens/match/match_dashScreen.dart';
 import 'package:infobash_admin/screens/requestscreen.dart';
 
 class CheckSignIn extends StatelessWidget {
@@ -18,7 +19,8 @@ class CheckSignIn extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasData) {
-          return const RequestScreen();
+          return const MatchDashScreen();
+          //const RequestScreen();
         } else if (snapshot.hasError) {
           return const Center(
             child: Text("Somthing wrong!!"),
