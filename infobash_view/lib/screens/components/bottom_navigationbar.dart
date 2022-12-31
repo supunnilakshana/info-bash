@@ -19,7 +19,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     const MatchesScreen(),
     const MoreScreen()
   ];
-  final items = <Widget>[
+  final items = const [
     Icon(
       Icons.home_outlined,
       size: 30,
