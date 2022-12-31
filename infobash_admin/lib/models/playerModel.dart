@@ -10,7 +10,7 @@ class PlayerModel {
     return {'id': id, 'name': name};
   }
 
-  factory PlayerModel.fromMap(String id, Map<String, dynamic> map) {
+  factory PlayerModel.fromMap(Map<String, dynamic> map) {
     return PlayerModel(
       id: map['id'],
       name: map['name'],

@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:infobash_admin/models/playerModel.dart';
 
 class BallModel {
@@ -9,7 +10,7 @@ class BallModel {
   String datetime;
   String resulttype;
   String result;
-  String hplayer;
+  PlayerModel hplayer;
 
   BallModel({
     this.id,
@@ -36,17 +37,17 @@ class BallModel {
     };
   }
 
-  factory BallModel.fromMap(Map<String, dynamic> map) {
+  factory BallModel.fromMap(String id, Map<String, dynamic> map) {
     return BallModel(
-      id: map['id'],
+      id: id,
       matchid: map['matchid'],
       bno: map['bno'],
-      batter: map['batter'],
-      baller: map['baller'],
+      batter: PlayerModel.fromMap(map['batter']),
+      baller: PlayerModel.fromMap(map['baller']),
       datetime: map['datetime'],
       result: map['result'],
       resulttype: map['resulttype'],
-      hplayer: map['hplayer'],
+      hplayer: PlayerModel.fromMap(map['hplayer']),
     );
   }
 }
