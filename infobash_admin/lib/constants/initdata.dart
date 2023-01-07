@@ -29,6 +29,8 @@ class Idelivertype {
   static const wide = "WB";
   static const noball = "NB";
   static const dead = "DB";
+  static const legbyes = "LB";
+  static const byes = "BY";
 }
 
 class Wickettype {
@@ -42,6 +44,7 @@ class Wickettype {
 class Marktype {
   static const six = "6M";
   static const four = "4M";
+  static const five = "5M";
   static const dot = "0M";
   static const one = "1M";
   static const two = "2M";

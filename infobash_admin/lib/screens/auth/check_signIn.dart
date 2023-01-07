@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:infobash_admin/screens/loginscreen.dart';
-import 'package:infobash_admin/screens/match/match_dashScreen.dart';
+import 'package:infobash_admin/screens/match/match_dashscreen.dart';
 import 'package:infobash_admin/screens/requestscreen.dart';
 
 class CheckSignIn extends StatelessWidget {

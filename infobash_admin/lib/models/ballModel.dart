@@ -11,18 +11,21 @@ class BallModel {
   String resulttype;
   String result;
   PlayerModel hplayer;
+  int totalmark;
+  int emark;
 
-  BallModel({
-    this.id,
-    required this.matchid,
-    required this.batter,
-    required this.baller,
-    required this.bno,
-    required this.datetime,
-    required this.resulttype,
-    required this.result,
-    required this.hplayer,
-  });
+  BallModel(
+      {this.id,
+      required this.matchid,
+      required this.batter,
+      required this.baller,
+      required this.bno,
+      required this.datetime,
+      required this.resulttype,
+      required this.result,
+      required this.hplayer,
+      required this.totalmark,
+      required this.emark});
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -34,6 +37,8 @@ class BallModel {
       'resulttype': resulttype,
       'result': result,
       'hplayer': hplayer,
+      'tmark': totalmark,
+      'emark': emark
     };
   }
 
@@ -48,6 +53,8 @@ class BallModel {
       result: map['result'],
       resulttype: map['resulttype'],
       hplayer: PlayerModel.fromMap(map['hplayer']),
+      totalmark: map['tmark'],
+      emark: map['emark'],
     );
   }
 }
