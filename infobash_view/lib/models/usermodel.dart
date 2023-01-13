@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class RegisterTeam extends ChangeNotifier {
+class RegisterTeam{
   String? uid;
   String? teamName;
   String? email;
@@ -59,7 +59,7 @@ class RegisterTeam extends ChangeNotifier {
   factory RegisterTeam.fromMap(Map<String, dynamic> map) {
     return RegisterTeam(
       uid: map['uid'],
-      teamName: map['name'],
+      teamName: map['teamName'],
       email: map['email'],
       academicYear: map['academicYear'],
       phoneNumber: map['phoneNumber'],

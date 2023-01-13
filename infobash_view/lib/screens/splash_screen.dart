@@ -3,11 +3,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:infobash_view/screens/score_screen.dart';
-import 'package:infobash_view/screens/timescreen.dart';
+import 'package:infobash_view/screens/auth/check_signIn.dart';
+
 
 import '../constants/constraints.dart';
-import 'components/bottom_navigationbar.dart';
+
 
 class SplashScreen extends StatefulWidget {
   static const routName = 'splash-screen';
@@ -37,7 +37,7 @@ class StartState extends State<SplashScreen> {
   }
 
   route() {
-    Navigator.of(context).pushReplacementNamed(BottomNavigation.routName);
+    Navigator.of(context).pushReplacementNamed(CheckSignIn.routName);
   }
 
   initScreen(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const Color kPrimaryColorlight = Color.fromARGB(255, 255, 255, 255);
+const Color kPrimaryColorlight = Color(0xFFD9D9D9);
 const Color kPrimaryColordark = Color(0xFF344D67);
 const double smallFont = 12.0;
 const double mediumFont = 16.0;

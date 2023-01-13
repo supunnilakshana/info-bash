@@ -1,10 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:infobash_view/constants/constraints.dart';
+import 'package:infobash_view/screens/auth/check_signIn.dart';
 import 'package:infobash_view/screens/components/bottom_navigationbar.dart';
+import 'package:infobash_view/screens/more_screen.dart';
 import 'package:infobash_view/screens/registerscreen.dart';
 import 'package:infobash_view/screens/score_screen.dart';
 import 'package:infobash_view/screens/splash_screen.dart';
+import 'package:infobash_view/screens/teams_screen.dart';
 import 'package:infobash_view/screens/timescreen.dart';
 
 void main() async {
@@ -28,6 +31,9 @@ class MyApp extends StatelessWidget {
         SplashScreen.routName: (ctx) => const SplashScreen(),
         TimeScreen.routName:(ctx)=> const TimeScreen(),
         RegisterScreen.routName:(ctx)=>const RegisterScreen(),
+        TeamsScreen.routName:(ctx)=> const TeamsScreen(),
+        MoreScreen.routName:(ctx)=> const MoreScreen(),
+        CheckSignIn.routName:(ctx)=> const CheckSignIn(),
       },
     );
   }

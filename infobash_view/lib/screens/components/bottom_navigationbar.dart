@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:infobash_view/constants/constraints.dart';
 import 'package:infobash_view/screens/matches.dart';
 import 'package:infobash_view/screens/more_screen.dart';
 import 'package:infobash_view/screens/score_screen.dart';
@@ -48,7 +49,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           child: CurvedNavigationBar(
             animationCurve: Curves.easeInOut,
             animationDuration: Duration(milliseconds: 300),
-            color: Colors.white70,
+            color: kPrimaryColorlight,
             backgroundColor: Colors.transparent,
             index: index,
             height: 60,

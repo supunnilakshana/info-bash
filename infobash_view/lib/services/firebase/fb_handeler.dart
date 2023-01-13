@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:infobash_view/models/usermodel.dart';
 import '../../constants/initdata.dart';
 
 class FbHandeler {

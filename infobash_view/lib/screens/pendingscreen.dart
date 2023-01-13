@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PendingScreen extends StatefulWidget {
-  final String id;
-  const PendingScreen({Key? key, required this.id}) : super(key: key);
+  final String? id;
+  const PendingScreen({Key? key, this.id}) : super(key: key);
 
   @override
   State<PendingScreen> createState() => _PendingScreenState();

@@ -1,8 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:infobash_view/screens/pendingscreen.dart';
+
+import '../registerscreen.dart';
 
 class CheckSignIn extends StatelessWidget {
+  static const routName = 'check-screen';
   const CheckSignIn({Key? key}) : super(key: key);
 
   @override
@@ -16,13 +20,13 @@ class CheckSignIn extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasData) {
-          return Container();
+          return const PendingScreen();
         } else if (snapshot.hasError) {
           return const Center(
             child: Text("Somthing wrong!!"),
           );
         } else {
-          return Container();
+          return RegisterScreen();
         }
       },
     ));
