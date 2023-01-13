@@ -92,6 +92,16 @@ class _SendMailScreenState extends State<SendMailScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+            "send mail"
+        ),
+        toolbarHeight: size.height * 0.09,
+        backgroundColor: kPrimaryColordark,
+        actions: [
+          Image.asset("assets/icons/app_icon.png"),
+        ],
+      ),
       body: Column(
         children: [
           Form(

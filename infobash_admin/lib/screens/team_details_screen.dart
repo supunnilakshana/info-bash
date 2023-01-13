@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:infobash_admin/screens/send_mail_screen.dart';
-import 'package:infobash_admin/services/firebase/fb_handeler.dart';
-import '../models/usermodel.dart';
-import 'components/buttons.dart';
+import 'package:get/get.dart';
+
+
+import '../constants/constraints.dart';
+import 'components/player_card.dart';
 
 class TeamDetailsScreen extends StatefulWidget {
   final String id;
@@ -23,6 +24,7 @@ class _TeamDetailsScreenState extends State<TeamDetailsScreen> {
 
   bool isLoading = false;
 
+
   String? uid;
   String? teamName;
   String? email;
@@ -40,7 +42,7 @@ class _TeamDetailsScreenState extends State<TeamDetailsScreen> {
   String? fPlayer3;
   bool? accept;
 
-  Future getTeam(id) async {
+  Future<List<String>> getTeam(id) async {
     final userCollection = FirebaseFirestore.instance.collection('Team');
     DocumentSnapshot documentSnapshot = await userCollection.doc(id).get();
     setState(() {
@@ -64,102 +66,50 @@ class _TeamDetailsScreenState extends State<TeamDetailsScreen> {
       isLoading = true;
     });
 
-    return [teamName, email];
-  }
-
-  void request(bool accept) {
-    RegisterTeam registerTeam = RegisterTeam();
-    registerTeam.uid = uid;
-    registerTeam.teamName = teamName;
-    registerTeam.academicYear = academicYear;
-    registerTeam.leaderName = leaderName;
-    registerTeam.email = email;
-    registerTeam.mPlayer1 = mPlayer1;
-    registerTeam.mPlayer2 = mPlayer2;
-    registerTeam.mPlayer3 = mPlayer3;
-    registerTeam.mPlayer4 = mPlayer4;
-    registerTeam.mPlayer5 = mPlayer5;
-    registerTeam.mPlayer6 = mPlayer6;
-    registerTeam.fPlayer1 = fPlayer1;
-    registerTeam.fPlayer2 = fPlayer2;
-    registerTeam.fPlayer3 = fPlayer3;
-    registerTeam.accept = accept;
-
-    FbHandeler.updateDoc(registerTeam.toMap(), "Team", uid.toString());
+    return [teamName.toString()];
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Team Details"),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          isLoading == true
-              ? Column(
-                  children: [
-                    Padding(padding: EdgeInsets.only(top: 50)),
-                    Text(teamName.toString()),
-                    Text(email.toString()),
-                    Text(academicYear.toString()),
-                    Text(mPlayer1.toString()),
-                    Text(mPlayer2.toString()),
-                    Text(mPlayer5.toString()),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: size.height * 0.02, bottom: size.height * 0.02),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Genaralbutton(
-                            onpress: () {
-                              request(true);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SendMailScreen(
-                                      id: uid.toString(),
-                                    ),
-                                  ));
-                            },
-                            text: "Accept",
-                            pleft: size.width * 0.2,
-                            pright: size.width * 0.2,
-                          )
-                        ],
+        appBar: AppBar(
+          title: isLoading == true?Text(teamName!.capitalize.toString()):Container(),
+          toolbarHeight: size.height * 0.09,
+          backgroundColor: kPrimaryColordark,
+          actions: [
+            Image.asset("assets/icons/app_icon.png"),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Column(children: [
+            isLoading == true
+                ? Column(
+                children: [
+                  Container(
+                    width: size.width,
+                    color: kPrimaryColorlight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Players",
+                        style: TextStyle(fontSize: 15),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: size.height * 0.02, bottom: size.height * 0.02),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Genaralbutton(
-                            onpress: () {
-                              request(false);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SendMailScreen(
-                                      id: uid.toString(),
-                                    ),
-                                  ));
-                            },
-                            text: "Reject",
-                            pleft: size.width * 0.2,
-                            pright: size.width * 0.2,
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                )
-              : Center(
-                  child: Column(
+                  ),
+                  PlayerCard(name: mPlayer1.toString()),
+                  PlayerCard(name: mPlayer2.toString()),
+                  PlayerCard(name: mPlayer3.toString()),
+                  PlayerCard(name: mPlayer4.toString()),
+                  PlayerCard(name: mPlayer5.toString()),
+                  PlayerCard(name: mPlayer6.toString()),
+                  PlayerCard(name: fPlayer1.toString()),
+                  PlayerCard(name: fPlayer2.toString()),
+                  PlayerCard(name: fPlayer3.toString()),
+
+                ])
+                : Center(
+                child: Column(
                   children: [
                     SizedBox(
                       height: 200,
@@ -169,8 +119,7 @@ class _TeamDetailsScreenState extends State<TeamDetailsScreen> {
                     ),
                   ],
                 ))
-        ],
-      ),
-    );
+          ]),
+        ));
   }
 }

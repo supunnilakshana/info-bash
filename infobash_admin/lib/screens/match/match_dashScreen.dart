@@ -1,10 +1,13 @@
 // ignore: file_names
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:infobash_admin/constants/constraints.dart';
 import 'package:infobash_admin/constants/initdata.dart';
 import 'package:infobash_admin/screens/components/buttons.dart';
 import 'package:infobash_admin/screens/components/textfileds.dart';
 import 'package:infobash_admin/services/validator/validate_handeler.dart';
+
+import '../../models/usermodel.dart';
 
 class MatchDashScreen extends StatefulWidget {
   const MatchDashScreen({Key? key}) : super(key: key);
@@ -14,6 +17,10 @@ class MatchDashScreen extends StatefulWidget {
 }
 
 class _MatchDashScreenState extends State<MatchDashScreen> {
+
+
+
+
   String resultval = "";
   String markval = "";
   String extraval = "";
@@ -26,10 +33,37 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
   String bownameValue = 'Select Bowler';
   final rtitelStyle = const TextStyle(fontWeight: FontWeight.bold);
   TextEditingController marksfiledController = TextEditingController();
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    FirebaseFirestore.instance.collection("Team").get().then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        print("===================");
+        print(result.data());
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+
+
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+            "Request"
+        ),
+        toolbarHeight: size.height * 0.09,
+        backgroundColor: kPrimaryColordark,
+        actions: [
+          Image.asset("assets/icons/app_icon.png"),
+        ],
+      ),
       body: SizedBox(
         height: double.infinity,
         child: SingleChildScrollView(
@@ -593,4 +627,6 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
     wicketval = "";
     setState(() {});
   }
+
+
 }

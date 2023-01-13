@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:infobash_admin/screens/team_details_screen.dart';
 
+import '../constants/constraints.dart';
 import '../models/usermodel.dart';
 
 class RequestScreen extends StatefulWidget {
@@ -22,14 +23,23 @@ class _RequestScreenState extends State<RequestScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Request'),
+        title: Text(
+            "Request"
+        ),
+        toolbarHeight: size.height * 0.09,
+        backgroundColor: kPrimaryColordark,
+        actions: [
+          Image.asset("assets/icons/app_icon.png"),
+        ],
       ),
       body: StreamBuilder<List<RegisterTeam>>(
         stream: allTeams(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
+            print('=======================');
             print(snapshot.error);
             return Text("Something went ot wrong");
           } else if (snapshot.hasData) {
@@ -46,7 +56,7 @@ class _RequestScreenState extends State<RequestScreen> {
   }
 
   Widget buildTeam(RegisterTeam team) {
-    return Padding(
+    return team.accept != true?Padding(
       padding: EdgeInsets.all(10),
       child: Card(
         child: ListTile(
@@ -82,6 +92,6 @@ class _RequestScreenState extends State<RequestScreen> {
           // },
         ),
       ),
-    );
+    ):Container();
   }
 }

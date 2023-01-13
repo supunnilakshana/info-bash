@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:infobash_admin/screens/loginscreen.dart';
+import 'package:infobash_admin/screens/match/match_creation_screen.dart';
 import 'package:infobash_admin/screens/match/match_dashscreen.dart';
 import 'package:infobash_admin/screens/requestscreen.dart';
 
@@ -19,7 +20,7 @@ class CheckSignIn extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasData) {
-          return const MatchDashScreen();
+          return const MatchCreationScreen();
           //const RequestScreen();
         } else if (snapshot.hasError) {
           return const Center(
