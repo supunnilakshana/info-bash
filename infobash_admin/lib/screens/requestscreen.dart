@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:infobash_admin/screens/team_details_screen.dart';
 
 import '../constants/constraints.dart';
-import '../models/usermodel.dart';
+import '../models/teammodel.dart';
 
 class RequestScreen extends StatefulWidget {
   static const routName = 'request-screen';
@@ -26,9 +26,7 @@ class _RequestScreenState extends State<RequestScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-            "Request"
-        ),
+        title: Text("Request"),
         toolbarHeight: size.height * 0.09,
         backgroundColor: kPrimaryColordark,
         actions: [
@@ -56,42 +54,44 @@ class _RequestScreenState extends State<RequestScreen> {
   }
 
   Widget buildTeam(RegisterTeam team) {
-    return team.accept != true?Padding(
-      padding: EdgeInsets.all(10),
-      child: Card(
-        child: ListTile(
-          // trailing: Icon(
-          //   Icons.message_outlined,
-          //   color: primaryColor,
-          // ),
-          trailing: IconButton(
-            icon: Icon(Icons.info_outline_rounded),
-            onPressed: () {
-              print(team.uid);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TeamDetailsScreen(
-                      id: team.uid.toString(),
-                    ),
-                  ));
-            },
-          ),
-          title: Text(team.teamName.toString()),
-          // onTap: () {
-          //   print("========================");
-          //   print(user.id.toString());
-          //   Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //         builder: (context) => AdminChatScreen(
-          //           id: user.id.toString(),
-          //           text: user.fName.toString(),
-          //         ),
-          //       ));
-          // },
-        ),
-      ),
-    ):Container();
+    return team.accept != true
+        ? Padding(
+            padding: EdgeInsets.all(10),
+            child: Card(
+              child: ListTile(
+                // trailing: Icon(
+                //   Icons.message_outlined,
+                //   color: primaryColor,
+                // ),
+                trailing: IconButton(
+                  icon: Icon(Icons.info_outline_rounded),
+                  onPressed: () {
+                    print(team.uid);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TeamDetailsScreen(
+                            id: team.uid.toString(),
+                          ),
+                        ));
+                  },
+                ),
+                title: Text(team.teamName.toString()),
+                // onTap: () {
+                //   print("========================");
+                //   print(user.id.toString());
+                //   Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) => AdminChatScreen(
+                //           id: user.id.toString(),
+                //           text: user.fName.toString(),
+                //         ),
+                //       ));
+                // },
+              ),
+            ),
+          )
+        : Container();
   }
 }
