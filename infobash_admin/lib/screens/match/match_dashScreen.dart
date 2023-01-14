@@ -7,8 +7,6 @@ import 'package:infobash_admin/screens/components/buttons.dart';
 import 'package:infobash_admin/screens/components/textfileds.dart';
 import 'package:infobash_admin/services/validator/validate_handeler.dart';
 
-import '../../models/usermodel.dart';
-
 class MatchDashScreen extends StatefulWidget {
   const MatchDashScreen({Key? key}) : super(key: key);
 
@@ -17,10 +15,6 @@ class MatchDashScreen extends StatefulWidget {
 }
 
 class _MatchDashScreenState extends State<MatchDashScreen> {
-
-
-
-
   String resultval = "";
   String markval = "";
   String extraval = "";
@@ -33,7 +27,6 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
   String bownameValue = 'Select Bowler';
   final rtitelStyle = const TextStyle(fontWeight: FontWeight.bold);
   TextEditingController marksfiledController = TextEditingController();
-
 
   @override
   void initState() {
@@ -49,15 +42,10 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-            "Request"
-        ),
+        title: Text("Request"),
         toolbarHeight: size.height * 0.09,
         backgroundColor: kPrimaryColordark,
         actions: [
@@ -627,6 +615,4 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
     wicketval = "";
     setState(() {});
   }
-
-
 }
