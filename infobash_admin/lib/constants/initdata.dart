@@ -16,7 +16,9 @@ const String sucesscode = "sucessfull";
 
 class CollectionPath {
   static const userpath = "users/";
-  static const postpath = "post";
+  static const initdata = "/initdata/";
+
+  static const grouppath = "initdata/groups/data";
 }
 
 class Resultype {
@@ -64,3 +66,5 @@ String getpossition(String role) {
     return "Unknown";
   }
 }
+
+final groupnamelist = ["A", "B", "C", "D", "E", "F"];
