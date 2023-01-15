@@ -1,78 +1,78 @@
 import 'package:flutter/cupertino.dart';
+import 'package:infobash_view/models/playerModel.dart';
 
 class RegisterTeam{
-  String? uid;
-  String? teamName;
-  String? email;
-  int? academicYear;
-  String? phoneNumber;
-  String? leaderName;
-  String? mPlayer1;
-  String? mPlayer2;
-  String? mPlayer3;
-  String? mPlayer4;
-  String? mPlayer5;
-  String? mPlayer6;
-  String? fPlayer1;
-  String? fPlayer2;
-  String? fPlayer3;
-  bool? accept;
+  String? teamId;
+  String teamName;
+  String email;
+  int academicYear;
+  String phoneNumber;
+  PlayerModel leaderName;
+  PlayerModel mPlayer1;
+  PlayerModel mPlayer2;
+  PlayerModel mPlayer3;
+  PlayerModel mPlayer4;
+  PlayerModel mPlayer5;
+  PlayerModel mPlayer6;
+  PlayerModel fPlayer1;
+  PlayerModel fPlayer2;
+  PlayerModel fPlayer3;
+  bool accept;
 
   RegisterTeam(
-      {this.uid,
-      this.teamName,
-      this.email,
-      this.phoneNumber,
-      this.leaderName,
-      this.academicYear,
-      this.mPlayer1,
-      this.mPlayer2,
-      this.mPlayer3,
-      this.mPlayer4,
-      this.mPlayer5,
-      this.mPlayer6,
-      this.fPlayer1,
-      this.fPlayer2,
-      this.fPlayer3,
-      this.accept});
+      {this.teamId,
+      required this.teamName,
+      required this.email,
+      required this.phoneNumber,
+      required this.leaderName,
+      required this.academicYear,
+      required this.mPlayer1,
+      required this.mPlayer2,
+      required this.mPlayer3,
+      required this.mPlayer4,
+      required this.mPlayer5,
+      required this.mPlayer6,
+      required this.fPlayer1,
+      required this.fPlayer2,
+      required this.fPlayer3,
+      required this.accept});
   Map<String, dynamic> toMap() {
     return {
-      'uid': uid,
       'teamName': teamName,
       'email': email,
       'academicYear': academicYear,
       'phoneNumber': phoneNumber,
-      'leaderName': leaderName,
-      'mPlayer1': mPlayer1,
-      'mPlayer2': mPlayer2,
-      'mPlayer3': mPlayer3,
-      'mPlayer4': mPlayer4,
-      'mPlayer5': mPlayer5,
-      'mPlayer6': mPlayer6,
-      'fPlayer1': fPlayer1,
-      'fPlayer2': fPlayer2,
-      'fPlayer3': fPlayer3,
+      'leaderName': leaderName.toMap(),
+      'mPlayer1': mPlayer1.toMap(),
+      'mPlayer2': mPlayer2.toMap(),
+      'mPlayer3': mPlayer3.toMap(),
+      'mPlayer4': mPlayer4.toMap(),
+      'mPlayer5': mPlayer5.toMap(),
+      'mPlayer6': mPlayer6.toMap(),
+      'fPlayer1': fPlayer1.toMap(),
+      'fPlayer2': fPlayer2.toMap(),
+      'fPlayer3': fPlayer3.toMap(),
       'accept': accept,
     };
   }
 
-  factory RegisterTeam.fromMap(Map<String, dynamic> map) {
+  factory RegisterTeam.fromMap(Map<String, dynamic> map,String id) {
     return RegisterTeam(
-      uid: map['uid'],
+      teamId: id,
       teamName: map['teamName'],
       email: map['email'],
       academicYear: map['academicYear'],
       phoneNumber: map['phoneNumber'],
-      leaderName: map['leaderName'],
-      mPlayer1: map['mPlayer1'],
-      mPlayer3: map['mPlayer3'],
-      mPlayer2: map['mPlayer2'],
-      mPlayer4: map['mPlayer4'],
-      mPlayer5: map['mPlayer5'],
-      mPlayer6: map['mPLayer6'],
-      fPlayer1: map['fPlayer1'],
-      fPlayer2: map['fPlayer2'],
-      fPlayer3: map['fPlayer3'],
+      leaderName: PlayerModel.fromMap(map['leaderName']),
+      mPlayer1: PlayerModel.fromMap(map['mPlayer1']),
+      mPlayer3: PlayerModel.fromMap(map['mPlayer3']),
+      mPlayer2: PlayerModel.fromMap(map['mPlayer2']),
+      mPlayer4: PlayerModel.fromMap(map['mPlayer4']),
+      mPlayer5: PlayerModel.fromMap(map['mPlayer5']),
+      mPlayer6: PlayerModel.fromMap(map['mPLayer6']),
+      fPlayer1: PlayerModel.fromMap(map['fPlayer1']),
+      fPlayer2: PlayerModel.fromMap(map['fPlayer2']),
+      fPlayer3: PlayerModel.fromMap(map['fPlayer3']),
       accept: map['accept'],
     );
   }
