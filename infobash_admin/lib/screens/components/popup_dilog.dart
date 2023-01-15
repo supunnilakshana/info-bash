@@ -3,7 +3,6 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/constraints.dart';
-import '../../models/usermodel.dart';
 
 class PopupDialog {
   static showPopupDilog(BuildContext context, String titel, String description,
