@@ -43,6 +43,8 @@ class _ScoreScreenState extends State<ScoreScreen> {
                 thickness: 2,
               ),
             ),
+
+
             ScoreRow(
                 batterName: "Batter",
                 runs: "R",

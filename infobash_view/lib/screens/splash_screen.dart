@@ -4,9 +4,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:infobash_view/screens/auth/check_signIn.dart';
+import 'package:infobash_view/screens/score_screen.dart';
 
 
 import '../constants/constraints.dart';
+import 'components/bottom_navigationbar.dart';
 
 
 class SplashScreen extends StatefulWidget {
@@ -37,7 +39,7 @@ class StartState extends State<SplashScreen> {
   }
 
   route() {
-    Navigator.of(context).pushReplacementNamed(CheckSignIn.routName);
+    Navigator.of(context).pushReplacementNamed(BottomNavigation.routName);
   }
 
   initScreen(BuildContext context) {
