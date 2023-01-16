@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:infobash_admin/models/groupModel.dart';
+import 'package:infobash_admin/models/matchModel.dart';
 import 'package:infobash_admin/models/teammodel.dart';
 import '../../constants/initdata.dart';
 
@@ -117,6 +118,23 @@ class FbHandeler {
 
       enlist.add(enmodel);
     }
+    return enlist;
+  }
+
+  Future<List<MatchModel>> getmatchs(
+      {String path = CollectionPath.matchdatapath}) async {
+    List<MatchModel> enlist = [];
+    MatchModel enmodel;
+    QuerySnapshot querySnapshot =
+        await firestoreInstance.collection(path).get();
+    for (int i = 0; i < querySnapshot.docs.length; i++) {
+      var a = querySnapshot.docs[i];
+
+      enmodel = MatchModel.fromMap(a.id, a.data() as Map<String, dynamic>);
+
+      enlist.add(enmodel);
+    }
+    enlist.sort((a, b) => a.matchid.compareTo(b.matchid));
     return enlist;
   }
 
