@@ -75,7 +75,8 @@ flutter_icons:
 flutter:
   uses-material-design: true
   assets:
-    - assets/icons/
+    - assets/anim/cricket.json
+    - assets/icons/app_icon.png
 
   fonts:
     - family: Poppins

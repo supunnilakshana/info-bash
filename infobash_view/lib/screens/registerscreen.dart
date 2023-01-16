@@ -227,8 +227,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         children: [
                           Genaralbutton(
                             onpress: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PendingScreen(
 
-                                teamRegistration(email, password);
+                                    ),
+                                  ));
+                                //teamRegistration(email, password);
 
                             },
                             text: "Register",

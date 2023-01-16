@@ -1,16 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:infobash_view/models/matchModel.dart';
 import '../models/pointsmodel.dart';
+import '../services/firebase/fb_handeler.dart';
 
 class ViewModel extends ChangeNotifier {
   bool _loading = false;
   List<PointsTable> _pointsTable = [];
+  List<MatchModel> _matchModel = [];
 
   bool get loading => _loading;
   List<PointsTable> get pointsTable => _pointsTable;
+  List<MatchModel> get matchModel => _matchModel;
 
   ViewModel() {
     getPointsData();
+    getMatchesData();
   }
 
   setLoading(bool loading) async {
@@ -20,6 +25,9 @@ class ViewModel extends ChangeNotifier {
 
   setPointsListModel(List<PointsTable> pointsTable) async {
     _pointsTable = pointsTable;
+  }
+  setMatchListModel(List<MatchModel> matchModel) async {
+    _matchModel = matchModel;
   }
 
   getPointsData() async {
@@ -43,5 +51,12 @@ class ViewModel extends ChangeNotifier {
     setLoading(false);
     return _docData;
     // do any further processing as you want
+  }
+
+  getMatchesData() async {
+    setLoading(true);
+    final _doc = await FbHandeler.getallMatch();
+    setMatchListModel(_doc);
+    setLoading(false);
   }
 }

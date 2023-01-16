@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:infobash_view/models/usermodel.dart';
 import '../../constants/initdata.dart';
+import '../../models/matchModel.dart';
 
 class FbHandeler {
   static final user = FirebaseAuth.instance.currentUser;
@@ -102,7 +103,25 @@ class FbHandeler {
     return res;
   }
 
-//get user details
+//get match details
+  static Future<List<MatchModel>> getallMatch() async {
+    List<MatchModel> enlist = [];
+    MatchModel enmodel;
+
+    QuerySnapshot querySnapshot =
+    await firestoreInstance.collection("/matchs/round1/data").get();
+    final data = querySnapshot.docs.map((doc) => doc.data()).toList();
+    print(data);
+    for (int i = 0; i < querySnapshot.docs.length; i++) {
+
+      var a = querySnapshot.docs[i];
+
+      enmodel = MatchModel.fromMap( a.id,a.data() as Map<String, dynamic>,);
+
+      enlist.add(enmodel);
+    }
+    return enlist;
+  }
 
 //realtimedb
   static Future<int> checkfiledstatus(String collectionpath) async {

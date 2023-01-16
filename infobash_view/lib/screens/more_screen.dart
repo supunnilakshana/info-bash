@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:infobash_view/screens/components/more_card.dart';
 import 'package:infobash_view/screens/points_table_screen.dart';
+import 'package:infobash_view/screens/schedule_screen.dart';
 import 'package:infobash_view/screens/teams_screen.dart';
 
 import '../constants/constraints.dart';
@@ -38,7 +39,12 @@ class _MoreScreenState extends State<MoreScreen> {
             Navigator.of(context)
                 .pushNamed(TeamsScreen.routName);
           }),
-          MoreCard(text: "Schedule", function: (){}),
+          MoreCard(text: "Schedule", function: (){
+            Navigator.push(
+                context,
+                new MaterialPageRoute(
+                    builder: (context) => ScheduleScreen()));
+          }),
           MoreCard(text: "Photos", function: (){}),
           MoreCard(text: "Points Table", function: (){
     SchedulerBinding.instance.addPostFrameCallback((_) {

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MatchCard extends StatefulWidget {
-  const MatchCard({Key? key}) : super(key: key);
+  final String? team1;
+  final String team2;
+  const MatchCard({Key? key, this.team1, required this.team2}) : super(key: key);
 
   @override
   State<MatchCard> createState() => _MatchCardState();
@@ -34,11 +36,11 @@ class _MatchCardState extends State<MatchCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Team1",
+                      "${widget.team1}",
                       style: TextStyle(color: Colors.black, fontSize: 20),
                     ),
                     Text(
-                      "team2",
+                      "Team",
                       style: TextStyle(color: Colors.black, fontSize: 20),
                     ),
                   ],
@@ -49,7 +51,7 @@ class _MatchCardState extends State<MatchCard> {
                 child: Row(
                   children: [
                     Text(
-                      "Team2",
+                      "${widget.team2}",
                       style: TextStyle(color: Colors.black, fontSize: 20),
                     ),
                   ],

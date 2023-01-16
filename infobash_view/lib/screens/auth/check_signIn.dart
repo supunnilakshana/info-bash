@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:infobash_view/screens/components/bottom_navigationbar.dart';
 import 'package:infobash_view/screens/pendingscreen.dart';
 
 import '../registerscreen.dart';
@@ -20,13 +21,13 @@ class CheckSignIn extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasData) {
-          return const PendingScreen();
+          return const BottomNavigation();
         } else if (snapshot.hasError) {
           return const Center(
             child: Text("Somthing wrong!!"),
           );
         } else {
-          return RegisterScreen();
+          return const RegisterScreen();
         }
       },
     ));

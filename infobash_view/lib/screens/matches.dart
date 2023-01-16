@@ -42,10 +42,10 @@ class _MatchesScreenState extends State<MatchesScreen> {
   }
   Widget _buildUpcomingScreen(){
 
-    return MatchCard();
+    return MatchCard(team1: "team1", team2: "team2",);
   }
   Widget _buildRecentScreen(){
-    return MatchCard();
+    return MatchCard(team1: "team1",team2: "team2",);
   }
 
 }

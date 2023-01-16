@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class PendingScreen extends StatefulWidget {
   final String? id;
@@ -12,7 +13,13 @@ class _PendingScreenState extends State<PendingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text('Your request is under reviewing.......')),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Lottie.asset('assets/anim/cricket.json'),
+          Text("Your request is under reviewing.......")
+        ],
+      ),
     );
   }
 }
