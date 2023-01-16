@@ -37,7 +37,7 @@ class _TeamDetailsScreenState extends State<TeamDetailsScreen> {
               children: [
                 Genaralbutton(
                   onpress: () {
-                    viewModel.selectedTeam!.accept = true;
+
                   },
                   text: "Accept",
                 ),

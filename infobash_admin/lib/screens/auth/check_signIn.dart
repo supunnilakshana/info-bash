@@ -4,6 +4,7 @@ import 'package:infobash_admin/screens/loginscreen.dart';
 import 'package:infobash_admin/screens/match/match_creation_screen.dart';
 import 'package:infobash_admin/screens/match/match_dashscreen.dart';
 import 'package:infobash_admin/screens/requestscreen.dart';
+import 'package:infobash_admin/screens/schedule_screen.dart';
 
 class CheckSignIn extends StatelessWidget {
   static const routName = 'check-screen';
@@ -20,7 +21,7 @@ class CheckSignIn extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasData) {
-          return const RequestScreen();
+          return const ScheduleScreen();
           //const RequestScreen();
         } else if (snapshot.hasError) {
           return const Center(
