@@ -143,6 +143,25 @@ class FbHandeler {
     return enlist;
   }
 
+  static Future<bool> getRoundstatus(String round) async {
+    bool status = false;
+    await firestoreInstance
+        .collection(CollectionPath.initdata)
+        .doc("matchdata")
+        .get()
+        .then((value) {
+      status = (value.data()![round]);
+    });
+    return status;
+  }
+
+  static Future updateRoundstatus(String round) async {
+    await firestoreInstance
+        .collection(CollectionPath.initdata)
+        .doc("matchdata")
+        .update({round: true}).then((_) {});
+  }
+
 //realtimedb
   static Future<int> checkfiledstatus(String collectionpath) async {
     final snapshot = await dbRef.child(collectionpath).get();

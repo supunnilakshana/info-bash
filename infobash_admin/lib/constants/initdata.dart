@@ -20,6 +20,7 @@ class CollectionPath {
   static const initdata = "/initdata/";
   static const matchsround1 = "/matchs/round1/data";
   static const grouppath = "initdata/groups/data";
+  static const matchdatapath = "/initdata/matchdata";
 }
 
 class Resultype {
