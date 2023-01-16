@@ -1,9 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:infobash_admin/screens/team_details_screen.dart';
+import 'package:infobash_admin/services/firebase/fb_handeler.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/constraints.dart';
 import '../models/teammodel.dart';
+import '../models/view_model/view_model.dart';
+import 'components/app_loading.dart';
+import 'components/team_card.dart';
 
 class RequestScreen extends StatefulWidget {
   static const routName = 'request-screen';
@@ -23,6 +28,7 @@ class _RequestScreenState extends State<RequestScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ViewModel teamViewModel = context.watch<ViewModel>();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -33,56 +39,35 @@ class _RequestScreenState extends State<RequestScreen> {
           Image.asset("assets/icons/app_icon.png"),
         ],
       ),
-      body: StreamBuilder<List<RegisterTeam>>(
-        stream: allTeams(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            print('=======================');
-            print(snapshot.error);
-            return Text("Something went ot wrong");
-          } else if (snapshot.hasData) {
-            final teams = snapshot.data!;
-            return ListView(children: teams.map(buildTeam).toList());
-          } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
+      body:Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          children: [
+            _ui(teamViewModel),
+          ],
+        ),
       ),
     );
   }
 
-  Widget buildTeam(RegisterTeam team) {
-    return team.accept != true
-        ? Padding(
-            padding: EdgeInsets.all(10),
-            child: Card(
-              child: ListTile(
-                // trailing: Icon(
-                //   Icons.message_outlined,
-                //   color: primaryColor,
-                // ),
-                trailing: IconButton(
-                  icon: Icon(Icons.info_outline_rounded),
-                  onPressed: () {},
-                ),
-                title: Text(team.teamName.toString()),
-                // onTap: () {
-                //   print("========================");
-                //   print(user.id.toString());
-                //   Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //         builder: (context) => AdminChatScreen(
-                //           id: user.id.toString(),
-                //           text: user.fName.toString(),
-                //         ),
-                //       ));
-                // },
-              ),
-            ),
-          )
-        : Container();
+  _ui(ViewModel viewModel) {
+    if (viewModel.loading) {
+      return Container(child: AppLoading());
+    }
+    return Expanded(
+        child: ListView.builder(
+            itemBuilder: (context, index) {
+              RegisterTeam userModel = viewModel.registerTeam[index];
+              return TeamListRow(
+                registerTeam: userModel,
+                onTap: () async {
+                  viewModel.setSelectedTeam(userModel);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const TeamDetailsScreen()));
+                },
+              );
+            },
+            itemCount: viewModel.registerTeam.length));
   }
+
 }
