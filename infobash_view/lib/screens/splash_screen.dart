@@ -39,7 +39,7 @@ class StartState extends State<SplashScreen> {
   }
 
   route() {
-    Navigator.of(context).pushReplacementNamed(BottomNavigation.routName);
+    Navigator.of(context).pushReplacementNamed(CheckSignIn.routName);
   }
 
   initScreen(BuildContext context) {

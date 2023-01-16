@@ -49,7 +49,7 @@ class FbHandeler {
 
   // create doc manual id;
   static Future<int> createDocManual(
-      Map<String, dynamic> model, String collectionpath, String docid) async {
+      Map<String, dynamic> model, String collectionpath, String? docid) async {
     int res = resfail;
     try {
       await firestoreInstance

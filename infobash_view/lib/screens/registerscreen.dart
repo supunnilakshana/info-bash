@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:infobash_view/constants/constraints.dart';
+import 'package:infobash_view/models/playerModel.dart';
 import 'package:infobash_view/models/usermodel.dart';
 import 'package:infobash_view/screens/components/buttons.dart';
 import 'package:infobash_view/screens/components/textfileds.dart';
@@ -8,6 +9,7 @@ import 'package:infobash_view/screens/pendingscreen.dart';
 import 'package:infobash_view/services/auth/signin_mannager.dart';
 import 'package:infobash_view/services/firebase/fb_handeler.dart';
 import 'package:infobash_view/services/validator/validate_handeler.dart';
+import 'package:uuid/uuid.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const routName = 'register-screen';
@@ -24,11 +26,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String team = '';
   String email = "";
   String password = "";
+  String pNumber = "";
+
+  var uuid = const Uuid();
 
   TextEditingController teamNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController academicYearController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
   TextEditingController captainController = TextEditingController();
   TextEditingController mPlayer1Controller = TextEditingController();
   TextEditingController mPlayer2Controller = TextEditingController();
@@ -43,6 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return Scaffold(
         appBar: AppBar(
           title: Text("Register your team"),
@@ -96,6 +103,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       },
                       valid: (text) {
                         return Validater.vaildemail(text!);
+                      },
+                    ),
+                    Gtextformfiled(
+                      label: "Phone Number of Team leader",
+                      onchange: (text) {
+                        pNumber = text;
+                      },
+                      controller: phoneNumberController,
+                      save: (text) {
+                        pNumber = text!;
+                      },
+                      valid: (text) {
+                        return Validater.vaildmobile(text!);
                       },
                     ),
                     Gtextformfiled(
@@ -207,7 +227,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         children: [
                           Genaralbutton(
                             onpress: () {
-                              teamRegistration(email, password);
+
+                                teamRegistration(email, password);
+
                             },
                             text: "Register",
                             pleft: size.width * 0.2,
@@ -225,35 +247,63 @@ class _RegisterScreenState extends State<RegisterScreen> {
 //team registration
   void teamRegistration(em, pw) {
     if (_form.currentState!.validate()) {
-      User? user = _auth.currentUser;
-      RegisterTeam registerTeam = RegisterTeam();
-      registerTeam.uid = user!.uid;
-      registerTeam.teamName = teamNameController.text;
-      registerTeam.academicYear = int.parse(academicYearController.text);
-      registerTeam.leaderName = captainController.text;
-      registerTeam.email = emailController.text;
-      registerTeam.mPlayer1 = mPlayer1Controller.text;
-      registerTeam.mPlayer2 = mPlayer2Controller.text;
-      registerTeam.mPlayer3 = mPlayer3Controller.text;
-      registerTeam.mPlayer4 = mPlayer4Controller.text;
-      registerTeam.mPlayer5 = mPlayer5Controller.text;
-      registerTeam.mPlayer6 = mPlayer6Controller.text;
-      registerTeam.fPlayer1 = wPlayer1Controller.text;
-      registerTeam.fPlayer2 = wPlayer2Controller.text;
-      registerTeam.fPlayer3 = wPlayer3Controller.text;
-      registerTeam.accept = false;
 
-      SigninManager()
-          .signUp(em, pw)
-          .then((value) => {
-                FbHandeler.createDocManual(
-                    registerTeam.toMap(), "Team", user.uid)
-              })
+      RegisterTeam registerTeam = RegisterTeam(
+      teamName : teamNameController.text,
+      academicYear : int.parse(academicYearController.text),
+      phoneNumber: phoneNumberController.text,
+      leaderName : PlayerModel(
+        id: uuid.v4(),
+        name: captainController.text,
+      ),
+      email : emailController.text,
+      mPlayer1 : PlayerModel(
+        id: uuid.v4(),
+        name: mPlayer1Controller.text,
+      ),
+      mPlayer2 : PlayerModel(
+        id: uuid.v4(),
+        name: mPlayer2Controller.text,
+      ),
+      mPlayer3 : PlayerModel(
+        id: uuid.v4(),
+        name: mPlayer3Controller.text,
+      ),
+      mPlayer4 : PlayerModel(
+        id: uuid.v4(),
+        name: mPlayer4Controller.text,
+      ),
+      mPlayer5 : PlayerModel(
+        id: uuid.v4(),
+        name: mPlayer5Controller.text,
+      ),
+      mPlayer6 : PlayerModel(
+        id: uuid.v4(),
+        name: mPlayer6Controller.text,
+      ),
+      fPlayer1 : PlayerModel(
+        id: uuid.v4(),
+        name: wPlayer1Controller.text,
+      ),
+      fPlayer2 : PlayerModel(
+        id: uuid.v4(),
+        name: wPlayer2Controller.text,
+      ),
+      fPlayer3 : PlayerModel(
+        id: uuid.v4(),
+        name: wPlayer3Controller.text,
+      ),
+      accept: false
+      );
+
+                FbHandeler.createDocAuto(
+                    registerTeam.toMap(), "Team")
+
           .then((value) => Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => PendingScreen(
-                  id: user.uid.toString(),
+
                 ),
               )));
       print(email);
