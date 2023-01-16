@@ -30,7 +30,6 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     FirebaseFirestore.instance.collection("Team").get().then((querySnapshot) {
       querySnapshot.docs.forEach((result) {
         print("===================");

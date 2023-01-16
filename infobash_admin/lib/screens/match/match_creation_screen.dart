@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:infobash_admin/services/base_service.dart';
+import 'package:infobash_admin/services/firebase/fb_handeler.dart';
+import 'package:trotter/trotter.dart';
 
 import '../../constants/constraints.dart';
 import '../components/buttons.dart';
@@ -27,7 +29,12 @@ class _MatchCreationScreenState extends State<MatchCreationScreen> {
       body: Container(
         child: Center(
           child: Genaralbutton(
-            onpress: () async {},
+            onpress: () async {
+              await BaseService().makeround1match(bpo: 4, over: 5);
+              // await FbHandeler.getallTeam();
+
+              // await BaseService().initgroupdata(4);
+            },
             text: "Submit",
           ),
         ),

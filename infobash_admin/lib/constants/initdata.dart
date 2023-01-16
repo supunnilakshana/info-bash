@@ -13,16 +13,23 @@ const postimagebucket = "images/posts/";
 const int resok = 1;
 const int resfail = 0;
 const String sucesscode = "sucessfull";
+const String nodata = "nodata";
 
 class CollectionPath {
-  static const userpath = "users/";
+  static const teampath = "Team/";
   static const initdata = "/initdata/";
-
+  static const matchsround1 = "/matchs/round1/data";
   static const grouppath = "initdata/groups/data";
 }
 
 class Resultype {
   static const wicket = "W";
+  static const iDilivary = "I";
+  static const marks = "W";
+}
+
+class Matchtype {
+  static const round1 = "round1";
   static const iDilivary = "I";
   static const marks = "W";
 }

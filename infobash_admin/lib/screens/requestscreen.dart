@@ -17,7 +17,7 @@ class _RequestScreenState extends State<RequestScreen> {
   Stream<List<RegisterTeam>> allTeams() {
     return FirebaseFirestore.instance.collection("Team").snapshots().map(
         (snapshot) => snapshot.docs
-            .map((doc) => RegisterTeam.fromMap(doc.data()))
+            .map((doc) => RegisterTeam.fromMap(doc.data(), doc.id))
             .toList());
   }
 
@@ -65,16 +65,7 @@ class _RequestScreenState extends State<RequestScreen> {
                 // ),
                 trailing: IconButton(
                   icon: Icon(Icons.info_outline_rounded),
-                  onPressed: () {
-                    print(team.uid);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TeamDetailsScreen(
-                            id: team.uid.toString(),
-                          ),
-                        ));
-                  },
+                  onPressed: () {},
                 ),
                 title: Text(team.teamName.toString()),
                 // onTap: () {

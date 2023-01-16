@@ -4,19 +4,19 @@ import 'package:infobash_admin/models/teammodel.dart';
 class GroupModel {
   final String? id;
   final String name;
-  final List<RegisterTeam> teamlist;
+  final List<RegisterTeamDto>? teamlist;
 
   GroupModel({
     this.id,
     required this.name,
-    required this.teamlist,
+    this.teamlist,
   });
-  Map<String, dynamic> toMap() {
-    return {'name': name, 'teamlist': teamlist};
+  Map<String, dynamic> toMap({required List<dynamic> tlist}) {
+    return {'name': name, 'teamlist': tlist};
   }
 
   factory GroupModel.fromMap(
-      String id, Map<String, dynamic> map, List<RegisterTeam> list) {
+      String id, Map<String, dynamic> map, List<RegisterTeamDto> list) {
     return GroupModel(
       id: id,
       name: map['name'],
@@ -24,10 +24,10 @@ class GroupModel {
     );
   }
 
-  List<RegisterTeam> createlist(List<dynamic> map) {
-    List<RegisterTeam> templist = [];
+  List<RegisterTeamDto> createlist(List<dynamic> map) {
+    List<RegisterTeamDto> templist = [];
     map.forEach((element) {
-      templist.add(RegisterTeam.fromMap(element));
+      templist.add(RegisterTeamDto.fromMap(element));
     });
     return templist;
   }

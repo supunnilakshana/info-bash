@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:infobash_view/models/playerModel.dart';
 
-class RegisterTeam{
+class RegisterTeam {
   String? teamId;
   String teamName;
   String email;
@@ -56,7 +56,7 @@ class RegisterTeam{
     };
   }
 
-  factory RegisterTeam.fromMap(Map<String, dynamic> map,String id) {
+  factory RegisterTeam.fromMap(Map<String, dynamic> map, String id) {
     return RegisterTeam(
       teamId: id,
       teamName: map['teamName'],
@@ -76,39 +76,4 @@ class RegisterTeam{
       accept: map['accept'],
     );
   }
-  //
-  // updateData(RegisterTeam userModel) {
-  //   uid = userModel.uid;
-  //   teamName = userModel.teamName;
-  //   email = userModel.email;
-  //   phoneNumber = userModel.phoneNumber;
-  //   leaderName = userModel.leaderName;
-  //   mPlayer1 = userModel.mPlayer1;
-  //   academicYear = userModel.academicYear;
-  //   mPlayer3 = userModel.mPlayer3;
-  //   mPlayer2 = userModel.mPlayer2;
-  //   mPlayer4 = userModel.mPlayer4;
-  //   snum = userModel.phoneNumber;
-  //   sdis = userModel.leaderName;
-  //   scity = userModel.mPlayer1;
-  //   notifyListeners();
-  // }
-  //
-  // String sdis = "";
-  // String scity = "";
-  // String snum = "";
-  // updatescity(String val) {
-  //   scity = val;
-  //   notifyListeners();
-  // }
-  //
-  // updatesdis(String val) {
-  //   sdis = val;
-  //   notifyListeners();
-  // }
-  //
-  // updatesphone(String val) {
-  //   snum = val;
-  //   notifyListeners();
-  // }
 }

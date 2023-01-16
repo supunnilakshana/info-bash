@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:infobash_admin/models/groupModel.dart';
+import 'package:infobash_admin/models/teammodel.dart';
 import '../../constants/initdata.dart';
 
 class FbHandeler {
@@ -101,11 +103,49 @@ class FbHandeler {
     return res;
   }
 
-//get user details
+//get team details
+
+  static Future<List<RegisterTeam>> getallTeam() async {
+    List<RegisterTeam> enlist = [];
+    RegisterTeam enmodel;
+    QuerySnapshot querySnapshot =
+        await firestoreInstance.collection(CollectionPath.teampath).get();
+    for (int i = 0; i < querySnapshot.docs.length; i++) {
+      var a = querySnapshot.docs[i];
+
+      enmodel = RegisterTeam.fromMap(a.data() as Map<String, dynamic>, a.id);
+
+      enlist.add(enmodel);
+    }
+    return enlist;
+  }
+
+//get group details
+
+  static Future<List<GroupModel>> getallGroup() async {
+    List<GroupModel> enlist = [];
+    GroupModel enmodel;
+    QuerySnapshot querySnapshot =
+        await firestoreInstance.collection(CollectionPath.grouppath).get();
+    for (int i = 0; i < querySnapshot.docs.length; i++) {
+      var a = querySnapshot.docs[i];
+      List<RegisterTeamDto> teamlist = [];
+      final tdata = a.data() as Map<String, dynamic>;
+
+      final tlist = tdata["teamlist"] as List<dynamic>;
+      for (var element in tlist) {
+        teamlist.add(RegisterTeamDto.fromMap(element));
+      }
+      enmodel =
+          GroupModel.fromMap(a.id, a.data() as Map<String, dynamic>, teamlist);
+      enlist.add(enmodel);
+    }
+    return enlist;
+  }
 
 //realtimedb
   static Future<int> checkfiledstatus(String collectionpath) async {
-    final snapshot = await dbRef.child('$collectionpath').get();
+    final snapshot = await dbRef.child(collectionpath).get();
     if (snapshot.exists) {
       return 0;
     } else {
