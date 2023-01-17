@@ -72,7 +72,10 @@ class BaseService {
             result: nodata,
             matchtype: Matchtype.round1,
             overs: over,
-            bpo: bpo.toString());
+            bpo: bpo.toString(),
+            matchstatus: Matchstatustype.notstared,
+            tossdec: nodata,
+            tosswin: nodata);
         i++;
 
         await FbHandeler.createDocAuto(

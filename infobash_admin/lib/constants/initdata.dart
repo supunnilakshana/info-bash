@@ -29,6 +29,14 @@ class Resultype {
   static const marks = "W";
 }
 
+class Matchstatustype {
+  static const ongoning = "ongoning";
+  static const notstared = "notstared";
+  static const end = "end";
+  static const noresult = "nr";
+  static const draw = "draw";
+}
+
 class Matchtype {
   static const round1 = "round1";
   static const iDilivary = "I";
