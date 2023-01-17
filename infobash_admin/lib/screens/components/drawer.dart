@@ -40,12 +40,7 @@ class MenuDrawer extends StatelessWidget {
                   color: kPrimaryColordark,
                 ),
                 title: const Text('My Profile'),
-                onTap: () async {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => const ProfilePage()));
-                },
+                onTap: () async {},
               ),
             ),
 
