@@ -23,6 +23,7 @@ class PlayerRow extends StatelessWidget {
         PlayerCardBackground(text: viewModel.selectedTeam!.fPlayer1.name),
         PlayerCardBackground(text: viewModel.selectedTeam!.fPlayer2.name),
         PlayerCardBackground(text: viewModel.selectedTeam!.fPlayer3.name),
+        PlayerCardBackground(text: viewModel.selectedTeam!.accept.toString()),
       ],
     );
   }

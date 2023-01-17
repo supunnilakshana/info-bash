@@ -72,7 +72,7 @@ class BaseService {
             result: nodata,
             matchtype: Matchtype.round1,
             overs: over,
-            bpo: bpo);
+            bpo: bpo.toString());
         i++;
 
         await FbHandeler.createDocAuto(

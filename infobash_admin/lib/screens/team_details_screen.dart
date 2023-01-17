@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:infobash_admin/constants/navigation_utils.dart';
 import 'package:infobash_admin/screens/components/buttons.dart';
 import 'package:provider/provider.dart';
 import '../constants/constraints.dart';
@@ -36,13 +37,16 @@ class _TeamDetailsScreenState extends State<TeamDetailsScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Genaralbutton(
-                  onpress: () {
-
+                  onpress: () async {
+                    viewModel.update();
+                    openMail(context);
                   },
                   text: "Accept",
                 ),
                 Genaralbutton(
-                  onpress: () {},
+                  onpress: () {
+                    openMail(context);
+                  },
                   text: "Reject",
                 )
               ],

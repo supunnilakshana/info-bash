@@ -11,7 +11,7 @@ class MatchModel {
   String result;
   String matchtype;
   int overs;
-  int bpo;
+  String bpo;
 
   MatchModel(
       {this.id,
