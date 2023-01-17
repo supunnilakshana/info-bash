@@ -33,23 +33,31 @@ class _TeamDetailsScreenState extends State<TeamDetailsScreen> {
         body: SingleChildScrollView(
           child: Column(children: [
             _ui(viewModel),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Genaralbutton(
-                  onpress: () async {
-                    viewModel.update();
-                    openMail(context);
-                  },
-                  text: "Accept",
-                ),
-                Genaralbutton(
-                  onpress: () {
-                    openMail(context);
-                  },
-                  text: "Reject",
-                )
-              ],
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: size.width*0.1),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Genaralbutton(
+
+                    onpress: () async {
+                      viewModel.update();
+                      openMail(context);
+                    },
+                    pleft: 30,
+                    pright: 30,
+                    text: "Accept",
+                  ),
+                  Genaralbutton(
+                    onpress: () {
+                      openMail(context);
+                    },
+                    text: "Reject",
+                    pleft: 30,
+                    pright: 30,
+                  )
+                ],
+              ),
             )
           ]),
         ));

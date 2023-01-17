@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../models/teammodel.dart';
 
@@ -20,7 +21,7 @@ class TeamListRow extends StatelessWidget {
             trailing: IconButton(
               icon: Icon(Icons.chevron_right_outlined), onPressed: onTap ,
             ),
-            title: Text(registerTeam.teamName.toString(),style: TextStyle(
+            title: Text(registerTeam.teamName.capitalize.toString(),style: TextStyle(
                 color: Colors.black
             ),),
           ),

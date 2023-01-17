@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:infobash_admin/constants/constraints.dart';
+import 'package:infobash_admin/constants/navigation_utils.dart';
 import 'package:infobash_admin/screens/components/popup_dilog.dart';
 import 'package:infobash_admin/screens/loginscreen.dart';
 import 'package:infobash_admin/services/auth/signin_mannager.dart';
@@ -36,11 +37,13 @@ class MenuDrawer extends StatelessWidget {
               elevation: 0,
               child: ListTile(
                 leading: const Icon(
-                  Icons.person_outlined,
+                  Icons.touch_app_rounded,
                   color: kPrimaryColordark,
                 ),
-                title: const Text('My Profile'),
-                onTap: () async {},
+                title: const Text('Requests'),
+                onTap: () async {
+                  openRequest(context);
+                },
               ),
             ),
 
@@ -51,8 +54,10 @@ class MenuDrawer extends StatelessWidget {
                   Icons.list_rounded,
                   color: kPrimaryColordark,
                 ),
-                title: const Text('My Appoinments'),
-                onTap: () async {},
+                title: const Text('Match schedule'),
+                onTap: () async {
+                  openMatches(context);
+                },
               ),
             ),
             // : Container(),

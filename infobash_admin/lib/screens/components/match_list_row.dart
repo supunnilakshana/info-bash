@@ -3,6 +3,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 import '../../models/matchModel.dart';
@@ -17,7 +18,7 @@ class TeamListRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MatchCard(team1:matchModel.team1.teamName.toString(),
-        team2: matchModel.team2.teamName.toString());;
+    return MatchCard(team1:matchModel.team1.teamName.capitalize.toString(),
+        team2: matchModel.team2.teamName.capitalize.toString());
   }
 }

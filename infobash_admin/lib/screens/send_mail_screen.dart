@@ -90,106 +90,108 @@ class _SendMailScreenState extends State<SendMailScreen> {
           Image.asset("assets/icons/app_icon.png"),
         ],
       ),
-      body: Column(
-        children: [
-          Form(
-            key: _form,
-            child: Padding(
-              padding: EdgeInsets.only(left: 20, right: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 100,
-                  ),
-                  Text(
-                    "Send E-mail",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
-                  ),
-                  TextFormField(
-                    validator: (value) {
-                      return Validater.genaralvalid(value.toString());
-                    },
-                    controller: subject,
-                    decoration: InputDecoration(
-                      hintText: "subject",
-                      icon: Icon(Icons.subject),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide:
-                            BorderSide(color: Color(0xFFE3E3E3FF), width: 1.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide:
-                            BorderSide(color: Color(0xFFE3E3E3FF), width: 1.0),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide:
-                            BorderSide(color: Color(0xFFCE0326), width: 2.0),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide:
-                            BorderSide(color: Color(0xFFE3E3E3FF), width: 1.0),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Form(
+              key: _form,
+              child: Padding(
+                padding: EdgeInsets.only(left: 20, right: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 100,
+                    ),
+                    Text(
+                      "Send E-mail",
+                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+                    ),
+                    TextFormField(
+                      validator: (value) {
+                        return Validater.genaralvalid(value.toString());
+                      },
+                      controller: subject,
+                      decoration: InputDecoration(
+                        hintText: "subject",
+                        icon: Icon(Icons.subject),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              BorderSide(color: Color(0xFFE3E3E3FF), width: 1.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              BorderSide(color: Color(0xFFE3E3E3FF), width: 1.0),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                              BorderSide(color: Color(0xFFCE0326), width: 2.0),
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              BorderSide(color: Color(0xFFE3E3E3FF), width: 1.0),
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 20),
-                    child: SizedBox(
-                      height: 400,
-                      child: TextFormField(
-                        validator: (value) {
-                          return Validater.genaralvalid(value.toString());
-                        },
-                        maxLines: 50,
-                        keyboardType: TextInputType.multiline,
-                        controller: msg,
-                        decoration: InputDecoration(
-                          hintText: "Message",
-                          icon: Icon(Icons.message_outlined),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(
-                                color: Color(0xFFE3E3E3FF), width: 1.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(
-                                color: Color(0xFFE3E3E3FF), width: 1.0),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                                color: Color(0xFFCE0326), width: 2.0),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(
-                                color: Color(0xFFE3E3E3FF), width: 1.0),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                      child: SizedBox(
+                        height: 400,
+                        child: TextFormField(
+                          validator: (value) {
+                            return Validater.genaralvalid(value.toString());
+                          },
+                          maxLines: 50,
+                          keyboardType: TextInputType.multiline,
+                          controller: msg,
+                          decoration: InputDecoration(
+                            hintText: "Message",
+                            icon: Icon(Icons.message_outlined),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                  color: Color(0xFFE3E3E3FF), width: 1.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                  color: Color(0xFFE3E3E3FF), width: 1.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(
+                                  color: Color(0xFFCE0326), width: 2.0),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                  color: Color(0xFFE3E3E3FF), width: 1.0),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Genaralbutton(
-                    onpress: () {
-                      sendMail(
-                          viewModel.selectedTeam!.email,
-                          viewModel.selectedTeam!.accept,
-                          viewModel.selectedTeam!.teamId.toString());
-                    },
-                    text: "Send",
-                    pleft: size.width * 0.2,
-                    pright: size.width * 0.2,
-                  )
-                ],
+                    Genaralbutton(
+                      onpress: () {
+                        sendMail(
+                            viewModel.selectedTeam!.email,
+                            viewModel.selectedTeam!.accept,
+                            viewModel.selectedTeam!.teamId.toString());
+                      },
+                      text: "Send",
+                      pleft: size.width * 0.2,
+                      pright: size.width * 0.2,
+                    )
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
