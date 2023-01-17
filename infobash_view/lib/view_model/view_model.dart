@@ -8,18 +8,25 @@ class ViewModel extends ChangeNotifier {
   bool _loading = false;
   List<PointsTable> _pointsTable = [];
   List<MatchModel> _matchModel = [];
+  bool _appUpdate =  false;
 
   bool get loading => _loading;
+  bool get appUpdate => _appUpdate;
   List<PointsTable> get pointsTable => _pointsTable;
   List<MatchModel> get matchModel => _matchModel;
 
   ViewModel() {
     getPointsData();
     getMatchesData();
+    getUpdateApp();
   }
 
   setLoading(bool loading) async {
     _loading = loading;
+    notifyListeners();
+  }
+  setAppUpdate(bool appUpdate){
+    _appUpdate = appUpdate;
     notifyListeners();
   }
 
@@ -29,6 +36,8 @@ class ViewModel extends ChangeNotifier {
   setMatchListModel(List<MatchModel> matchModel) async {
     _matchModel = matchModel;
   }
+
+
 
   getPointsData() async {
     setLoading(true);
@@ -58,5 +67,13 @@ class ViewModel extends ChangeNotifier {
     final _doc = await FbHandeler.getallMatch();
     setMatchListModel(_doc);
     setLoading(false);
+  }
+
+  getUpdateApp()async{
+    setLoading(true);
+    final _appUpdate = await FbHandeler.getUpdate();
+    setAppUpdate(_appUpdate);
+    setLoading(false);
+
   }
 }

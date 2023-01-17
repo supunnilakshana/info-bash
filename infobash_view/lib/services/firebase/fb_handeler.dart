@@ -132,4 +132,10 @@ class FbHandeler {
       return 1;
     }
   }
+  static Future getUpdate() async {
+    final userCollection = FirebaseFirestore.instance.collection('initdata');
+    DocumentSnapshot documentSnapshot = await userCollection.doc('appinfo').get();
+    final s = documentSnapshot.get('mustupdate');
+    return s;
+  }
 }
