@@ -76,6 +76,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/anim/cricket.json
+    - assets/anim/update.json
     - assets/icons/app_icon.png
 
   fonts:
