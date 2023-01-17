@@ -1,14 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:infobash_admin/constants/constraints.dart';
 import 'package:infobash_admin/services/firebase/fb_handeler.dart';
 import 'package:infobash_admin/services/validator/validate_handeler.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import '../models/view_model/view_model.dart';
 import 'components/buttons.dart';
 
 class SendMailScreen extends StatefulWidget {
-  final String id;
-  const SendMailScreen({Key? key, required this.id}) : super(key: key);
+  const SendMailScreen({Key? key}) : super(key: key);
 
   @override
   State<SendMailScreen> createState() => _SendMailScreenState();
@@ -16,24 +16,13 @@ class SendMailScreen extends StatefulWidget {
 
 class _SendMailScreenState extends State<SendMailScreen> {
   final _form = GlobalKey<FormState>();
-  String? email;
-  bool? accept;
   String? message;
   String? subjectHeader;
 
   TextEditingController subject = TextEditingController();
   TextEditingController msg = TextEditingController();
 
-  Future getTeam(id) async {
-    final userCollection = FirebaseFirestore.instance.collection('Team');
-    DocumentSnapshot documentSnapshot = await userCollection.doc(id).get();
-    setState(() {
-      email = documentSnapshot.get('email');
-      accept = documentSnapshot.get('accept');
-    });
-  }
-
-  void sendMail() async {
+  void sendMail(String email, bool accept, String id) async {
     //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
 
     var headers = {
@@ -69,7 +58,7 @@ class _SendMailScreenState extends State<SendMailScreen> {
       subject.clear();
     }
     if (accept == false) {
-      FbHandeler.deletedoc('Team', widget.id);
+      FbHandeler.deletedoc('Team', id);
     }
     print(res.body);
   }
@@ -90,12 +79,11 @@ class _SendMailScreenState extends State<SendMailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ViewModel viewModel = context.watch<ViewModel>();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-            "send mail"
-        ),
+        title: Text("send mail"),
         toolbarHeight: size.height * 0.09,
         backgroundColor: kPrimaryColordark,
         actions: [
@@ -188,7 +176,10 @@ class _SendMailScreenState extends State<SendMailScreen> {
                   ),
                   Genaralbutton(
                     onpress: () {
-                      sendMail();
+                      sendMail(
+                          viewModel.selectedTeam!.email,
+                          viewModel.selectedTeam!.accept,
+                          viewModel.selectedTeam!.teamId.toString());
                     },
                     text: "Send",
                     pleft: size.width * 0.2,

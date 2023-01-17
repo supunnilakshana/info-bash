@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:infobash_admin/screens/team_details_screen.dart';
-import 'package:infobash_admin/services/firebase/fb_handeler.dart';
+import 'package:infobash_admin/constants/navigation_utils.dart';
 import 'package:provider/provider.dart';
-
 import '../constants/constraints.dart';
 import '../models/teammodel.dart';
 import '../models/view_model/view_model.dart';
@@ -39,7 +37,7 @@ class _RequestScreenState extends State<RequestScreen> {
           Image.asset("assets/icons/app_icon.png"),
         ],
       ),
-      body:Container(
+      body: Container(
         padding: EdgeInsets.all(20),
         child: Column(
           children: [
@@ -52,7 +50,7 @@ class _RequestScreenState extends State<RequestScreen> {
 
   _ui(ViewModel viewModel) {
     if (viewModel.loading) {
-      return Container(child: AppLoading());
+      return AppLoading();
     }
     return Expanded(
         child: ListView.builder(
@@ -62,12 +60,10 @@ class _RequestScreenState extends State<RequestScreen> {
                 registerTeam: userModel,
                 onTap: () async {
                   viewModel.setSelectedTeam(userModel);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const TeamDetailsScreen()));
+                  openTeamDetails(context);
                 },
               );
             },
             itemCount: viewModel.registerTeam.length));
   }
-
 }

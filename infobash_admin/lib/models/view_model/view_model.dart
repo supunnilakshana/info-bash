@@ -13,14 +13,17 @@ class ViewModel extends ChangeNotifier {
   List<MatchModel> _matchModel = [];
 
 
+
   bool get loading => _loading;
   List<RegisterTeam> get registerTeam => _registerTeam;
   RegisterTeam? get selectedTeam => _selectedTeam;
   List<MatchModel> get matchModel => _matchModel;
 
 
+
   ViewModel() {
     getTeamsData();
+    getMatchesData();
   }
 
   setLoading(bool loading) async {
@@ -37,6 +40,12 @@ class ViewModel extends ChangeNotifier {
   }
   setMatchListModel(List<MatchModel> matchModel) async {
     _matchModel = matchModel;
+  }
+
+  update()async{
+    _selectedTeam!.accept = true;
+    FbHandeler.updateDoc(_selectedTeam!.toMap(), "Team", _selectedTeam!.teamId.toString());
+    notifyListeners();
   }
 
 
