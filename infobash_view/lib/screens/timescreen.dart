@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:infobash_view/constants/constraints.dart';
 import 'package:infobash_view/screens/registerscreen.dart';
@@ -53,6 +51,7 @@ class _TimeScreenState extends State<TimeScreen> {
       remainMinutes = strDigits(remainDuration!.inMinutes.remainder(60));
       isLoading = true;
       print(remainDuration);
+      getTime();
     });
   }
 

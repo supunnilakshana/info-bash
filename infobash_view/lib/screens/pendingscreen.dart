@@ -24,7 +24,6 @@ class _PendingScreenState extends State<PendingScreen> {
             openTimes(context);
           },
         ),
-        title: Text("New version is available"),
         toolbarHeight: size.height * 0.09,
         backgroundColor: kPrimaryColordark,
         actions: [

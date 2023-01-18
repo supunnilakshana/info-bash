@@ -238,15 +238,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             return Validater.genaralvalid(text!);
                           },
                         ),
-                        Gpasswordformfiled(
-                            textinput: TextInputType.text,
-                            icon: Icons.key,
-                            onchange: (text) {
-                              password = text;
-                            },
-                            save: (text) {
-                              password = text!;
-                            }),
                         Padding(
                           padding: EdgeInsets.only(
                               top: size.height * 0.05,
@@ -256,7 +247,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             children: [
                               Genaralbutton(
                                 onpress: () {
-                                  teamRegistration(email, password);
+                                  teamRegistration(email);
                                 },
                                 text: "Register",
                                 pleft: size.width * 0.2,
@@ -274,7 +265,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
 //team registration
-  void teamRegistration(em, pw) async {
+  void teamRegistration(em) async {
     if (_form.currentState!.validate()) {
       RegisterTeam registerTeam = RegisterTeam(
           teamName: teamNameController.text,
