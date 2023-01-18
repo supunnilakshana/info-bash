@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:infobash_view/screens/components/bottom_navigationbar.dart';
 import 'package:infobash_view/screens/pendingscreen.dart';
+import 'package:infobash_view/screens/timescreen.dart';
 
 import '../registerscreen.dart';
 
@@ -27,7 +28,7 @@ class CheckSignIn extends StatelessWidget {
             child: Text("Somthing wrong!!"),
           );
         } else {
-          return const RegisterScreen();
+          return const TimeScreen();
         }
       },
     ));

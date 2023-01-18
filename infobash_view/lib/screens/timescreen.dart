@@ -63,6 +63,7 @@ class _TimeScreenState extends State<TimeScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           toolbarHeight: size.height * 0.09,
           backgroundColor: kPrimaryColordark,
           actions: [
