@@ -1,7 +1,5 @@
-
-
-
 import 'package:flutter/material.dart';
+import 'package:infobash_admin/screens/match/matchstarting/match_start_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/constraints.dart';
@@ -18,8 +16,6 @@ class ScheduleScreen extends StatefulWidget {
 }
 
 class _ScheduleScreenState extends State<ScheduleScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     ViewModel teamViewModel = context.watch<ViewModel>();
@@ -35,9 +31,15 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             indicatorColor: Colors.white,
             indicatorWeight: 4,
             tabs: [
-              Tab(text: "Round",),
-              Tab(text: "Semi Final",),
-              Tab(text: "Final",)
+              Tab(
+                text: "Round",
+              ),
+              Tab(
+                text: "Semi Final",
+              ),
+              Tab(
+                text: "Final",
+              )
             ],
           ),
         ),
@@ -48,21 +50,30 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             _buildFinal(),
           ],
         ),
-
       ),
     );
   }
 
   _ui(ViewModel viewModel) {
     if (viewModel.loading) {
-      return Container(child: AppLoading());
+      return Container(child: const AppLoading());
     }
     return Expanded(
         child: ListView.builder(
             itemBuilder: (context, index) {
               MatchModel matchModel = viewModel.matchModel[index];
-              return TeamListRow(
-                matchModel: matchModel,
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MatchStartedScreen(
+                                matchModel: matchModel,
+                              )));
+                },
+                child: TeamListRow(
+                  matchModel: matchModel,
+                ),
               );
             },
             itemCount: viewModel.matchModel.length));
@@ -78,28 +89,20 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       ),
     );
   }
+
   Widget _buildSemiFinal() {
     return Container(
         padding: EdgeInsets.all(20),
         child: Center(
-          child: Text(
-              "No Data"
-          ),
-        )
-    );
+          child: Text("No Data"),
+        ));
   }
 
   Widget _buildFinal() {
     return Container(
         padding: EdgeInsets.all(20),
         child: Center(
-          child: Text(
-              "No Data"
-          ),
-        )
-    );
+          child: Text("No Data"),
+        ));
   }
-
-
-
 }

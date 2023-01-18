@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:infobash_admin/screens/home/round_start/round_start_view.dart';
+import 'package:infobash_admin/screens/match/match_creation_screen.dart';
 import 'package:infobash_admin/screens/requestscreen.dart';
 import 'package:infobash_admin/screens/schedule_screen.dart';
 import 'package:infobash_admin/screens/send_mail_screen.dart';
@@ -10,16 +12,26 @@ void openTeamDetails(BuildContext context) async {
 }
 
 void openMail(BuildContext context) async {
-  Navigator.push(context,
-      MaterialPageRoute(builder: (context) => const SendMailScreen()));
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => const SendMailScreen()));
 }
 
 void openRequest(BuildContext context) async {
-  Navigator.push(context,
-      MaterialPageRoute(builder: (context) => const RequestScreen()));
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => const RequestScreen()));
 }
 
 void openMatches(BuildContext context) async {
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => const ScheduleScreen()));
+}
+
+void openSessionSchedule(BuildContext context) async {
   Navigator.push(context,
-      MaterialPageRoute(builder: (context) => const ScheduleScreen()));
+      MaterialPageRoute(builder: (context) => const RoundScheduleView()));
+}
+
+void opentest(BuildContext context) async {
+  Navigator.push(context,
+      MaterialPageRoute(builder: (context) => const MatchCreationScreen()));
 }

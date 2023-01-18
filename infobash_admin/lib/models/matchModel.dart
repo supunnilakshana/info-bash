@@ -12,7 +12,9 @@ class MatchModel {
   String matchtype;
   int overs;
   String bpo;
-
+  String tosswin;
+  String tossdec;
+  String matchstatus;
   MatchModel(
       {this.id,
       required this.matchid,
@@ -24,7 +26,10 @@ class MatchModel {
       required this.result,
       required this.matchtype,
       required this.overs,
-      required this.bpo});
+      required this.bpo,
+      required this.matchstatus,
+      required this.tossdec,
+      required this.tosswin});
   Map<String, dynamic> toMap() {
     return {
       // 'id': id,
@@ -37,7 +42,10 @@ class MatchModel {
       'result': result,
       'matchtype': matchtype,
       'overs': overs,
-      'bpo': groupid
+      'bpo': groupid,
+      'tossdec': tossdec,
+      'tosswin': tosswin,
+      'matchstatus': matchstatus,
     };
   }
 
@@ -54,6 +62,9 @@ class MatchModel {
       matchtype: map['matchtype'],
       overs: map['overs'],
       bpo: map['bpo'],
+      matchstatus: map['matchstatus'],
+      tossdec: map['tossdec'],
+      tosswin: map['tosswin'],
     );
   }
 }

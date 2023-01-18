@@ -65,66 +65,24 @@ class MenuDrawer extends StatelessWidget {
               elevation: 0,
               child: ListTile(
                 leading: const Icon(
-                  Icons.password_outlined,
+                  Icons.schedule,
                   color: kPrimaryColordark,
                 ),
-                title: const Text('Change Password'),
-                onTap: () {},
+                title: const Text('Session schedule'),
+                onTap: () {
+                  openSessionSchedule(context);
+                },
               ),
             ),
             Card(
               elevation: 0,
               child: ListTile(
                   leading: const Icon(
-                    Icons.language_rounded,
+                    Icons.dashboard_customize,
                     color: kPrimaryColordark,
                   ),
-                  title: const Text('Change Language'),
+                  title: const Text('Custom match schedule'),
                   onTap: () {}),
-            ),
-            Card(
-              elevation: 0,
-              child: ListTile(
-                leading: const Icon(
-                  Icons.help_outline_rounded,
-                  color: kPrimaryColordark,
-                ),
-                title: const Text('Help'),
-                onTap: () {},
-              ),
-            ),
-            Card(
-              elevation: 0,
-              child: ListTile(
-                leading: const Icon(
-                  Icons.web,
-                  color: kPrimaryColordark,
-                ),
-                title: const Text('About Us'),
-                onTap: () {},
-              ),
-            ),
-            Card(
-              elevation: 0,
-              child: ListTile(
-                leading: const Icon(
-                  Icons.contact_page_outlined,
-                  color: kPrimaryColordark,
-                ),
-                title: const Text('Contact Us'),
-                onTap: () async {},
-              ),
-            ),
-            Card(
-              elevation: 0,
-              child: ListTile(
-                leading: const Icon(
-                  Icons.book_online_outlined,
-                  color: kPrimaryColordark,
-                ),
-                title: const Text('Privacy & Policy'),
-                onTap: () async {},
-              ),
             ),
 
             Card(
