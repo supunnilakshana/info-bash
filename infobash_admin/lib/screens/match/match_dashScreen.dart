@@ -6,6 +6,8 @@ import 'package:infobash_admin/models/ballModel.dart';
 import 'package:infobash_admin/models/matchModel.dart';
 import 'package:infobash_admin/screens/components/buttons.dart';
 import 'package:infobash_admin/screens/components/textfileds.dart';
+import 'package:infobash_admin/screens/components/tots.dart';
+import 'package:infobash_admin/screens/match/matchstarting/match_start_screen.dart';
 import 'package:infobash_admin/services/date_time/date.dart';
 import 'package:infobash_admin/services/firebase/fb_handeler.dart';
 import 'package:infobash_admin/services/validator/validate_handeler.dart';
@@ -13,10 +15,12 @@ import 'package:infobash_admin/services/validator/validate_handeler.dart';
 class MatchDashScreen extends StatefulWidget {
   final MatchModel matchModel;
   final bool is1stinning;
+  final int in1score;
   const MatchDashScreen({
     Key? key,
     required this.matchModel,
     required this.is1stinning,
+    this.in1score = 0,
   }) : super(key: key);
 
   @override
@@ -32,7 +36,9 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
   int over = 0;
   int ball = 0;
   int total = 0;
+  int istscore = 0;
   int wickets = 0;
+  bool canpress = true;
   late Future<List<BallModel>> ballList;
   final rtitelStyle = const TextStyle(fontWeight: FontWeight.bold);
   TextEditingController marksfiledController = TextEditingController();
@@ -47,11 +53,6 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          loadData();
-        },
-      ),
       appBar: AppBar(
         title: const Text("Match dashboard"),
         toolbarHeight: size.height * 0.09,
@@ -88,6 +89,13 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                   for (var element in tempdata) {
                     if (element.matchid == widget.matchModel.inning2) {
                       data.add(element);
+                    }
+                  }
+                }
+                if (widget.is1stinning == false) {
+                  for (var element in tempdata) {
+                    if (element.matchid == widget.matchModel.inning1) {
+                      istscore += element.totalmark;
                     }
                   }
                 }
@@ -133,6 +141,9 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                               : "2 nd Inning"),
                           Text("overs $over . ${ball - 1}"),
                           Text("total $total / $wickets"),
+                          !widget.is1stinning
+                              ? Text("Target ${istscore + 1}")
+                              : Container(),
                           Row(
                             children: [
                               Expanded(
@@ -590,34 +601,152 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                             )
                           : Container(),
                       Padding(
-                        padding:
-                            const EdgeInsets.only(left: 50, right: 50, top: 10),
-                        child: Genaralbutton(
-                          onpress: () async {
-                            BallModel ballModel = BallModel(
-                                id: Date.getDateTimeId(),
-                                matchid: widget.is1stinning
-                                    ? widget.matchModel.inning1
-                                    : widget.matchModel.inning2,
-                                bno: ball,
-                                datetime: Date.getStringdatetimenow(),
-                                totalmark: int.parse(marksfiledController.text),
-                                emark: 2,
-                                overno: over,
-                                diliverytype: extraval,
-                                runtype: markval,
-                                wickettype: wicketval);
+                          padding: const EdgeInsets.only(
+                              left: 50, right: 50, top: 10),
+                          child: !ischase()
+                              ? over < widget.matchModel.overs
+                                  ? wickets < 9
+                                      ? Genaralbutton(
+                                          onpress: canpress
+                                              ? () async {
+                                                  canpress = false;
+                                                  setState(() {});
+                                                  bool isok = false;
+                                                  if (extraval != "" &&
+                                                      markval != "" &&
+                                                      iswicket != "") {
+                                                    if (iswicket ==
+                                                        Wickettype.out) {
+                                                      if (wicketval != "") {
+                                                        isok = true;
+                                                      } else {
+                                                        isok = false;
+                                                      }
+                                                    } else {
+                                                      isok = true;
+                                                    }
+                                                  } else {
+                                                    isok = false;
+                                                  }
 
-                            await FbHandeler.createDocManual(
-                              ballModel.toMap(),
-                              CollectionPath.ballpath(widget.matchModel.id!),
-                              Date.getDateTimeId(),
-                            );
-                            print("${data.length}---------");
-                            loadData();
-                            clearval();
-                          },
-                          text: "Submit",
+                                                  if (isok) {
+                                                    BallModel ballModel = BallModel(
+                                                        id: Date
+                                                            .getDateTimeId(),
+                                                        matchid:
+                                                            widget.is1stinning
+                                                                ? widget
+                                                                    .matchModel
+                                                                    .inning1
+                                                                : widget
+                                                                    .matchModel
+                                                                    .inning2,
+                                                        bno: ball,
+                                                        datetime: Date
+                                                            .getStringdatetimenow(),
+                                                        totalmark: int.parse(
+                                                            marksfiledController
+                                                                .text),
+                                                        emark: 2,
+                                                        overno: over,
+                                                        diliverytype: extraval,
+                                                        runtype: markval,
+                                                        wickettype: wicketval);
+
+                                                    await FbHandeler
+                                                        .createDocManual(
+                                                      ballModel.toMap(),
+                                                      CollectionPath.ballpath(
+                                                          widget
+                                                              .matchModel.id!),
+                                                      Date.getDateTimeId(),
+                                                    );
+                                                    print(
+                                                        "${data.length}---------");
+                                                    loadData();
+                                                    clearval();
+                                                    Customtost.commontost(
+                                                        "Successfully Added",
+                                                        Colors.blue);
+                                                  } else {
+                                                    Customtost.commontost(
+                                                        "Filled correctly",
+                                                        Colors.red);
+                                                  }
+                                                  canpress = true;
+                                                  setState(() {});
+                                                }
+                                              : () {
+                                                  Customtost.commontost(
+                                                      "Still submitting",
+                                                      Colors.amber);
+                                                },
+                                          text: "Submit",
+                                        )
+                                      : Text("Wicket is over")
+                                  : Text("Over is over")
+                              : Text("Chased")),
+                      const SizedBox(
+                        height: 100,
+                      ),
+                      !widget.is1stinning
+                          ? Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: Genaralbutton(
+                                    onpress: () {},
+                                    text: "Win",
+                                    color: Colors.green,
+                                  )),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  Expanded(
+                                      child: Genaralbutton(
+                                    onpress: () {},
+                                    text: "Loss",
+                                    color: Colors.red,
+                                  ))
+                                ],
+                              ),
+                            )
+                          : Container(),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                                child: Genaralbutton(
+                              onpress: () async {
+                                var nmodel = widget.matchModel;
+                                nmodel.inning1s = Matchstatustype.end;
+                                nmodel.inning2s = Matchstatustype.ongoning;
+                                await FbHandeler.updateDoc(nmodel.toMap(),
+                                        CollectionPath.matchpath, nmodel.id!)
+                                    .then((value) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              MatchStartedScreen(
+                                                  matchModelw: nmodel)));
+                                });
+                              },
+                              text: "End Inning",
+                              color: Colors.red,
+                            )),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                                child: Genaralbutton(
+                              onpress: () {},
+                              text: "Stop Inning",
+                              color: Colors.red,
+                            ))
+                          ],
                         ),
                       )
                     ],
@@ -704,11 +833,25 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
     setState(() {});
   }
 
+  bool ischase() {
+    bool tbool = false;
+    if (!widget.is1stinning) {
+      if (total > istscore) {
+        tbool = true;
+      }
+    } else {
+      tbool = false;
+    }
+    return tbool;
+  }
+
   clearval() {
     resultval = "";
     markval = "";
     extraval = "";
     wicketval = "";
+    marksfiledController.text = "";
+    iswicket = Wickettype.notout;
     setState(() {});
   }
 }
