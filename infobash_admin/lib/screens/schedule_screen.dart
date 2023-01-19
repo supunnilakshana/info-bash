@@ -27,7 +27,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           actions: [
             Image.asset("assets/icons/app_icon.png"),
           ],
-          bottom: TabBar(
+          bottom: const TabBar(
             indicatorColor: Colors.white,
             indicatorWeight: 4,
             tabs: [
@@ -68,7 +68,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => MatchStartedScreen(
-                                matchModel: matchModel,
+                                matchModelw: matchModel,
                               )));
                 },
                 child: TeamListRow(

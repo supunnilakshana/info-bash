@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:infobash_admin/models/ballModel.dart';
 import 'package:infobash_admin/models/groupModel.dart';
 import 'package:infobash_admin/models/matchModel.dart';
+import 'package:infobash_admin/models/point_tablemode.dart';
 import 'package:infobash_admin/models/teammodel.dart';
 import '../../constants/initdata.dart';
 
@@ -103,26 +105,28 @@ class FbHandeler {
     }
     return res;
   }
+
   //get match details
   static Future<List<MatchModel>> getallMatch() async {
     List<MatchModel> enlist = [];
     MatchModel enmodel;
 
     QuerySnapshot querySnapshot =
-    await firestoreInstance.collection("/matchs/round1/data").get();
+        await firestoreInstance.collection("/matchs/round1/data").get();
     final data = querySnapshot.docs.map((doc) => doc.data()).toList();
     print(data);
     for (int i = 0; i < querySnapshot.docs.length; i++) {
-
       var a = querySnapshot.docs[i];
 
-      enmodel = MatchModel.fromMap( a.id,a.data() as Map<String, dynamic>,);
+      enmodel = MatchModel.fromMap(
+        a.id,
+        a.data() as Map<String, dynamic>,
+      );
 
       enlist.add(enmodel);
     }
     return enlist;
   }
-
 
 //get team details
 
@@ -158,6 +162,26 @@ class FbHandeler {
     return enlist;
   }
 
+  //get ball details
+
+  static Future<List<BallModel>> getballs({required String matchid}) async {
+    String path = CollectionPath.ballpath(matchid);
+    List<BallModel> enlist = [];
+    BallModel enmodel;
+    QuerySnapshot querySnapshot =
+        await firestoreInstance.collection(path).get();
+    for (int i = 0; i < querySnapshot.docs.length; i++) {
+      var a = querySnapshot.docs[i];
+
+      enmodel = BallModel.fromMap(a.data() as Map<String, dynamic>);
+
+      enlist.add(enmodel);
+    }
+    print("${enlist.length}------------------------------");
+    enlist.sort((a, b) => b.matchid.compareTo(a.matchid));
+    return enlist;
+  }
+
 //get group details
 
   static Future<List<GroupModel>> getallGroup() async {
@@ -168,22 +192,24 @@ class FbHandeler {
     for (int i = 0; i < querySnapshot.docs.length; i++) {
       var a = querySnapshot.docs[i];
       List<RegisterTeamDto> teamlist = [];
+      List<PoinTableModel> pointtables = [];
       final tdata = a.data() as Map<String, dynamic>;
 
       final tlist = tdata["teamlist"] as List<dynamic>;
       for (var element in tlist) {
         teamlist.add(RegisterTeamDto.fromMap(element));
       }
-      enmodel =
-          GroupModel.fromMap(a.id, a.data() as Map<String, dynamic>, teamlist);
+
+      final tpointlist = tdata["pointable"] as List<dynamic>;
+      for (var element in tpointlist) {
+        pointtables.add(PoinTableModel.fromMap(element));
+      }
+      enmodel = GroupModel.fromMap(
+          a.id, a.data() as Map<String, dynamic>, teamlist, pointtables);
       enlist.add(enmodel);
     }
     return enlist;
   }
-
-
-
-
 
   static Future<bool> getRoundstatus(String round) async {
     bool status = false;
@@ -203,7 +229,6 @@ class FbHandeler {
         .doc("matchdata")
         .update({round: true}).then((_) {});
   }
-
 
 //realtimedb
   static Future<int> checkfiledstatus(String collectionpath) async {

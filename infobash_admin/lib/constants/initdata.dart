@@ -21,12 +21,18 @@ class CollectionPath {
   static const matchsround1 = "/matchs/round1/data";
   static const grouppath = "initdata/groups/data";
   static const matchdatapath = "/initdata/matchdata";
+  static const matchpath = "/matchs/round1/data/";
+  static String ballpath(String matchid) {
+    String path = "/matchs/round1/data/$matchid/ball";
+
+    return path;
+  }
 }
 
 class Resultype {
   static const wicket = "W";
   static const iDilivary = "I";
-  static const marks = "W";
+  static const marks = "R";
 }
 
 class Matchstatustype {
@@ -49,6 +55,7 @@ class Idelivertype {
   static const dead = "DB";
   static const legbyes = "LB";
   static const byes = "BY";
+  static const noex = "NOex";
 }
 
 class Wickettype {
@@ -57,11 +64,15 @@ class Wickettype {
   static const runout = "RO";
   static const hitwicket = "HW";
   static const catchout = "CO";
+  static const out = "OUT";
+  static const notout = "NOTOUT";
 }
 
 class Marktype {
   static const six = "6M";
   static const four = "4M";
+  static const boundarysix = "6MB";
+  static const boundaryfour = "4MB";
   static const five = "5M";
   static const dot = "0M";
   static const one = "1M";

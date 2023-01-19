@@ -1,27 +1,23 @@
 // ignore: file_names
+import 'package:infobash_admin/models/point_tablemode.dart';
 import 'package:infobash_admin/models/teammodel.dart';
 
 class GroupModel {
   final String? id;
   final String name;
   final List<RegisterTeamDto>? teamlist;
+  final List<PoinTableModel>? pointable;
 
-  GroupModel({
-    this.id,
-    required this.name,
-    this.teamlist,
-  });
-  Map<String, dynamic> toMap({required List<dynamic> tlist}) {
-    return {'name': name, 'teamlist': tlist};
+  GroupModel({this.id, required this.name, this.teamlist, this.pointable});
+  Map<String, dynamic> toMap(
+      {required List<dynamic> tlist, required List<dynamic> plist}) {
+    return {'name': name, 'teamlist': tlist, "pointable": plist};
   }
 
-  factory GroupModel.fromMap(
-      String id, Map<String, dynamic> map, List<RegisterTeamDto> list) {
+  factory GroupModel.fromMap(String id, Map<String, dynamic> map,
+      List<RegisterTeamDto> list, List<PoinTableModel> pointtable) {
     return GroupModel(
-      id: id,
-      name: map['name'],
-      teamlist: list,
-    );
+        id: id, name: map['name'], teamlist: list, pointable: pointtable);
   }
 
   List<RegisterTeamDto> createlist(List<dynamic> map) {

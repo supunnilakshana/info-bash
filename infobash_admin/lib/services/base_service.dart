@@ -1,6 +1,7 @@
 import 'package:infobash_admin/constants/initdata.dart';
 import 'package:infobash_admin/models/groupModel.dart';
 import 'package:infobash_admin/models/matchModel.dart';
+import 'package:infobash_admin/models/point_tablemode.dart';
 import 'package:infobash_admin/services/date_time/date.dart';
 import 'package:infobash_admin/services/firebase/fb_handeler.dart';
 import 'package:trotter/trotter.dart';
@@ -37,13 +38,29 @@ class BaseService {
 
     for (var i = 1; i <= group; i++) {
       List<dynamic> teamlistd = [];
+      List<dynamic> pointtable = [];
       final glist = teamlist.sublist(s, e);
-      final gmodel = GroupModel(name: groupnamelist[i - 1], teamlist: glist);
+      for (var element in glist) {
+        pointtable.add(PoinTableModel(
+                team: element,
+                point: 0,
+                played: 0,
+                win: 0,
+                loss: 0,
+                notres: 0,
+                nrr: 0.0)
+            .toMap());
+      }
+      final gmodel = GroupModel(
+        name: groupnamelist[i - 1],
+        teamlist: glist,
+      );
       for (var element in glist) {
         teamlistd.add(element.toMap());
       }
       await FbHandeler.createDocAuto(
-          gmodel.toMap(tlist: teamlistd), CollectionPath.grouppath);
+          gmodel.toMap(tlist: teamlistd, plist: pointtable),
+          CollectionPath.grouppath);
       s = e;
       int c = e + gcount;
       if (teamlist.length - c >= gcount) {
@@ -75,7 +92,9 @@ class BaseService {
             bpo: bpo.toString(),
             matchstatus: Matchstatustype.notstared,
             tossdec: nodata,
-            tosswin: nodata);
+            tosswin: nodata,
+            inning1: nodata,
+            inning2: nodata);
         i++;
 
         await FbHandeler.createDocAuto(

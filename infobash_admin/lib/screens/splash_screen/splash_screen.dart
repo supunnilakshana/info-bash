@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:infobash_admin/screens/auth/check_signIn.dart';
 import 'package:infobash_admin/screens/loginscreen.dart';
+import 'package:infobash_admin/screens/match/match_dashScreen.dart';
 import 'package:infobash_admin/screens/requestscreen.dart';
 
 import '../../constants/constraints.dart';
@@ -37,7 +38,8 @@ class StartState extends State<SplashScreen> {
   }
 
   route() {
-    Navigator.of(context).pushReplacementNamed(CheckSignIn.routName);
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const CheckSignIn()));
   }
 
   initScreen(BuildContext context) {

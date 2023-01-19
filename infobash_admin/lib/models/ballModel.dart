@@ -2,28 +2,28 @@
 import 'package:infobash_admin/models/playerModel.dart';
 
 class BallModel {
-  String? id;
+  String id;
   String matchid;
   int bno;
-  PlayerModel batter;
-  PlayerModel baller;
+  String diliverytype;
+  // PlayerModel? baller;
   String datetime;
-  String resulttype;
-  String result;
-  PlayerModel hplayer;
+  String wickettype;
+  String runtype;
+  int overno;
   int totalmark;
   int emark;
 
   BallModel(
-      {this.id,
+      {required this.id,
       required this.matchid,
-      required this.batter,
-      required this.baller,
+      required this.diliverytype,
+      // this.baller,
       required this.bno,
       required this.datetime,
-      required this.resulttype,
-      required this.result,
-      required this.hplayer,
+      required this.wickettype,
+      required this.runtype,
+      required this.overno,
       required this.totalmark,
       required this.emark});
   Map<String, dynamic> toMap() {
@@ -31,28 +31,28 @@ class BallModel {
       'id': id,
       'matchid': matchid,
       'bno': bno,
-      'batter': batter,
-      'baller': baller,
+      'diliverytype': diliverytype,
+      // 'baller': baller,
       'datetime': datetime,
-      'resulttype': resulttype,
-      'result': result,
-      'hplayer': hplayer,
+      'wickettype': wickettype,
+      'runtype': runtype,
+      'overno': overno,
       'tmark': totalmark,
       'emark': emark
     };
   }
 
-  factory BallModel.fromMap(String id, Map<String, dynamic> map) {
+  factory BallModel.fromMap(Map<String, dynamic> map) {
     return BallModel(
-      id: id,
+      id: map['id'],
       matchid: map['matchid'],
       bno: map['bno'],
-      batter: PlayerModel.fromMap(map['batter']),
-      baller: PlayerModel.fromMap(map['baller']),
+      diliverytype: map['diliverytype'],
+      //baller: PlayerModel.fromMap(map['baller']),
       datetime: map['datetime'],
-      result: map['result'],
-      resulttype: map['resulttype'],
-      hplayer: PlayerModel.fromMap(map['hplayer']),
+      runtype: map['runtype'],
+      wickettype: map['wickettype'],
+      overno: map['overno'],
       totalmark: map['tmark'],
       emark: map['emark'],
     );
