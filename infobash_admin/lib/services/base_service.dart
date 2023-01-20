@@ -75,7 +75,7 @@ class BaseService {
     final group = await FbHandeler.getallGroup();
     int i = 1;
     for (var element in group) {
-      final bagOfItems = group[0].teamlist!,
+      final bagOfItems = element.teamlist!,
           combos = Combinations(2, bagOfItems);
 
       for (final combo in combos()) {

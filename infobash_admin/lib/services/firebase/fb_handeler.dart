@@ -243,8 +243,12 @@ class FbHandeler {
       win = matchModel.team2.teamId;
       loss = matchModel.team1.teamId;
     }
+    print(win);
+    print(loss);
+    print(gmodel.pointable!.length);
     int winindex =
         gmodel.pointable!.indexWhere((element) => element.team.teamId == win);
+
     int lossindex =
         gmodel.pointable!.indexWhere((element) => element.team.teamId == loss);
     if (matchModel.matchstatus == Matchstatustype.end) {
@@ -257,10 +261,12 @@ class FbHandeler {
       gmodel.pointable![winindex].played++;
       gmodel.pointable![lossindex].played++;
       gmodel.pointable![winindex].point += 1;
+      gmodel.pointable![lossindex].point += 1;
     } else if (matchModel.matchstatus == Matchstatustype.draw) {
       gmodel.pointable![winindex].played++;
       gmodel.pointable![lossindex].played++;
       gmodel.pointable![lossindex].point += 1;
+      gmodel.pointable![winindex].point += 1;
     }
     List<dynamic> uppoint = [];
     for (var element in gmodel.pointable!) {

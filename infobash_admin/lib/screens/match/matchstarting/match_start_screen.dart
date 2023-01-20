@@ -153,8 +153,10 @@ class _MatchStartedScreenState extends State<MatchStartedScreen> {
 
                             if (statusval == model.team1.teamId) {
                               model.inning1 = model.team1.teamId;
+                              model.inning2 = model.team2.teamId;
                             } else if (statusval == model.team2.teamId) {
                               model.inning1 = model.team2.teamId;
+                              model.inning2 = model.team1.teamId;
                             }
                             model.inning1s = Matchstatustype.ongoning;
                             model.inning2s = Matchstatustype.notstared;
@@ -207,6 +209,22 @@ class _MatchStartedScreenState extends State<MatchStartedScreen> {
                 ),
               ),
             ),
+            matchModel.matchstatus == Matchstatustype.end
+                ? Card(
+                    child: ListTile(
+                      title: Text("WIN TEAM  "),
+                      subtitle: Text(
+                          matchModel.winteam == matchModel.team1.teamId
+                              ? matchModel.team1.teamName
+                              : matchModel.team2.teamName),
+                    ),
+                  )
+                : Container(),
+            matchModel.matchstatus == Matchstatustype.draw
+                ? const Card(
+                    child: ListTile(title: Text("Draw")),
+                  )
+                : Container()
           ],
         ),
       ),

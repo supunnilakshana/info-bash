@@ -119,7 +119,7 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                   print(data.length);
                   over = m.overno;
                   ball = m.bno;
-                  if (int.parse(widget.matchModel.bpo) <= m.bno - 1) {
+                  if (int.parse(widget.matchModel.bpo) <= m.bno) {
                     ball = 1;
                     over++;
                   } else {
@@ -130,12 +130,12 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                   ball = 1;
                   total = 0;
                   wickets = 0;
-                  istscore = 0;
+                  //istscore = 0;
                   runrate = 0.0;
                 }
               }
               runrate = total / (double.parse("$over.${ball - 1}"));
-              print(ball.toString() + "--------");
+              print("$ball--------");
               return SingleChildScrollView(
                   keyboardDismissBehavior:
                       ScrollViewKeyboardDismissBehavior.onDrag,
@@ -153,9 +153,7 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                           !widget.is1stinning
                               ? Text("Target ${istscore + 1}")
                               : Container(),
-                          !widget.is1stinning
-                              ? Text("RunRate $runrate")
-                              : Container(),
+                          Text("RunRate $runrate"),
                           Row(
                             children: [
                               Expanded(
@@ -751,23 +749,23 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: [
-                            Expanded(
-                                child: Genaralbutton(
-                              onpress: () async {
-                                await endining1st();
-                              },
-                              text: "End Inning",
-                              color: Colors.red,
-                            )),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Expanded(
-                                child: Genaralbutton(
-                              onpress: () {},
-                              text: "Stop Inning",
-                              color: Colors.red,
-                            ))
+                            widget.is1stinning
+                                ? Expanded(
+                                    child: Genaralbutton(
+                                    onpress: () async {
+                                      await endining1st();
+                                    },
+                                    text: "End Inning",
+                                    color: Colors.red,
+                                  ))
+                                : Expanded(
+                                    child: Genaralbutton(
+                                    onpress: () async {
+                                      await endmatch();
+                                    },
+                                    text: "End Match",
+                                    color: Colors.red,
+                                  ))
                           ],
                         ),
                       )
@@ -802,7 +800,7 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
       nmodel.inning2s = Matchstatustype.ongoning;
       await FbHandeler.updateDoc(
               nmodel.toMap(), CollectionPath.matchpath, nmodel.id!)
-          .then((value) => Navigator.push(
+          .then((value) => Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                   builder: (context) =>
@@ -937,7 +935,12 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
 
         await FbHandeler.updateDoc(
             newmmodel.toMap(), CollectionPath.matchpath, newmmodel.id!);
-        await FbHandeler.updatePointtable(newmmodel);
+        await FbHandeler.updatePointtable(newmmodel).then((value) =>
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        MatchStartedScreen(matchModelw: newmmodel))));
       }
     }
   }
