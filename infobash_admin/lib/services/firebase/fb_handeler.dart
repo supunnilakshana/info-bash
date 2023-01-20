@@ -230,6 +230,79 @@ class FbHandeler {
         .update({round: true}).then((_) {});
   }
 
+  static Future updatePointtable(MatchModel matchModel) async {
+    final glist = await getAGroup(matchModel.groupid);
+    var gmodel = glist.first;
+    String win;
+    String loss;
+
+    if (matchModel.winteam == matchModel.team1.teamId) {
+      win = matchModel.team1.teamId;
+      loss = matchModel.team2.teamId;
+    } else {
+      win = matchModel.team2.teamId;
+      loss = matchModel.team1.teamId;
+    }
+    int winindex =
+        gmodel.pointable!.indexWhere((element) => element.team.teamId == win);
+    int lossindex =
+        gmodel.pointable!.indexWhere((element) => element.team.teamId == loss);
+    if (matchModel.matchstatus == Matchstatustype.end) {
+      gmodel.pointable![winindex].played++;
+      gmodel.pointable![winindex].win++;
+      gmodel.pointable![winindex].point += 2;
+      gmodel.pointable![lossindex].played++;
+      gmodel.pointable![lossindex].loss++;
+    } else if (matchModel.matchstatus == Matchstatustype.draw) {
+      gmodel.pointable![winindex].played++;
+      gmodel.pointable![lossindex].played++;
+      gmodel.pointable![winindex].point += 1;
+    } else if (matchModel.matchstatus == Matchstatustype.draw) {
+      gmodel.pointable![winindex].played++;
+      gmodel.pointable![lossindex].played++;
+      gmodel.pointable![lossindex].point += 1;
+    }
+    List<dynamic> uppoint = [];
+    for (var element in gmodel.pointable!) {
+      uppoint.add(element.toMap());
+    }
+    await firestoreInstance
+        .collection(CollectionPath.grouppath)
+        .doc(gmodel.id)
+        .update({"pointable": uppoint}).then((_) {
+      print("update doc");
+    });
+  }
+
+  static Future<List<GroupModel>> getAGroup(String gname) async {
+    List<GroupModel> enlist = [];
+    GroupModel enmodel;
+    QuerySnapshot querySnapshot = await firestoreInstance
+        .collection(CollectionPath.grouppath)
+        .where("name", isEqualTo: gname)
+        .get();
+    if (querySnapshot.docs.isNotEmpty) {
+      var a = querySnapshot.docs.first;
+      List<RegisterTeamDto> teamlist = [];
+      List<PoinTableModel> pointtables = [];
+      final tdata = a.data() as Map<String, dynamic>;
+
+      final tlist = tdata["teamlist"] as List<dynamic>;
+      for (var element in tlist) {
+        teamlist.add(RegisterTeamDto.fromMap(element));
+      }
+
+      final tpointlist = tdata["pointable"] as List<dynamic>;
+      for (var element in tpointlist) {
+        pointtables.add(PoinTableModel.fromMap(element));
+      }
+      enmodel = GroupModel.fromMap(
+          a.id, a.data() as Map<String, dynamic>, teamlist, pointtables);
+      enlist.add(enmodel);
+    }
+    return enlist;
+  }
+
 //realtimedb
   static Future<int> checkfiledstatus(String collectionpath) async {
     final snapshot = await dbRef.child(collectionpath).get();

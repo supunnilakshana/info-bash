@@ -3,12 +3,12 @@ import 'package:infobash_admin/models/teammodel.dart';
 
 class PoinTableModel {
   final RegisterTeamDto team;
-  final int point;
-  final int played;
-  final int win;
-  final int loss;
-  final int notres;
-  final num nrr;
+  int point;
+  int played;
+  int win;
+  int loss;
+  int notres;
+  num nrr;
 
   PoinTableModel({
     required this.team,

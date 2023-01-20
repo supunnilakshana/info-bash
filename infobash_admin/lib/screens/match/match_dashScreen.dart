@@ -38,10 +38,12 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
   int total = 0;
   int istscore = 0;
   int wickets = 0;
+  double runrate = 0.0;
   bool canpress = true;
   late Future<List<BallModel>> ballList;
   final rtitelStyle = const TextStyle(fontWeight: FontWeight.bold);
   TextEditingController marksfiledController = TextEditingController();
+  String matchresult = "";
 
   @override
   void initState() {
@@ -72,12 +74,16 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
               ball = 1;
               total = 0;
               wickets = 0;
+              istscore = 0;
+              runrate = 0.0;
               List<BallModel> data = [];
               if (tempdata.isEmpty) {
                 over = 0;
                 ball = 1;
                 total = 0;
                 wickets = 0;
+                istscore = 0;
+                runrate = 0.0;
               } else {
                 if (widget.is1stinning) {
                   for (var element in tempdata) {
@@ -124,8 +130,11 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                   ball = 1;
                   total = 0;
                   wickets = 0;
+                  istscore = 0;
+                  runrate = 0.0;
                 }
               }
+              runrate = total / (double.parse("$over.${ball - 1}"));
               print(ball.toString() + "--------");
               return SingleChildScrollView(
                   keyboardDismissBehavior:
@@ -143,6 +152,9 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                           Text("total $total / $wickets"),
                           !widget.is1stinning
                               ? Text("Target ${istscore + 1}")
+                              : Container(),
+                          !widget.is1stinning
+                              ? Text("RunRate $runrate")
                               : Container(),
                           Row(
                             children: [
@@ -612,7 +624,11 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                                                   canpress = false;
                                                   setState(() {});
                                                   bool isok = false;
-                                                  if (extraval != "" &&
+                                                  makemarks();
+                                                  if (extraval ==
+                                                      Idelivertype.dead) {
+                                                    isok = true;
+                                                  } else if (extraval != "" &&
                                                       markval != "" &&
                                                       iswicket != "") {
                                                     if (iswicket ==
@@ -630,6 +646,24 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                                                   }
 
                                                   if (isok) {
+                                                    if (extraval ==
+                                                            Idelivertype
+                                                                .noball ||
+                                                        extraval ==
+                                                            Idelivertype.wide ||
+                                                        extraval ==
+                                                            Idelivertype.dead) {
+                                                      if (over <= 0 &&
+                                                          ball <= 0) {
+                                                        over = 0;
+                                                        ball = 0;
+                                                      } else if (ball <= 0) {
+                                                        over--;
+                                                      } else {
+                                                        ball--;
+                                                      }
+                                                    }
+
                                                     BallModel ballModel = BallModel(
                                                         id: Date
                                                             .getDateTimeId(),
@@ -683,9 +717,9 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                                                 },
                                           text: "Submit",
                                         )
-                                      : Text("Wicket is over")
-                                  : Text("Over is over")
-                              : Text("Chased")),
+                                      : const Text("Wicket is over")
+                                  : const Text("Over is over")
+                              : const Text("Chased")),
                       const SizedBox(
                         height: 100,
                       ),
@@ -720,19 +754,7 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                             Expanded(
                                 child: Genaralbutton(
                               onpress: () async {
-                                var nmodel = widget.matchModel;
-                                nmodel.inning1s = Matchstatustype.end;
-                                nmodel.inning2s = Matchstatustype.ongoning;
-                                await FbHandeler.updateDoc(nmodel.toMap(),
-                                        CollectionPath.matchpath, nmodel.id!)
-                                    .then((value) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              MatchStartedScreen(
-                                                  matchModelw: nmodel)));
-                                });
+                                await endining1st();
                               },
                               text: "End Inning",
                               color: Colors.red,
@@ -764,6 +786,28 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
   loadData() {
     ballList = FbHandeler.getballs(matchid: widget.matchModel.id!);
     setState(() {});
+  }
+
+  isendining() {
+    bool fover = over > widget.matchModel.overs;
+    bool fwickets = wickets > 9;
+    setState(() {});
+    return fover || fwickets;
+  }
+
+  endining1st() async {
+    if (widget.is1stinning) {
+      var nmodel = widget.matchModel;
+      nmodel.inning1s = Matchstatustype.end;
+      nmodel.inning2s = Matchstatustype.ongoning;
+      await FbHandeler.updateDoc(
+              nmodel.toMap(), CollectionPath.matchpath, nmodel.id!)
+          .then((value) => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      MatchStartedScreen(matchModelw: nmodel))));
+    }
   }
 
   int marks = 0;
@@ -845,6 +889,18 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
     return tbool;
   }
 
+  bool isdraw() {
+    bool tbool = false;
+    if (!widget.is1stinning) {
+      if (total == istscore) {
+        tbool = true;
+      }
+    } else {
+      tbool = false;
+    }
+    return tbool;
+  }
+
   clearval() {
     resultval = "";
     markval = "";
@@ -853,5 +909,36 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
     marksfiledController.text = "";
     iswicket = Wickettype.notout;
     setState(() {});
+  }
+
+  endmatch({bool isnoreslt = false}) async {
+    if (!widget.is1stinning) {
+      var winId = "";
+      var newmmodel = widget.matchModel;
+      if (isnoreslt) {
+        newmmodel.matchstatus = Matchstatustype.noresult;
+        await FbHandeler.updateDoc(
+            newmmodel.toMap(), CollectionPath.matchpath, newmmodel.id!);
+        await FbHandeler.updatePointtable(newmmodel);
+      } else if (ischase() || isendining() || isdraw()) {
+        if (ischase()) {
+          winId = newmmodel.inning2;
+        } else {
+          winId = newmmodel.inning1;
+        }
+        newmmodel = widget.matchModel;
+        newmmodel.matchstatus = Matchstatustype.end;
+        newmmodel.winteam = winId;
+
+        newmmodel.inning2s = Matchstatustype.end;
+        if (isdraw()) {
+          newmmodel.inning2s = Matchstatustype.draw;
+        }
+
+        await FbHandeler.updateDoc(
+            newmmodel.toMap(), CollectionPath.matchpath, newmmodel.id!);
+        await FbHandeler.updatePointtable(newmmodel);
+      }
+    }
   }
 }
