@@ -1,8 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:infobash_view/constants/constraints.dart';
-import 'package:infobash_view/screens/matches.dart';
 import 'package:infobash_view/screens/more_screen.dart';
+import 'package:infobash_view/screens/schedule_screen.dart';
 import 'package:infobash_view/screens/score_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -17,7 +17,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int index = 0;
   final screens = [
     const ScoreScreen(),
-    const MatchesScreen(),
+    const ScheduleScreen(),
     const MoreScreen()
   ];
   final items = const [
