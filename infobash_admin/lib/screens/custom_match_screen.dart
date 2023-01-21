@@ -32,7 +32,6 @@ class _CustomMatchScreenState extends State<CustomMatchScreen> {
   String matchType = '';
   String team1 = '';
   String team2 = '';
-  String path = '';
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +84,6 @@ class _CustomMatchScreenState extends State<CustomMatchScreen> {
                     onChanged: (value) {
                       setState(() {
                         matchType = value.toString();
-                        path = CollectionPath.matchpathsemi;
                       });
                     },
                   ),
@@ -104,7 +102,6 @@ class _CustomMatchScreenState extends State<CustomMatchScreen> {
                     onChanged: (value) {
                       setState(() {
                         matchType = value.toString();
-                        path = CollectionPath.matchpathfinal;
                       });
                     },
                   ),
@@ -208,6 +205,7 @@ class _CustomMatchScreenState extends State<CustomMatchScreen> {
                           tosswin: nodata,
                           inning1: nodata,
                           inning2: nodata);
+                      String path = Matchtype.round1;
                       int res = await FbHandeler.createDocAuto(
                           matchmodel.toMap(), path);
 

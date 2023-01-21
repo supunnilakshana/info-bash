@@ -160,13 +160,20 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                             if (ining1ballst.isNotEmpty) {
                               over1 = ining1ballst.last.overno;
                               ball1 = ining1ballst.last.bno;
+                              if (ball1 == int.parse(matchModel.bpo)) {
+                                ball1 = 0;
+                                over1++;
+                              }
                             }
                             if (ining2ballst.isNotEmpty) {
                               over2 = ining2ballst.last.overno;
                               ball2 = ining2ballst.last.bno;
+                              if (ball2 == int.parse(matchModel.bpo)) {
+                                ball2 = 0;
+                                over2++;
+                              }
                             }
                             return Expanded(
-
                               child: Column(
                                 children: [
                                   Column(
@@ -181,76 +188,94 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                                                     matchModel.inning1s ==
                                                         Matchstatustype.end
                                                 ? CardView(
-                                                function: () {},
-                                                matchNumber: matchModel.matchid
-                                                    .toString(),
-                                                team1: (matchModel.inning1) ==
-                                                    (matchModel
-                                                        .team1.teamId)
-                                                    ? matchModel.team1.teamName
-                                                    : matchModel.team2.teamName,
-                                                team2: (matchModel.inning2) ==
-                                                    (matchModel
-                                                        .team2.teamId)
-                                                    ? matchModel.team1.teamName
-                                                    : matchModel.team2.teamName,
-                                                team1Tot: score1.toString(),
-                                                team1Wicket:
-                                                wickets1.toString(),
-                                                team2Tot: score2.toString(),
-                                                team2Wicket:
-                                                wickets2.toString(),
-                                                date: matchModel.datetime,
-                                                over1: over1.toString(),
-                                                ball1: ball1.toString(),
-                                              winToss: (matchModel.tosswin == matchModel.team1.teamId)?matchModel.team1.teamName:
-                                              (matchModel.tosswin == matchModel.team2.teamId)?matchModel.team2.teamName:
-                                                  ''
-                                                )
+                                                    function: () {},
+                                                    matchNumber: matchModel
+                                                        .matchid
+                                                        .toString(),
+                                                    team1: (matchModel.inning1) ==
+                                                            (matchModel
+                                                                .team1.teamId)
+                                                        ? matchModel
+                                                            .team1.teamName
+                                                        : matchModel
+                                                            .team2.teamName,
+                                                    team2: (matchModel.inning2) ==
+                                                            (matchModel
+                                                                .team2.teamId)
+                                                        ? matchModel
+                                                            .team1.teamName
+                                                        : matchModel
+                                                            .team2.teamName,
+                                                    team1Tot: score1.toString(),
+                                                    team1Wicket:
+                                                        wickets1.toString(),
+                                                    team2Tot: score2.toString(),
+                                                    team2Wicket:
+                                                        wickets2.toString(),
+                                                    date: matchModel.datetime,
+                                                    over1: over1.toString(),
+                                                    ball1: ball1.toString(),
+                                                    winToss: (matchModel
+                                                                .tosswin ==
+                                                            matchModel
+                                                                .team1.teamId)
+                                                        ? matchModel
+                                                            .team1.teamName
+                                                        : (matchModel.tosswin ==
+                                                                matchModel.team2.teamId)
+                                                            ? matchModel.team2.teamName
+                                                            : '')
                                                 : Container(),
                                             matchModel.inning2s ==
                                                         Matchstatustype
                                                             .ongoning ||
                                                     matchModel.inning2s ==
                                                         Matchstatustype.end
-                                                ?CardView(
-                                                function: () {},
-                                                matchNumber: matchModel.matchid
-                                                    .toString(),
-                                                team1: (matchModel.inning1) ==
-                                                    (matchModel
-                                                        .team1.teamId)
-                                                    ? matchModel.team1.teamName
-                                                    : matchModel.team2.teamName,
-                                                team2: (matchModel.inning2) ==
-                                                    (matchModel
-                                                        .team2.teamId)
-                                                    ? matchModel.team1.teamName
-                                                    : matchModel.team2.teamName,
-                                                team1Tot: score1.toString(),
-                                                team1Wicket:
-                                                wickets1.toString(),
-                                                team2Tot: score2.toString(),
-                                                team2Wicket:
-                                                wickets2.toString(),
-                                                date: matchModel.datetime,
-                                                over1: over1.toString(),
-                                                ball1: ball1.toString(),
-                                                over2: over2.toString(),
-                                                ball2: ball2.toString(),
-                                                winToss: (matchModel.tosswin == matchModel.team1.teamId)?matchModel.team1.teamName:
-                                                (matchModel.tosswin == matchModel.team2.teamId)?matchModel.team2.teamName:
-                                                ''
-
-                                            )
-
-
+                                                ? CardView(
+                                                    function: () {},
+                                                    matchNumber: matchModel
+                                                        .matchid
+                                                        .toString(),
+                                                    team1: (matchModel.inning1) ==
+                                                            (matchModel
+                                                                .team1.teamId)
+                                                        ? matchModel
+                                                            .team1.teamName
+                                                        : matchModel
+                                                            .team2.teamName,
+                                                    team2: (matchModel.inning2) ==
+                                                            (matchModel
+                                                                .team2.teamId)
+                                                        ? matchModel
+                                                            .team1.teamName
+                                                        : matchModel
+                                                            .team2.teamName,
+                                                    team1Tot: score1.toString(),
+                                                    team1Wicket:
+                                                        wickets1.toString(),
+                                                    team2Tot: score2.toString(),
+                                                    team2Wicket:
+                                                        wickets2.toString(),
+                                                    date: matchModel.datetime,
+                                                    over1: over1.toString(),
+                                                    ball1: ball1.toString(),
+                                                    over2: over2.toString(),
+                                                    ball2: ball2.toString(),
+                                                    winToss: (matchModel
+                                                                .tosswin ==
+                                                            matchModel
+                                                                .team1.teamId)
+                                                        ? matchModel
+                                                            .team1.teamName
+                                                        : (matchModel.tosswin ==
+                                                                matchModel.team2.teamId)
+                                                            ? matchModel.team2.teamName
+                                                            : '')
                                                 : Container(),
                                           ],
                                         )
                                       else if (matchModel.matchstatus ==
                                           Matchstatustype.end)
-
                                         Column(
                                           children: [
                                             CardView(
@@ -278,10 +303,15 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                                                 ball1: ball1.toString(),
                                                 over2: over2.toString(),
                                                 ball2: ball2.toString(),
-                                                winToss: (matchModel.tosswin == matchModel.team1.teamId)?matchModel.team1.teamName:
-                                                (matchModel.tosswin == matchModel.team2.teamId)?matchModel.team2.teamName:
-                                                ''
-                                            ),
+                                                winToss: (matchModel.tosswin ==
+                                                        matchModel.team1.teamId)
+                                                    ? matchModel.team1.teamName
+                                                    : (matchModel.tosswin ==
+                                                            matchModel
+                                                                .team2.teamId)
+                                                        ? matchModel
+                                                            .team2.teamName
+                                                        : ''),
                                             // Text(matchModel.datetime),
                                             // Text(
                                             //     "inig 1   ${score1}/${wickets1}"),
@@ -403,16 +433,16 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                                               if (ining2ballst.isNotEmpty)
                                                 ListView.builder(
                                                   itemCount:
-                                                  ining2ballst.length,
+                                                      ining2ballst.length,
                                                   itemBuilder:
                                                       (context, index) {
                                                     var ballmodel2 =
-                                                    ining2ballst[index];
+                                                        ining2ballst[index];
                                                     return ListTile(
                                                       leading: Column(
                                                         crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                            CrossAxisAlignment
+                                                                .start,
                                                         children: [
                                                           Text(
                                                             "${ballmodel2.overno} . ${ballmodel2.bno} ",
@@ -430,48 +460,48 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                                right: 5),
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    right: 5),
                                                             child: Container(
                                                                 child: extraimg(ballmodel2
-                                                                    .diliverytype) !=
-                                                                    ""
+                                                                            .diliverytype) !=
+                                                                        ""
                                                                     ? Image
-                                                                    .asset(
-                                                                  extraimg(
-                                                                    ballmodel2
-                                                                        .diliverytype,
-                                                                  ),
-                                                                  width:
-                                                                  30,
-                                                                )
+                                                                        .asset(
+                                                                        extraimg(
+                                                                          ballmodel2
+                                                                              .diliverytype,
+                                                                        ),
+                                                                        width:
+                                                                            30,
+                                                                      )
                                                                     : Container()),
                                                           ),
                                                           Container(
                                                               child: wicketimg(
-                                                                  ballmodel2
-                                                                      .wickettype) !=
-                                                                  ""
+                                                                          ballmodel2
+                                                                              .wickettype) !=
+                                                                      ""
                                                                   ? Image.asset(
-                                                                wicketimg(
-                                                                  ballmodel2
-                                                                      .wickettype,
-                                                                ),
-                                                                width: 30,
-                                                              )
+                                                                      wicketimg(
+                                                                        ballmodel2
+                                                                            .wickettype,
+                                                                      ),
+                                                                      width: 30,
+                                                                    )
                                                                   : Container()),
                                                           Container(
                                                               child: boundaryimg(
-                                                                  ballmodel2
-                                                                      .runtype) !=
-                                                                  ""
+                                                                          ballmodel2
+                                                                              .runtype) !=
+                                                                      ""
                                                                   ? Image.asset(
-                                                                boundaryimg(
-                                                                    ballmodel2
-                                                                        .runtype),
-                                                                width: 30,
-                                                              )
+                                                                      boundaryimg(
+                                                                          ballmodel2
+                                                                              .runtype),
+                                                                      width: 30,
+                                                                    )
                                                                   : Container()),
                                                         ],
                                                       ),
@@ -480,7 +510,8 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                                                 )
                                               else
                                                 Container(
-                                                  child: Lottie.asset("assets/animations/nodata.json"),
+                                                  child: Lottie.asset(
+                                                      "assets/animations/nodata.json"),
                                                 ),
                                             ]),
                                           )
