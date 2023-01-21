@@ -929,6 +929,11 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
         await FbHandeler.updateDoc(
             newmmodel.toMap(), CollectionPath.matchpath, newmmodel.id!);
         await FbHandeler.updatePointtable(newmmodel);
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    MatchStartedScreen(matchModelw: newmmodel)));
       } else if (ischase() || isendining() || isdraw()) {
         if (ischase()) {
           winId = newmmodel.inning2;
