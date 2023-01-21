@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:infobash_view/models/point_tablemode.dart';
 import '../../constants/initdata.dart';
 import '../../models/ballModel.dart';
+import '../../models/groupModel.dart';
 import '../../models/matchModel.dart';
 import '../../models/usermodel.dart';
 
@@ -106,13 +107,16 @@ class FbHandeler {
   }
 
 //get match details
-  static Future<List<MatchModel>> getallMatch(String path) async {
+  //get match details
+  static Future<List<MatchModel>> getallMatch(
+      {String type = Matchtype.round1}) async {
     List<MatchModel> enlist = [];
     MatchModel enmodel;
 
     QuerySnapshot querySnapshot = await firestoreInstance
-        .collection(path)
-        .orderBy("matchid", descending: false)
+        .collection(CollectionPath.matchpath)
+        .where('matchtype', isEqualTo: type)
+        .orderBy('matchid', descending: false)
         .get();
     final data = querySnapshot.docs.map((doc) => doc.data()).toList();
     print(data);
@@ -128,23 +132,31 @@ class FbHandeler {
     }
     return enlist;
   }
-  //get point details
-  static Future<List<PointTableModel>> getallPoints(String path) async {
-    List<PointTableModel> enlist = [];
-    PointTableModel enmodel;
 
-    QuerySnapshot querySnapshot = await firestoreInstance
-        .collection(path)
-        .get();
-    final data = querySnapshot.docs.map((doc) => doc.data()).toList();
-    print(data);
+  //get group details
+
+  static Future<List<GroupModel>> getallGroup() async {
+    List<GroupModel> enlist = [];
+    GroupModel enmodel;
+    QuerySnapshot querySnapshot =
+    await firestoreInstance.collection(CollectionPath.grouppath).get();
     for (int i = 0; i < querySnapshot.docs.length; i++) {
       var a = querySnapshot.docs[i];
+      List<RegisterTeamDto> teamlist = [];
+      List<PoinTableModel> pointtables = [];
+      final tdata = a.data() as Map<String, dynamic>;
 
-      enmodel = PointTableModel.fromMap(
-        a.data() as Map<String, dynamic>,
-      );
+      final tlist = tdata["teamlist"] as List<dynamic>;
+      for (var element in tlist) {
+        teamlist.add(RegisterTeamDto.fromMap(element));
+      }
 
+      final tpointlist = tdata["pointable"] as List<dynamic>;
+      for (var element in tpointlist) {
+        pointtables.add(PoinTableModel.fromMap(element));
+      }
+      enmodel = GroupModel.fromMap(
+          a.id, a.data() as Map<String, dynamic>, teamlist, pointtables);
       enlist.add(enmodel);
     }
     return enlist;

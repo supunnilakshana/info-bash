@@ -3,7 +3,7 @@
 
 import 'package:infobash_view/models/usermodel.dart';
 
-class PointTableModel {
+class PoinTableModel {
   final RegisterTeamDto team;
   int point;
   int played;
@@ -12,7 +12,7 @@ class PointTableModel {
   int notres;
   num nrr;
 
-  PointTableModel({
+  PoinTableModel({
     required this.team,
     required this.point,
     required this.played,
@@ -33,8 +33,8 @@ class PointTableModel {
     };
   }
 
-  factory PointTableModel.fromMap(Map<String, dynamic> map) {
-    return PointTableModel(
+  factory PoinTableModel.fromMap(Map<String, dynamic> map) {
+    return PoinTableModel(
       team: RegisterTeamDto.fromMap(map['team']),
       point: map['point'],
       loss: map['loss'],

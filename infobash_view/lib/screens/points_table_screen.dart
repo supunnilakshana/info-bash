@@ -18,14 +18,7 @@ class PointsTableScreen extends StatefulWidget {
 
 class _PointsTableScreenState extends State<PointsTableScreen> {
   List<MatchModel> list =[];
-  @override
-  void initState() {
-    // TODO: implement initState
-    print("===============0");
-    print(FbHandeler.getallMatch(CollectionPath.grouppath));
-    super.initState();
-  }
-  
+
   
   @override
   Widget build(BuildContext context) {

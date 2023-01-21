@@ -103,21 +103,21 @@ class ViewModel extends ChangeNotifier {
 
   getMatchesData() async {
     setLoading(true);
-    final _doc = await FbHandeler.getallMatch(CollectionPath.matchsround1);
+    final _doc = await FbHandeler.getallMatch();
     setMatchListModel(_doc);
     setLoading(false);
   }
 
   getSemiMatchesData() async {
     setLoading(true);
-    final _doc = await FbHandeler.getallMatch(CollectionPath.matchpathsemi);
+    final _doc = await FbHandeler.getallMatch(type: Matchtype.semi);
     setMatchListModel(_doc);
     setLoading(false);
   }
 
   getFinalMatchesData() async {
     setLoading(true);
-    final _doc = await FbHandeler.getallMatch(CollectionPath.matchpathfinal);
+    final _doc = await FbHandeler.getallMatch(type: Matchtype.finalm);
     setMatchListModel(_doc);
     setLoading(false);
   }
