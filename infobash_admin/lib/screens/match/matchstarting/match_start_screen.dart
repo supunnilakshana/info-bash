@@ -172,58 +172,64 @@ class _MatchStartedScreenState extends State<MatchStartedScreen> {
                     ],
                   )
                 : Container(),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MatchDashScreen(
-                              matchModel: matchModel,
-                              is1stinning: true,
-                            )));
-              },
-              child: Card(
-                child: ListTile(
-                  title: const Text("1 st inning"),
-                  subtitle: Text(matchModel.inning1s),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            GestureDetector(
-              onTap: () {
-                print("object");
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MatchDashScreen(
-                              is1stinning: false,
-                              matchModel: matchModel,
-                            )));
-              },
-              child: Card(
-                child: ListTile(
-                  title: const Text("2 nd inning"),
-                  subtitle: Text(matchModel.inning2s),
-                ),
-              ),
-            ),
-            matchModel.matchstatus == Matchstatustype.end
-                ? Card(
-                    child: ListTile(
-                      title: Text("WIN TEAM  "),
-                      subtitle: Text(
-                          matchModel.winteam == matchModel.team1.teamId
-                              ? matchModel.team1.teamName
-                              : matchModel.team2.teamName),
-                    ),
-                  )
-                : Container(),
-            matchModel.matchstatus == Matchstatustype.draw
-                ? const Card(
-                    child: ListTile(title: Text("Draw")),
+            matchModel.matchstatus != Matchstatustype.notstared
+                ? Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MatchDashScreen(
+                                        matchModel: matchModel,
+                                        is1stinning: true,
+                                      )));
+                        },
+                        child: Card(
+                          child: ListTile(
+                            title: const Text("1 st inning"),
+                            subtitle: Text(matchModel.inning1s),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          print("object");
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MatchDashScreen(
+                                        is1stinning: false,
+                                        matchModel: matchModel,
+                                      )));
+                        },
+                        child: Card(
+                          child: ListTile(
+                            title: const Text("2 nd inning"),
+                            subtitle: Text(matchModel.inning2s),
+                          ),
+                        ),
+                      ),
+                      matchModel.matchstatus == Matchstatustype.end
+                          ? Card(
+                              child: ListTile(
+                                title: Text("WIN TEAM  "),
+                                subtitle: Text(matchModel.winteam ==
+                                        matchModel.team1.teamId
+                                    ? matchModel.team1.teamName
+                                    : matchModel.team2.teamName),
+                              ),
+                            )
+                          : Container(),
+                      matchModel.matchstatus == Matchstatustype.draw
+                          ? const Card(
+                              child: ListTile(title: Text("Draw")),
+                            )
+                          : Container(),
+                    ],
                   )
                 : Container()
           ],
