@@ -64,15 +64,14 @@ class MenuDrawer extends StatelessWidget {
             Card(
               elevation: 0,
               child: ListTile(
-                leading: const Icon(
-                  Icons.schedule,
-                  color: kPrimaryColordark,
-                ),
-                title: const Text('Session schedule'),
-                onTap: () {
-                  openSessionSchedule(context);
-                },
-              ),
+                  leading: const Icon(
+                    Icons.dashboard_customize,
+                    color: kPrimaryColordark,
+                  ),
+                  title: const Text('Custom match schedule'),
+                  onTap: () {
+                    openCustomMatch(context);
+                  }),
             ),
             Card(
               elevation: 0,
@@ -81,9 +80,8 @@ class MenuDrawer extends StatelessWidget {
                     Icons.dashboard_customize,
                     color: kPrimaryColordark,
                   ),
-                  title: const Text('Custom match schedule'),
+                  title: const Text('Test'),
                   onTap: () {
-                    openCustomMatch(context);
                   }),
             ),
 

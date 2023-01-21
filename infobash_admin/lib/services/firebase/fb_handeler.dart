@@ -186,7 +186,7 @@ class FbHandeler {
       enlist.add(enmodel);
     }
     print("${enlist.length}------------------------------");
-    enlist.sort((a, b) => b.matchid.compareTo(a.matchid));
+    enlist.sort((a, b) => a.matchid.compareTo(b.matchid));
     return enlist;
   }
 

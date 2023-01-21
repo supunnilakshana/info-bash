@@ -44,6 +44,14 @@ class _MatchStartedScreenState extends State<MatchStartedScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Match Start"),
+        toolbarHeight: size.height * 0.09,
+        backgroundColor: kPrimaryColordark,
+        actions: [
+          Image.asset("assets/icons/app_icon.png"),
+        ],
+      ),
       body: SizedBox(
         width: size.width,
         child: Column(

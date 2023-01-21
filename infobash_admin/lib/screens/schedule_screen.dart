@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:infobash_admin/screens/components/drawer.dart';
 import 'package:infobash_admin/screens/match/matchstarting/match_start_screen.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/constraints.dart';
@@ -22,6 +24,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        drawer: MenuDrawer(),
         appBar: AppBar(
           backgroundColor: kPrimaryColordark,
           actions: [
@@ -45,9 +48,13 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         ),
         body: TabBarView(
           children: [
-            _buildRoundOne(teamViewModel),
-            _buildSemiFinal(),
-            _buildFinal(),
+            RefreshIndicator(
+                onRefresh: (){
+
+                },
+                child: _buildRoundOne(teamViewModel)),
+            _buildSemiFinal(teamViewModel),
+            _buildFinal(teamViewModel),
           ],
         ),
       ),
@@ -76,7 +83,71 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 ),
               );
             },
-            itemCount: viewModel.matchModel.length));
+            itemCount: viewModel.matchModel.length,
+        ));
+  }
+  _uiSemi(ViewModel viewModel) {
+    if (viewModel.loading) {
+      return Container(child: AppLoading());
+    }
+    if(viewModel.semiMatchModel.isEmpty){
+      return Center(
+        child: Lottie.asset("assets/animations/nodata.json"),
+      );
+
+    }
+    return Expanded(
+        child: ListView.builder(
+            itemBuilder: (context, index) {
+              MatchModel matchModel = viewModel.semiMatchModel[index];
+
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MatchStartedScreen(
+                            matchModelw: matchModel,
+                          )));
+                },
+                child: TeamListRow(
+                  matchModel: matchModel,
+                ),
+              );
+            },
+            itemCount: viewModel.semiMatchModel.length));
+  }
+
+  _uiFinal(ViewModel viewModel) {
+    if (viewModel.loading) {
+      return Container(child: AppLoading());
+    }
+    if(viewModel.finalMatchModel.isEmpty){
+      return Center(
+        child: Lottie.asset("assets/animations/nodata.json"),
+      );
+
+    }
+    return Expanded(
+        child: ListView.builder(
+            itemBuilder: (context, index) {
+              MatchModel matchModel = viewModel.finalMatchModel[index];
+
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MatchStartedScreen(
+                            matchModelw: matchModel,
+                          )));
+                },
+                child: TeamListRow(
+                  matchModel: matchModel,
+                ),
+              );
+            },
+            itemCount: viewModel.finalMatchModel.length));
   }
 
   Widget _buildRoundOne(ViewModel teamViewModel) {
@@ -90,19 +161,23 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     );
   }
 
-  Widget _buildSemiFinal() {
+  Widget _buildSemiFinal(ViewModel viewModel) {
     return Container(
         padding: const EdgeInsets.all(20),
-        child: const Center(
-          child: const Text("No Data"),
+        child: Column(
+          children: [
+            _uiSemi(viewModel)
+          ],
         ));
   }
 
-  Widget _buildFinal() {
+  Widget _buildFinal(ViewModel viewModel) {
     return Container(
         padding: const EdgeInsets.all(20),
-        child: const Center(
-          child: const Text("No Data"),
+        child:Column(
+          children: [
+            _uiFinal(viewModel)
+          ],
         ));
   }
 }
