@@ -1,32 +1,48 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:infobash_view/constants/initdata.dart';
+import 'package:infobash_view/models/matchModel.dart';
+import 'package:provider/provider.dart';
+
 import 'package:infobash_view/models/ballModel.dart';
 import 'package:infobash_view/services/firebase/fb_handeler.dart';
-import 'package:provider/provider.dart';
 
 import '../constants/constraints.dart';
 import '../view_model/view_model.dart';
 
 class MatchDetailsScreen extends StatefulWidget {
-  const MatchDetailsScreen({Key? key}) : super(key: key);
-
+  const MatchDetailsScreen({
+    Key? key,
+    required this.matchid,
+  }) : super(key: key);
+  final String matchid;
   @override
   State<MatchDetailsScreen> createState() => _MatchDetailsScreenState();
 }
 
 class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
-
+  late Future<MatchModel> futurematchdata;
+  late Stream matchStream;
+  late Stream ballStream;
+  late String ballpath;
   @override
   void initState() {
-    // TODO: implement initState
-    FbHandeler.getballs(matchid: id.toString());
+    // futurematchdata = FbHandeler.getMatchModel(widget.matchid);
+    matchStream = FirebaseFirestore.instance
+        .collection(CollectionPath.matchpath)
+        .doc(widget.matchid)
+        .snapshots();
+    ballStream = FirebaseFirestore.instance.collection(ballpath).snapshots();
+    ballpath = CollectionPath.ballpath(widget.matchid);
     super.initState();
   }
-  String? id;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    ViewModel matchViewModel = context.watch<ViewModel>();
+
     return Scaffold(
       appBar: AppBar(
         title: Text("More"),
@@ -36,22 +52,48 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
           Image.asset("assets/icons/app_icon.png"),
         ],
       ),
-      body: Column(
+      body: StreamBuilder<dynamic>(
+          stream: matchStream,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              DocumentSnapshot documentSnapshot =
+                  snapshot.data as DocumentSnapshot;
+              var model = MatchModel.fromMap(documentSnapshot.id,
+                  documentSnapshot.data() as Map<String, dynamic>);
+              model.toMap();
+              return Column(
+                children: [
+                  Text(model.datetime),
+                  StreamBuilder(
+                    stream: ballStream,
+                    builder: (context, snapshotball) {
+                      if (snapshot.hasData) {
+                        return Text('Something went wrong');
+                      }
+                      if (snapshot.hasError) {
+                        return Text('Something went wrong');
+                      }
+                      return Center(child: CircularProgressIndicator());
+                    },
+                  )
 
-        children: [
-          Text(matchViewModel.selectedMatch!.team1.teamName),
-          ListView.builder(itemBuilder: (context,index){
-            setState((){
-              id = matchViewModel.selectedMatch!.id;
-            });
+                  // ListView.builder(
+                  //     itemBuilder: (context, index) {
+                  //       setState(() {});
 
-            return Text(id.toString());
-          },
-          itemCount: matchViewModel.ballModel.length,
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true)
-        ],
-      ),
+                  //       return Text("id.toString()");
+                  //     },
+                  //     itemCount: matchViewModel.ballModel.length,
+                  //     scrollDirection: Axis.vertical,
+                  //     shrinkWrap: true)
+                ],
+              );
+            }
+            if (snapshot.hasError) {
+              return Text('Something went wrong');
+            }
+            return const Center(child: CircularProgressIndicator());
+          }),
     );
   }
 }

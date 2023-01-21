@@ -14,10 +14,15 @@ const int resok = 1;
 const int resfail = 0;
 const String sucesscode = "sucessfull";
 
+const String nodata = "nodata";
+
 class CollectionPath {
-  static const userpath = "users/";
-  static const postpath = "post";
   static const teampath = "Team/";
+  static const initdata = "/initdata/";
+  static const matchsround1 = "/matchs/round1/data";
+  static const grouppath = "initdata/groups/data";
+  static const matchdatapath = "/initdata/matchdata";
+  static const matchpath = "/matchs/round1/data/";
   static String ballpath(String matchid) {
     String path = "/matchs/round1/data/$matchid/ball";
 
@@ -25,10 +30,12 @@ class CollectionPath {
   }
 }
 
-class ItemType {
-  static const bakery = "b";
-  static const coffe = "c";
+class Resultype {
+  static const wicket = "W";
+  static const iDilivary = "I";
+  static const marks = "R";
 }
+
 class Matchstatustype {
   static const ongoning = "ongoning";
   static const notstared = "notstared";
@@ -37,9 +44,42 @@ class Matchstatustype {
   static const draw = "draw";
 }
 
-const int maxad = 15;
+class Matchtype {
+  static const round1 = "round1";
+  static const semi = "semi";
+  static const finalm = "final";
+}
 
-enum UserRole { farmer, fofficer, expert }
+class Idelivertype {
+  static const wide = "WB";
+  static const noball = "NB";
+  static const dead = "DB";
+  static const legbyes = "LB";
+  static const byes = "BY";
+  static const noex = "NOex";
+}
+
+class Wickettype {
+  static const bowled = "BO";
+  static const stump = "SO";
+  static const runout = "RO";
+  static const hitwicket = "HW";
+  static const catchout = "CO";
+  static const out = "OUT";
+  static const notout = "NOTOUT";
+}
+
+class Marktype {
+  static const six = "6M";
+  static const four = "4M";
+  static const boundarysix = "6MB";
+  static const boundaryfour = "4MB";
+  static const five = "5M";
+  static const dot = "0M";
+  static const one = "1M";
+  static const two = "2M";
+  static const three = "3M";
+}
 
 String getpossition(String role) {
   int r = int.parse(role);
