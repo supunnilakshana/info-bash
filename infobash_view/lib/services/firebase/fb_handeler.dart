@@ -109,15 +109,19 @@ class FbHandeler {
     List<MatchModel> enlist = [];
     MatchModel enmodel;
 
-    QuerySnapshot querySnapshot =
-    await firestoreInstance.collection("/matchs/round1/data").orderBy("matchid",descending: false).get();
+    QuerySnapshot querySnapshot = await firestoreInstance
+        .collection("/matchs/round1/data")
+        .orderBy("matchid", descending: false)
+        .get();
     final data = querySnapshot.docs.map((doc) => doc.data()).toList();
     print(data);
     for (int i = 0; i < querySnapshot.docs.length; i++) {
-
       var a = querySnapshot.docs[i];
 
-      enmodel = MatchModel.fromMap( a.id,a.data() as Map<String, dynamic>,);
+      enmodel = MatchModel.fromMap(
+        a.id,
+        a.data() as Map<String, dynamic>,
+      );
 
       enlist.add(enmodel);
     }
@@ -133,9 +137,11 @@ class FbHandeler {
       return 1;
     }
   }
+
   static Future getUpdate() async {
     final userCollection = FirebaseFirestore.instance.collection('initdata');
-    DocumentSnapshot documentSnapshot = await userCollection.doc('appinfo').get();
+    DocumentSnapshot documentSnapshot =
+        await userCollection.doc('appinfo').get();
     final s = documentSnapshot.get('mustupdate');
     return s;
   }
@@ -144,7 +150,7 @@ class FbHandeler {
     List<RegisterTeam> enlist = [];
     RegisterTeam enmodel;
     QuerySnapshot querySnapshot =
-    await firestoreInstance.collection("Team/").get();
+        await firestoreInstance.collection("Team/").get();
     for (int i = 0; i < querySnapshot.docs.length; i++) {
       var a = querySnapshot.docs[i];
 
@@ -162,7 +168,7 @@ class FbHandeler {
     List<BallModel> enlist = [];
     BallModel enmodel;
     QuerySnapshot querySnapshot =
-    await firestoreInstance.collection(path).get();
+        await firestoreInstance.collection(path).get();
     for (int i = 0; i < querySnapshot.docs.length; i++) {
       var a = querySnapshot.docs[i];
 
@@ -175,5 +181,15 @@ class FbHandeler {
     return enlist;
   }
 
+  static Future<MatchModel> getMatchModel(String id) async {
+    MatchModel model;
 
+    DocumentSnapshot documentSnapshot = await firestoreInstance
+        .collection(CollectionPath.matchpath)
+        .doc(id)
+        .get();
+    model = MatchModel.fromMap(
+        documentSnapshot.id, documentSnapshot.data() as Map<String, dynamic>);
+    return model;
+  }
 }

@@ -8,7 +8,6 @@ import '../view_model/view_model.dart';
 import 'components/app_loading.dart';
 import 'components/match_list_row.dart';
 
-
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({Key? key}) : super(key: key);
 
@@ -17,8 +16,6 @@ class ScheduleScreen extends StatefulWidget {
 }
 
 class _ScheduleScreenState extends State<ScheduleScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     ViewModel teamViewModel = context.watch<ViewModel>();
@@ -34,9 +31,15 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             indicatorColor: Colors.white,
             indicatorWeight: 4,
             tabs: [
-              Tab(text: "Round",),
-              Tab(text: "Semi Final",),
-              Tab(text: "Final",)
+              Tab(
+                text: "Round",
+              ),
+              Tab(
+                text: "Semi Final",
+              ),
+              Tab(
+                text: "Final",
+              )
             ],
           ),
         ),
@@ -47,7 +50,6 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             _buildFinal(),
           ],
         ),
-
       ),
     );
   }
@@ -62,12 +64,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
               MatchModel matchModel = viewModel.matchModel[index];
 
               return GestureDetector(
-                onTap: (){
+                onTap: () {
                   viewModel.setSelectedMatch(matchModel);
                   print("fvfvfdvdfv");
                   print(matchModel.id);
-                  openBallDetails(context);
-
+                  openBallDetails(context, matchModel.id!);
                 },
                 child: ScheduleListRow(
                   matchModel: matchModel,
@@ -87,28 +88,20 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       ),
     );
   }
+
   Widget _buildSemiFinal() {
     return Container(
-      padding: EdgeInsets.all(20),
-      child: Center(
-        child: Text(
-          "No Data"
-        ),
-      )
-    );
+        padding: EdgeInsets.all(20),
+        child: Center(
+          child: Text("No Data"),
+        ));
   }
 
   Widget _buildFinal() {
     return Container(
         padding: EdgeInsets.all(20),
         child: Center(
-          child: Text(
-              "No Data"
-          ),
-        )
-    );
+          child: Text("No Data"),
+        ));
   }
-
-
-
 }
