@@ -108,12 +108,13 @@ class FbHandeler {
 
   //get match details
   static Future<List<MatchModel>> getallMatch(
-      {String cpath = CollectionPath.matchpath}) async {
+      {String type = Matchtype.round1}) async {
     List<MatchModel> enlist = [];
     MatchModel enmodel;
 
     QuerySnapshot querySnapshot = await firestoreInstance
-        .collection(cpath)
+        .collection(CollectionPath.matchpath)
+        .where('matchtype', isEqualTo: type)
         .orderBy('matchid', descending: false)
         .get();
     final data = querySnapshot.docs.map((doc) => doc.data()).toList();
