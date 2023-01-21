@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:infobash_view/models/matchModel.dart';
 import 'package:infobash_view/models/pointsmodel.dart';
 import 'package:infobash_view/screens/match_details_screen.dart';
 import 'package:infobash_view/screens/pendingscreen.dart';
@@ -44,11 +45,13 @@ void openTeamDetails(BuildContext context) async {
       MaterialPageRoute(builder: (context) => const TeamDetailsScreen()));
 }
 
-void openBallDetails(BuildContext context, String matchid) async {
+void openBallDetails(
+    BuildContext context, String matchid, MatchModel matchModel) async {
   Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => MatchDetailsScreen(
                 matchid: matchid,
+                mmdel: matchModel,
               )));
 }

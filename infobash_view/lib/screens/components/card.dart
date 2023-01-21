@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:infobash_view/constants/constraints.dart';
 
 class CardView extends StatelessWidget {
-  CardView({
-    Key? key,
-    required this.function,
-    required this.matchNumber,
-    required this.team1,
-    required this.team2,
-    required this.team1Tot,
-    required this.team1Wicket,
-    required this.date,
-    required this.team2Tot,
-    required this.team2Wicket,
-    this.winTeam
-  }) : super(key: key);
+  CardView(
+      {Key? key,
+      required this.function,
+      required this.matchNumber,
+      required this.team1,
+      required this.team2,
+      required this.team1Tot,
+      required this.team1Wicket,
+      required this.date,
+      required this.team2Tot,
+      required this.team2Wicket,
+      this.winTeam})
+      : super(key: key);
 
   final String matchNumber;
   final String team1;
@@ -52,19 +52,16 @@ class CardView extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                   vertical: size.height * 0.02, horizontal: size.width * 0.03),
               child: Container(
-                height: size.height * 0.14,
+                //  height: size.height * 0.14,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Date : ${date}",
-                      style: TextStyle(color: kPrimaryColordark, fontSize: 22),
-                    ),
                     Row(
                       children: [
                         Text(
                           "$matchNumber match",
-                          style: TextStyle(color: kPrimaryColordark, fontSize: 22),
+                          style:
+                              TextStyle(color: kPrimaryColordark, fontSize: 22),
                         ),
                       ],
                     ),
@@ -103,9 +100,7 @@ class CardView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Row(
-                        children: [
-
-                        ],
+                        children: [],
                       ),
                     ),
                   ],

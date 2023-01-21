@@ -67,7 +67,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 onTap: () {
                   viewModel.setSelectedMatch(matchModel);
 
-                  openBallDetails(context, matchModel.id!);
+                  openBallDetails(context, matchModel.id!, matchModel);
                 },
                 child: ScheduleListRow(
                   matchModel: matchModel,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:infobash_view/constants/initdata.dart';
 import 'package:infobash_view/models/matchModel.dart';
 import 'package:infobash_view/screens/components/card.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import 'package:infobash_view/models/ballModel.dart';
@@ -17,8 +18,10 @@ class MatchDetailsScreen extends StatefulWidget {
   const MatchDetailsScreen({
     Key? key,
     required this.matchid,
+    required this.mmdel,
   }) : super(key: key);
   final String matchid;
+  final MatchModel mmdel;
   @override
   State<MatchDetailsScreen> createState() => _MatchDetailsScreenState();
 }
@@ -57,7 +60,8 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Match"),
+        title: Text(
+            "${widget.mmdel.team1.teamName} vs ${widget.mmdel.team2.teamName}"),
         toolbarHeight: size.height * 0.09,
         backgroundColor: kPrimaryColordark,
         actions: [
@@ -78,7 +82,17 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
 
                 List<BallModel> balllist = [];
                 if (matchModel.matchstatus == Matchstatustype.notstared) {
-                  return Text("Match is not started");
+                  return Center(
+                      child: Column(
+                    children: [
+                      SizedBox(
+                        height: size.height * 0.2,
+                      ),
+                      Lottie.asset("assets/animations/cricketanimi.json",
+                          width: size.height * 0.4),
+                      Text("Match is not started yet")
+                    ],
+                  ));
                 } else {
                   return Column(
                     children: [
@@ -188,11 +202,11 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                                               team1: (matchModel.inning1) ==
                                                       (matchModel.team1.teamId)
                                                   ? matchModel.team1.teamName
-                                                  : "null",
+                                                  : matchModel.team2.teamName,
                                               team2: (matchModel.inning2) ==
                                                       (matchModel.team2.teamId)
-                                                  ? matchModel.team2.teamName
-                                                  : "null",
+                                                  ? matchModel.team1.teamName
+                                                  : matchModel.team2.teamName,
                                               team1Tot: score1.toString(),
                                               team1Wicket: wickets1.toString(),
                                               team2Tot: score2.toString(),
@@ -218,15 +232,18 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                                         children: [
                                           Container(
                                             color: kPrimaryColordark,
-                                            constraints: BoxConstraints.expand(
-                                                height: 50),
-                                            child: TabBar(
+                                            constraints:
+                                                const BoxConstraints.expand(
+                                                    height: 50),
+                                            child: const TabBar(
                                                 indicatorColor: Colors.white,
                                                 indicatorWeight: 4,
                                                 tabs: [
-                                              Tab(text: "Inning 1",),
-                                              Tab(text: "Inning 2"),
-                                            ]),
+                                                  Tab(
+                                                    text: "Inning 1",
+                                                  ),
+                                                  Tab(text: "Inning 2"),
+                                                ]),
                                           ),
                                           Expanded(
                                             child: TabBarView(children: [
@@ -239,25 +256,58 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                                                     var ballmodel1 =
                                                         ining1ballst[index];
                                                     return ListTile(
-                                                      title: Text(
+                                                      leading: Text(
                                                           "${ballmodel1.overno} . ${ballmodel1.bno} "),
-                                                      trailing: Container(
-                                                          width:30,
-                                                          height: 30,
-                                                          child:boundaryimg(ballmodel1.runtype)!=""?
-                                                          Image.asset(boundaryimg(ballmodel1.runtype)):Container()
-
-
-
-                                                        ),
-
+                                                      title: Row(
+                                                        children: [
+                                                          Container(
+                                                              child: extraimg(ballmodel1
+                                                                          .diliverytype) !=
+                                                                      ""
+                                                                  ? Image.asset(
+                                                                      extraimg(
+                                                                        ballmodel1
+                                                                            .diliverytype,
+                                                                      ),
+                                                                      width: 30,
+                                                                    )
+                                                                  : Container()),
+                                                          Container(
+                                                              child: wicketimg(
+                                                                          ballmodel1
+                                                                              .wickettype) !=
+                                                                      ""
+                                                                  ? Image.asset(
+                                                                      wicketimg(
+                                                                        ballmodel1
+                                                                            .wickettype,
+                                                                      ),
+                                                                      width: 30,
+                                                                    )
+                                                                  : Container()),
+                                                          Container(
+                                                              child: boundaryimg(
+                                                                          ballmodel1
+                                                                              .runtype) !=
+                                                                      ""
+                                                                  ? Image.asset(
+                                                                      boundaryimg(
+                                                                          ballmodel1
+                                                                              .runtype),
+                                                                      width: 30,
+                                                                    )
+                                                                  : Container()),
+                                                        ],
+                                                      ),
                                                     );
                                                   },
                                                 )
                                               else
-                                                Container(
-                                                  child: Text("No data"),
-                                                ),
+                                                Center(
+                                                    child: Lottie.asset(
+                                                        "assets/animations/nodata.json",
+                                                        width: size.height *
+                                                            0.15)),
                                               if (ining2ballst.isNotEmpty)
                                                 ListView.builder(
                                                   itemCount:
@@ -274,7 +324,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                                                 )
                                               else
                                                 Container(
-                                                  child: Text("No data"),
+                                                  child: const Text("No data"),
                                                 ),
                                             ]),
                                           )
@@ -315,19 +365,44 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
       ),
     );
   }
- String boundaryimg(String type){
-    String img="";
-    if(Marktype.boundaryfour==type){
-      img="";
-    }else    if(Marktype.six==type){
-      img="";
-    }else{
-      img="";
+
+  String boundaryimg(String type) {
+    String img = "";
+    if (Marktype.boundaryfour == type) {
+      img = "assets/icons/four.png";
+    } else if (Marktype.six == type) {
+      img = "assets/icons/six.png";
+    } else {
+      img = "";
     }
-return img;
+    return img;
   }
 
-
-
-
+  String wicketimg(String type) {
+    String img = "";
+    if (type != "") {
+      img = "assets/icons/wicket.png";
+    } else {
+      img = "";
+    }
+    return img;
   }
+
+  String extraimg(String type) {
+    String img = "";
+    if (type == Idelivertype.noball) {
+      img = "assets/icons/noball.png";
+    } else if (type == Idelivertype.wide) {
+      img = "assets/icons/wide.png";
+    } else if (type == Idelivertype.byes) {
+      img = "assets/icons/by.png";
+    } else if (type == Idelivertype.legbyes) {
+      img = "assets/icons/legby.png";
+    } else if (type == Idelivertype.dead) {
+      img = "assets/icons/by.png";
+    } else {
+      img = "";
+    }
+    return img;
+  }
+}
