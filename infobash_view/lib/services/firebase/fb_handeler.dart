@@ -115,11 +115,11 @@ class FbHandeler {
 
     QuerySnapshot querySnapshot = await firestoreInstance
         .collection(CollectionPath.matchpath)
-        .where('matchtype', isEqualTo: type)
         .orderBy('matchid', descending: false)
+        .where('matchtype', isEqualTo: type)
         .get();
     final data = querySnapshot.docs.map((doc) => doc.data()).toList();
-    print(data);
+    print(querySnapshot.docs.length);
     for (int i = 0; i < querySnapshot.docs.length; i++) {
       var a = querySnapshot.docs[i];
 
@@ -139,7 +139,7 @@ class FbHandeler {
     List<GroupModel> enlist = [];
     GroupModel enmodel;
     QuerySnapshot querySnapshot =
-    await firestoreInstance.collection(CollectionPath.grouppath).get();
+        await firestoreInstance.collection(CollectionPath.grouppath).get();
     for (int i = 0; i < querySnapshot.docs.length; i++) {
       var a = querySnapshot.docs[i];
       List<RegisterTeamDto> teamlist = [];
