@@ -82,7 +82,9 @@ class MenuDrawer extends StatelessWidget {
                     color: kPrimaryColordark,
                   ),
                   title: const Text('Custom match schedule'),
-                  onTap: () {}),
+                  onTap: () {
+                    openCustomMatch(context);
+                  }),
             ),
 
             Card(

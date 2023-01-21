@@ -18,7 +18,16 @@ class TeamListRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MatchCard(team1:matchModel.team1.teamName.capitalize.toString(),
-        team2: matchModel.team2.teamName.capitalize.toString());
+    return MatchCard(
+     id: matchModel.matchid,
+     team1: matchModel.team1.teamName.capitalize,
+     team2: matchModel.team2.teamName.capitalize.toString(),
+     tossWin: (matchModel.tosswin) == (matchModel.team1.teamId)
+         ? matchModel.team1.teamName.capitalize
+         : "No data",
+     optBat: (matchModel.tosswin) == (matchModel.inning1)
+         ? matchModel.team1.teamName.capitalize
+         : "",
+    );
   }
 }

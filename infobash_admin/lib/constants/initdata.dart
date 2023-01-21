@@ -45,8 +45,10 @@ class Matchstatustype {
 
 class Matchtype {
   static const round1 = "round1";
-  static const iDilivary = "I";
-  static const marks = "W";
+  static const semi = "semi";
+  static const mfinal = "final";
+
+
 }
 
 class Idelivertype {

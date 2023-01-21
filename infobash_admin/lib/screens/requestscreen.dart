@@ -52,6 +52,7 @@ class _RequestScreenState extends State<RequestScreen> {
     if (viewModel.loading) {
       return AppLoading();
     }
+    print(viewModel);
     return Expanded(
         child: ListView.builder(
             itemBuilder: (context, index) {
