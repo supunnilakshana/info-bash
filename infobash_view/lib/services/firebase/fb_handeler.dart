@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../../constants/initdata.dart';
+import '../../models/ballModel.dart';
 import '../../models/matchModel.dart';
+import '../../models/usermodel.dart';
 
 class FbHandeler {
   static final user = FirebaseAuth.instance.currentUser;
@@ -108,7 +110,7 @@ class FbHandeler {
     MatchModel enmodel;
 
     QuerySnapshot querySnapshot =
-    await firestoreInstance.collection("/matchs/round1/data").get();
+    await firestoreInstance.collection("/matchs/round1/data").orderBy("matchid",descending: false).get();
     final data = querySnapshot.docs.map((doc) => doc.data()).toList();
     print(data);
     for (int i = 0; i < querySnapshot.docs.length; i++) {
@@ -137,4 +139,41 @@ class FbHandeler {
     final s = documentSnapshot.get('mustupdate');
     return s;
   }
+
+  static Future<List<RegisterTeam>> getallTeam() async {
+    List<RegisterTeam> enlist = [];
+    RegisterTeam enmodel;
+    QuerySnapshot querySnapshot =
+    await firestoreInstance.collection("Team/").get();
+    for (int i = 0; i < querySnapshot.docs.length; i++) {
+      var a = querySnapshot.docs[i];
+
+      enmodel = RegisterTeam.fromMap(a.data() as Map<String, dynamic>, a.id);
+
+      enlist.add(enmodel);
+    }
+    print("==============");
+    print(enlist);
+    return enlist;
+  }
+
+  static Future<List<BallModel>> getballs({required String matchid}) async {
+    String path = CollectionPath.ballpath(matchid);
+    List<BallModel> enlist = [];
+    BallModel enmodel;
+    QuerySnapshot querySnapshot =
+    await firestoreInstance.collection(path).get();
+    for (int i = 0; i < querySnapshot.docs.length; i++) {
+      var a = querySnapshot.docs[i];
+
+      enmodel = BallModel.fromMap(a.data() as Map<String, dynamic>);
+
+      enlist.add(enmodel);
+    }
+    print("${enlist.length}------------------------------");
+    enlist.sort((a, b) => b.matchid.compareTo(a.matchid));
+    return enlist;
+  }
+
+
 }

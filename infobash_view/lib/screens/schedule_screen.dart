@@ -1,10 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:infobash_view/constants/constraints.dart';
+import 'package:infobash_view/constants/navigation_utils.dart';
+import 'package:infobash_view/models/ballModel.dart';
 import 'package:infobash_view/models/matchModel.dart';
-import 'package:infobash_view/services/firebase/fb_handeler.dart';
 import 'package:provider/provider.dart';
-
 import '../view_model/view_model.dart';
 import 'components/app_loading.dart';
 import 'components/match_list_row.dart';
@@ -61,8 +60,18 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         child: ListView.builder(
             itemBuilder: (context, index) {
               MatchModel matchModel = viewModel.matchModel[index];
-              return TeamListRow(
-                matchModel: matchModel,
+
+              return GestureDetector(
+                onTap: (){
+                  viewModel.setSelectedMatch(matchModel);
+                  print("fvfvfdvdfv");
+                  print(matchModel.id);
+                  openBallDetails(context);
+
+                },
+                child: ScheduleListRow(
+                  matchModel: matchModel,
+                ),
               );
             },
             itemCount: viewModel.matchModel.length));

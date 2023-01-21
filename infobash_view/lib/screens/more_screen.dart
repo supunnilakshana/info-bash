@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:infobash_view/constants/navigation_utils.dart';
 import 'package:infobash_view/screens/components/more_card.dart';
 import 'package:infobash_view/screens/points_table_screen.dart';
 import 'package:infobash_view/screens/schedule_screen.dart';
@@ -21,9 +22,7 @@ class _MoreScreenState extends State<MoreScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "More"
-        ),
+        title: Text("More"),
         toolbarHeight: size.height * 0.09,
         backgroundColor: kPrimaryColordark,
         actions: [
@@ -32,28 +31,30 @@ class _MoreScreenState extends State<MoreScreen> {
       ),
       body: Column(
         children: [
-          MoreCard(text: "Rules & Regulations", function: (){
+          MoreCard(
+              text: "Rules & Regulations",
+              function: () {
+                openRules(context);
+              }),
+          MoreCard(
+              text: "Teams",
+              function: () {
+                openTeams(context);
+              }),
+          MoreCard(
+              text: "Schedule",
+              function: () {
 
-          }),
-          MoreCard(text: "Teams", function: (){
-            Navigator.of(context)
-                .pushNamed(TeamsScreen.routName);
-          }),
-          MoreCard(text: "Schedule", function: (){
-            Navigator.push(
-                context,
-                new MaterialPageRoute(
-                    builder: (context) => ScheduleScreen()));
-          }),
-          MoreCard(text: "Photos", function: (){}),
-          MoreCard(text: "Points Table", function: (){
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      Navigator.push(
-          context,
-          new MaterialPageRoute(
-              builder: (context) => PointsTableScreen()));
-    });
-          })
+                openSchedule(context);
+              }),
+          MoreCard(text: "Photos", function: () {}),
+          MoreCard(
+              text: "Points Table",
+              function: () {
+                SchedulerBinding.instance.addPostFrameCallback((_) {
+                  openPointsTable(context);
+                });
+              })
         ],
       ),
     );

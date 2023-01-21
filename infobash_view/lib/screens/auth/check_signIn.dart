@@ -28,7 +28,7 @@ class CheckSignIn extends StatelessWidget {
             child: Text("Somthing wrong!!"),
           );
         } else {
-          return const TimeScreen();
+          return const BottomNavigation();
         }
       },
     ));

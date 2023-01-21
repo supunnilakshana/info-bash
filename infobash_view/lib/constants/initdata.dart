@@ -17,11 +17,24 @@ const String sucesscode = "sucessfull";
 class CollectionPath {
   static const userpath = "users/";
   static const postpath = "post";
+  static const teampath = "Team/";
+  static String ballpath(String matchid) {
+    String path = "/matchs/round1/data/$matchid/ball";
+
+    return path;
+  }
 }
 
 class ItemType {
   static const bakery = "b";
   static const coffe = "c";
+}
+class Matchstatustype {
+  static const ongoning = "ongoning";
+  static const notstared = "notstared";
+  static const end = "end";
+  static const noresult = "nr";
+  static const draw = "draw";
 }
 
 const int maxad = 15;

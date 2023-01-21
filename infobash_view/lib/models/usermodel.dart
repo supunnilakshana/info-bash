@@ -17,7 +17,7 @@ class RegisterTeam {
   PlayerModel fPlayer1;
   PlayerModel fPlayer2;
   PlayerModel fPlayer3;
-  bool accept;
+  bool? accept;
 
   RegisterTeam(
       {this.teamId,
@@ -35,7 +35,7 @@ class RegisterTeam {
       required this.fPlayer1,
       required this.fPlayer2,
       required this.fPlayer3,
-      required this.accept});
+      this.accept});
   Map<String, dynamic> toMap() {
     return {
       'teamName': teamName,
@@ -69,7 +69,7 @@ class RegisterTeam {
       mPlayer2: PlayerModel.fromMap(map['mPlayer2']),
       mPlayer4: PlayerModel.fromMap(map['mPlayer4']),
       mPlayer5: PlayerModel.fromMap(map['mPlayer5']),
-      mPlayer6: PlayerModel.fromMap(map['mPLayer6']),
+      mPlayer6: PlayerModel.fromMap(map['mPlayer6']),
       fPlayer1: PlayerModel.fromMap(map['fPlayer1']),
       fPlayer2: PlayerModel.fromMap(map['fPlayer2']),
       fPlayer3: PlayerModel.fromMap(map['fPlayer3']),
