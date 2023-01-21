@@ -160,9 +160,10 @@ class _MatchStartedScreenState extends State<MatchStartedScreen> {
                             }
                             model.inning1s = Matchstatustype.ongoning;
                             model.inning2s = Matchstatustype.notstared;
+                            model.matchstatus = Matchstatustype.ongoning;
                             await FbHandeler.updateDoc(model.toMap(),
                                 CollectionPath.matchpath, model.id!);
-                            model.matchstatus = Matchstatustype.ongoning;
+
                             istossupdate = true;
                             matchModel = model;
                             setState(() {});

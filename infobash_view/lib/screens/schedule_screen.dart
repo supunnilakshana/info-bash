@@ -66,8 +66,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
               return GestureDetector(
                 onTap: () {
                   viewModel.setSelectedMatch(matchModel);
-                  print("fvfvfdvdfv");
-                  print(matchModel.id);
+
                   openBallDetails(context, matchModel.id!);
                 },
                 child: ScheduleListRow(
