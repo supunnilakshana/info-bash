@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:infobash_admin/constants/initdata.dart';
 import 'package:infobash_admin/models/matchModel.dart';
 import 'package:infobash_admin/screens/components/customdropdown.dart';
+import 'package:infobash_admin/screens/schedule_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/constraints.dart';
@@ -154,7 +155,7 @@ class _CustomMatchScreenState extends State<CustomMatchScreen> {
                       var tobj1 = teamlist
                           .firstWhere((element) => element.teamName == team1);
                       var tobj2 = teamlist
-                          .firstWhere((element) => element.teamName == team1);
+                          .firstWhere((element) => element.teamName == team2);
                       var rteam1 = RegisterTeamDto(
                           teamId: tobj1.teamId!,
                           teamName: tobj1.teamName,
@@ -205,12 +206,15 @@ class _CustomMatchScreenState extends State<CustomMatchScreen> {
                           tosswin: nodata,
                           inning1: nodata,
                           inning2: nodata);
-                      String path = Matchtype.round1;
+                      String path = CollectionPath.matchpath;
                       int res = await FbHandeler.createDocAuto(
                           matchmodel.toMap(), path);
 
                       Customtost.commontost("Successfull", Colors.blue);
+                      Navigator.pushReplacement(
+                          context, MaterialPageRoute(builder: (context) => const ScheduleScreen()));
                     } else {
+
                       Customtost.commontost("Not Complete", Colors.red);
                     }
                   }

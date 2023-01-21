@@ -20,7 +20,7 @@ class CheckSignIn extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasData) {
-          return const HomeScreen();
+          return const ScheduleScreen();
           //const RequestScreen();
         } else if (snapshot.hasError) {
           return const Center(
