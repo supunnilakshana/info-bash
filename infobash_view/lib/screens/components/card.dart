@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:infobash_view/constants/constraints.dart';
 
 class CardView extends StatelessWidget {
-  CardView(
-      {Key? key,
-      required this.function,
-      required this.matchNumber,
-      required this.team1,
-      required this.team2,
-      required this.team1Tot,
-      required this.team1Wicket,
-      required this.date,
-      required this.team2Tot,
-      required this.team2Wicket,
-      this.winTeam})
-      : super(key: key);
+  CardView({
+    Key? key,
+    required this.function,
+    required this.matchNumber,
+    required this.team1,
+    required this.team2,
+    required this.team1Tot,
+    required this.team1Wicket,
+    required this.date,
+    required this.team2Tot,
+    required this.team2Wicket,
+    this.winTeam,
+    this.over1,
+    this.ball2,
+    this.ball1,
+    this.over2,
+    this.winToss,
+  }) : super(key: key);
 
   final String matchNumber;
   final String team1;
@@ -25,6 +31,11 @@ class CardView extends StatelessWidget {
   final String team2Wicket;
   final String date;
   String? winTeam;
+  String? over1;
+  String? ball1;
+  String? over2;
+  String? ball2;
+  String? winToss;
 
   final Function function;
 
@@ -71,13 +82,28 @@ class CardView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            team1,
+                            team1.capitalize.toString(),
                             style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
-                          Text(
-                            "${team1Tot} - ${team1Wicket}",
-                            style: TextStyle(color: Colors.black, fontSize: 20),
-                          ),
+                          over1 != null
+                              ? Row(
+                                  children: [
+                                    Text(
+                                      "${team1Tot} - ${team1Wicket}",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 20),
+                                    ),
+                                    Container(
+                                      width: 20,
+                                    ),
+                                    Text(
+                                      "Overs( ${over1}.${ball1} )",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 20),
+                                    )
+                                  ],
+                                )
+                              : Container()
                         ],
                       ),
                     ),
@@ -87,20 +113,37 @@ class CardView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            team2,
+                            team2.capitalize.toString(),
                             style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
-                          Text(
-                            "${team2Tot} - ${team2Wicket}",
-                            style: TextStyle(color: Colors.black, fontSize: 20),
-                          ),
+                          over2 != null
+                              ? Row(
+                                  children: [
+                                    Text(
+                                      "${team2Tot} - ${team2Wicket}",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 20),
+                                    ),
+                                    Container(
+                                      width: 20,
+                                    ),
+                                    Text(
+                                      "Overs( ${over2}.${ball2} )",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 20),
+                                    ),
+                                  ],
+                                )
+                              : Container()
                         ],
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Row(
-                        children: [],
+                        children: [
+                          Text("${winToss.toString().capitalize} won the toss"),
+                        ],
                       ),
                     ),
                   ],
@@ -111,6 +154,6 @@ class CardView extends StatelessWidget {
         ),
       ),
     );
-    ;
+
   }
 }

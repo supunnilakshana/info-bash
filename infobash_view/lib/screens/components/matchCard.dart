@@ -4,10 +4,9 @@ class MatchCard extends StatefulWidget {
   final int? id;
   final String? team1;
   final String team2;
-  final String? tossWin;
-  final String? optBat;
+  final String? status;
 
-  const MatchCard({Key? key, this.team1, required this.team2, this.id, this.tossWin, this.optBat}) : super(key: key);
+  const MatchCard({Key? key, this.team1, required this.team2, this.id, this.status}) : super(key: key);
 
   @override
   State<MatchCard> createState() => _MatchCardState();
@@ -50,22 +49,18 @@ class _MatchCardState extends State<MatchCard> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "${widget.team2}",
                     style: TextStyle(color: Colors.black, fontSize: 20),
                   ),
-
+                  Text(
+                    "${widget.status}",
+                    style: TextStyle(color: Colors.green, fontSize: 15),
+                  ),
                 ],
               ),
-            ),
-            Text(
-              "${widget.tossWin} won the toss",
-              style: TextStyle(color: Colors.black, fontSize: 20),
-            ),
-            Text(
-              "${widget.optBat} opt bat.",
-              style: TextStyle(color: Colors.red, fontSize: 10),
             ),
           ],
         ),
