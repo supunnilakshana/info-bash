@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infobash_admin/constants/initdata.dart';
+import 'package:infobash_admin/models/matchModel.dart';
 import 'package:infobash_admin/screens/components/customdropdown.dart';
 import 'package:provider/provider.dart';
 
@@ -22,22 +23,20 @@ class _CustomMatchScreenState extends State<CustomMatchScreen> {
   TextEditingController overController = TextEditingController();
   String? selectedValue = "";
 
-  final period = [
-    "Team  1",
-    "Team 2",
-    "team 3"
-  ];
+  final period = ["Team  1", "Team 2", "team 3"];
   List<String> teams = [];
   final rtitelStyle = const TextStyle(fontWeight: FontWeight.bold);
   String matchType = '';
-  String team1= '';
-  String team2= '';
+  String team1 = '';
+  String team2 = '';
 
   @override
   Widget build(BuildContext context) {
     ViewModel teamViewModel = context.watch<ViewModel>();
-    setState((){
-      teams = teamViewModel.registerTeam.map((RegisterTeam registerTeam) => registerTeam.teamName).toList();
+    setState(() {
+      teams = teamViewModel.registerTeam
+          .map((RegisterTeam registerTeam) => registerTeam.teamName)
+          .toList();
       print("====================");
       print(teams);
     });
@@ -54,14 +53,19 @@ class _CustomMatchScreenState extends State<CustomMatchScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CustomDropDown(valueList: teams.map(buildMenus).toList(), hint: "Teams",
+          CustomDropDown(
+            valueList: teams.map(buildMenus).toList(),
+            hint: "Teams",
             function: (team1) => setState(() {
               this.team1 = team1!;
-            }),),
-          CustomDropDown(valueList: teams.map(buildMenus).toList(), hint: "Teams",
+            }),
+          ),
+          CustomDropDown(
+              valueList: teams.map(buildMenus).toList(),
+              hint: "Teams",
               function: (team2) => setState(() {
-                this.team2 = team2!;
-              })),
+                    this.team2 = team2!;
+                  })),
           Row(
             children: [
               Expanded(
@@ -101,7 +105,6 @@ class _CustomMatchScreenState extends State<CustomMatchScreen> {
                 ),
               ),
             ],
-
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -136,15 +139,12 @@ class _CustomMatchScreenState extends State<CustomMatchScreen> {
                   textinput: TextInputType.number,
                 ),
               ),
-
             ],
           ),
           Genaralbutton(
             pright: 30,
             pleft: 30,
-            onpress: () {
-
-              //Todo data upload
+            onpress: () async {
               print(team1);
               print(team2);
               print(matchType);
@@ -152,7 +152,6 @@ class _CustomMatchScreenState extends State<CustomMatchScreen> {
             text: "Create",
             color: kPrimaryColordark,
           )
-
         ],
       ),
     );
