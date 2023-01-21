@@ -134,7 +134,7 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                   runrate = 0.0;
                 }
               }
-              runrate = total / (double.parse("$over.${ball - 1}"));
+              runrate = (total / (double.parse("$over.${ball - 1}")));
               print("$ball--------");
               return SingleChildScrollView(
                   keyboardDismissBehavior:
@@ -153,7 +153,7 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                           !widget.is1stinning
                               ? Text("Target ${istscore + 1}")
                               : Container(),
-                          Text("RunRate $runrate"),
+                          Text("RunRate ${runrate.toStringAsFixed(2)}"),
                           Row(
                             children: [
                               Expanded(
