@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infobash_view/constants/constraints.dart';
+import 'package:infobash_view/constants/initdata.dart';
 import 'package:infobash_view/constants/navigation_utils.dart';
 import 'package:infobash_view/models/ballModel.dart';
 import 'package:infobash_view/models/matchModel.dart';
+import 'package:infobash_view/screens/tabbarviews/match_screen.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import '../view_model/view_model.dart';
@@ -29,14 +31,14 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           actions: [
             Image.asset("assets/icons/app_icon.png"),
           ],
-          bottom: TabBar(
+          bottom: const TabBar(
             indicatorColor: Colors.white,
             indicatorWeight: 4,
             tabs: [
-              Tab(
+              const Tab(
                 text: "Round",
               ),
-              Tab(
+              const Tab(
                 text: "Semi Final",
               ),
               Tab(
@@ -45,11 +47,14 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
-            _buildRoundOne(teamViewModel),
-            _buildSemiFinal(teamViewModel),
-            _buildFinal(teamViewModel),
+            MatchShowScreen(matchtype: Matchtype.round1),
+            MatchShowScreen(matchtype: Matchtype.semi),
+            MatchShowScreen(matchtype: Matchtype.finalm)
+            // _buildRoundOne(teamViewModel),
+            // _buildSemiFinal(teamViewModel),
+            // _buildFinal(teamViewModel),
           ],
         ),
       ),
@@ -58,12 +63,13 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   _ui(ViewModel viewModel) {
     if (viewModel.loading) {
-      return Container(child: AppLoading());
+      return Container(child: const AppLoading());
     }
-    if(viewModel.matchModel.isEmpty){
+    if (viewModel.matchModel.isEmpty) {
       return Center(
         child: Lottie.asset("assets/animations/nodata.json"),
-      );}
+      );
+    }
     return Expanded(
         child: ListView.builder(
             itemBuilder: (context, index) {
@@ -82,15 +88,15 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             },
             itemCount: viewModel.matchModel.length));
   }
+
   _uiSemi(ViewModel viewModel) {
     if (viewModel.loading) {
-      return Container(child: AppLoading());
+      return Container(child: const AppLoading());
     }
-    if(viewModel.semiMatchModel.isEmpty){
+    if (viewModel.semiMatchModel.isEmpty) {
       return Center(
         child: Lottie.asset("assets/animations/nodata.json"),
       );
-
     }
     return Expanded(
         child: ListView.builder(
@@ -113,13 +119,12 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   _uiFinal(ViewModel viewModel) {
     if (viewModel.loading) {
-      return Container(child: AppLoading());
+      return Container(child: const AppLoading());
     }
-    if(viewModel.finalMatchModel.isEmpty){
+    if (viewModel.finalMatchModel.isEmpty) {
       return Center(
         child: Lottie.asset("assets/animations/nodata.json"),
       );
-
     }
     return Expanded(
         child: ListView.builder(
@@ -139,9 +144,10 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             },
             itemCount: viewModel.finalMatchModel.length));
   }
+
   Widget _buildRoundOne(ViewModel teamViewModel) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Column(
         children: [
           _ui(teamViewModel),
@@ -152,21 +158,17 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   Widget _buildSemiFinal(ViewModel teamViewModel) {
     return Container(
-        padding: EdgeInsets.all(20),
-        child:Column(
-          children: [
-            _uiSemi(teamViewModel)
-          ],
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [_uiSemi(teamViewModel)],
         ));
   }
 
   Widget _buildFinal(ViewModel teamViewModel) {
     return Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
-          children: [
-            _uiFinal(teamViewModel)
-          ],
+          children: [_uiFinal(teamViewModel)],
         ));
   }
 }

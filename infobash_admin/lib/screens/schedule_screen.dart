@@ -49,10 +49,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         body: TabBarView(
           children: [
             RefreshIndicator(
-                onRefresh: (){
-
-                },
-                child: _buildRoundOne(teamViewModel)),
+                onRefresh: () {}, child: _buildRoundOne(teamViewModel)),
             _buildSemiFinal(teamViewModel),
             _buildFinal(teamViewModel),
           ],
@@ -67,8 +64,40 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     }
     return Expanded(
         child: ListView.builder(
+      itemBuilder: (context, index) {
+        MatchModel matchModel = viewModel.matchModel[index];
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MatchStartedScreen(
+                          matchModelw: matchModel,
+                        )));
+          },
+          child: TeamListRow(
+            matchModel: matchModel,
+          ),
+        );
+      },
+      itemCount: viewModel.matchModel.length,
+    ));
+  }
+
+  _uiSemi(ViewModel viewModel) {
+    if (viewModel.loading) {
+      return Container(child: AppLoading());
+    }
+    if (viewModel.semiMatchModel.isEmpty) {
+      return Center(
+        child: Lottie.asset("assets/animations/nodata.json"),
+      );
+    }
+    return Expanded(
+        child: ListView.builder(
             itemBuilder: (context, index) {
-              MatchModel matchModel = viewModel.matchModel[index];
+              MatchModel matchModel = viewModel.semiMatchModel[index];
+
               return GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -83,38 +112,6 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 ),
               );
             },
-            itemCount: viewModel.matchModel.length,
-        ));
-  }
-  _uiSemi(ViewModel viewModel) {
-    if (viewModel.loading) {
-      return Container(child: AppLoading());
-    }
-    if(viewModel.semiMatchModel.isEmpty){
-      return Center(
-        child: Lottie.asset("assets/animations/nodata.json"),
-      );
-
-    }
-    return Expanded(
-        child: ListView.builder(
-            itemBuilder: (context, index) {
-              MatchModel matchModel = viewModel.semiMatchModel[index];
-
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MatchStartedScreen(
-                            matchModelw: matchModel,
-                          )));
-                },
-                child: TeamListRow(
-                  matchModel: matchModel,
-                ),
-              );
-            },
             itemCount: viewModel.semiMatchModel.length));
   }
 
@@ -122,11 +119,10 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     if (viewModel.loading) {
       return Container(child: AppLoading());
     }
-    if(viewModel.finalMatchModel.isEmpty){
+    if (viewModel.finalMatchModel.isEmpty) {
       return Center(
         child: Lottie.asset("assets/animations/nodata.json"),
       );
-
     }
     return Expanded(
         child: ListView.builder(
@@ -139,8 +135,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => MatchStartedScreen(
-                            matchModelw: matchModel,
-                          )));
+                                matchModelw: matchModel,
+                              )));
                 },
                 child: TeamListRow(
                   matchModel: matchModel,
@@ -165,19 +161,15 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     return Container(
         padding: const EdgeInsets.all(20),
         child: Column(
-          children: [
-            _uiSemi(viewModel)
-          ],
+          children: [_uiSemi(viewModel)],
         ));
   }
 
   Widget _buildFinal(ViewModel viewModel) {
     return Container(
         padding: const EdgeInsets.all(20),
-        child:Column(
-          children: [
-            _uiFinal(viewModel)
-          ],
+        child: Column(
+          children: [_uiFinal(viewModel)],
         ));
   }
 }
