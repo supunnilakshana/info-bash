@@ -5,6 +5,7 @@ import 'package:infobash_admin/constants/initdata.dart';
 import 'package:infobash_admin/models/ballModel.dart';
 import 'package:infobash_admin/models/matchModel.dart';
 import 'package:infobash_admin/screens/components/buttons.dart';
+import 'package:infobash_admin/screens/components/popup_dilog.dart';
 import 'package:infobash_admin/screens/components/textfileds.dart';
 import 'package:infobash_admin/screens/components/tots.dart';
 import 'package:infobash_admin/screens/match/matchstarting/match_start_screen.dart';
@@ -721,30 +722,6 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                       const SizedBox(
                         height: 100,
                       ),
-                      !widget.is1stinning
-                          ? Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: Genaralbutton(
-                                    onpress: () {},
-                                    text: "Win",
-                                    color: Colors.green,
-                                  )),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  Expanded(
-                                      child: Genaralbutton(
-                                    onpress: () {},
-                                    text: "Loss",
-                                    color: Colors.red,
-                                  ))
-                                ],
-                              ),
-                            )
-                          : Container(),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -753,7 +730,13 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                                 ? Expanded(
                                     child: Genaralbutton(
                                     onpress: () async {
-                                      await endining1st();
+                                      PopupDialog.showPopupDilog(
+                                          context,
+                                          "Confirmation",
+                                          "Are you sure to end inning ?",
+                                          () async {
+                                        await endining1st();
+                                      });
                                     },
                                     text: "End Inning",
                                     color: Colors.red,
@@ -761,11 +744,39 @@ class _MatchDashScreenState extends State<MatchDashScreen> {
                                 : Expanded(
                                     child: Genaralbutton(
                                     onpress: () async {
-                                      await endmatch();
+                                      PopupDialog.showPopupDilog(
+                                          context,
+                                          "Confirmation",
+                                          "Are you sure to end match ?",
+                                          () async {
+                                        await endmatch();
+                                      });
                                     },
                                     text: "End Match",
                                     color: Colors.red,
                                   ))
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Row(
+                          children: [
+                            Genaralbutton(
+                              onpress: () async {
+                                PopupDialog.showPopupDilog(
+                                    context,
+                                    "Confirmation",
+                                    "Are you sure to abandoned ?", () async {
+                                  await endmatch(isnoreslt: true);
+                                });
+                              },
+                              text: "Abandoned",
+                              color: Colors.green,
+                            ),
                           ],
                         ),
                       )

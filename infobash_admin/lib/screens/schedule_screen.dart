@@ -81,7 +81,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   Widget _buildRoundOne(ViewModel teamViewModel) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Column(
         children: [
           _ui(teamViewModel),
@@ -92,17 +92,17 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   Widget _buildSemiFinal() {
     return Container(
-        padding: EdgeInsets.all(20),
-        child: Center(
-          child: Text("No Data"),
+        padding: const EdgeInsets.all(20),
+        child: const Center(
+          child: const Text("No Data"),
         ));
   }
 
   Widget _buildFinal() {
     return Container(
-        padding: EdgeInsets.all(20),
-        child: Center(
-          child: Text("No Data"),
+        padding: const EdgeInsets.all(20),
+        child: const Center(
+          child: const Text("No Data"),
         ));
   }
 }
