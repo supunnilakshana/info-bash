@@ -22,6 +22,8 @@ class CollectionPath {
   static const grouppath = "initdata/groups/data";
   static const matchdatapath = "/initdata/matchdata";
   static const matchpath = "/matchs/round1/data/";
+  static const matchpathsemi = "/matchs/semi/data/";
+  static const matchpathfinal = "/matchs/final/data/";
   static String ballpath(String matchid) {
     String path = "/matchs/round1/data/$matchid/ball";
 
@@ -47,8 +49,6 @@ class Matchtype {
   static const round1 = "round1";
   static const semi = "semi";
   static const mfinal = "final";
-
-
 }
 
 class Idelivertype {

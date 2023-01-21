@@ -107,12 +107,15 @@ class FbHandeler {
   }
 
   //get match details
-  static Future<List<MatchModel>> getallMatch() async {
+  static Future<List<MatchModel>> getallMatch(
+      {String cpath = CollectionPath.matchpath}) async {
     List<MatchModel> enlist = [];
     MatchModel enmodel;
 
-    QuerySnapshot querySnapshot =
-        await firestoreInstance.collection("/matchs/round1/data").orderBy('matchid',descending: false).get();
+    QuerySnapshot querySnapshot = await firestoreInstance
+        .collection(cpath)
+        .orderBy('matchid', descending: false)
+        .get();
     final data = querySnapshot.docs.map((doc) => doc.data()).toList();
     print(data);
     for (int i = 0; i < querySnapshot.docs.length; i++) {
@@ -144,13 +147,16 @@ class FbHandeler {
     }
     return enlist;
   }
+
 //not use
   Future<List<MatchModel>> getmatchs(
       {String path = CollectionPath.matchdatapath}) async {
     List<MatchModel> enlist = [];
     MatchModel enmodel;
-    QuerySnapshot querySnapshot =
-        await firestoreInstance.collection(path).orderBy("matchid", descending: false).get();
+    QuerySnapshot querySnapshot = await firestoreInstance
+        .collection(path)
+        .orderBy("matchid", descending: false)
+        .get();
     for (int i = 0; i < querySnapshot.docs.length; i++) {
       var a = querySnapshot.docs[i];
 
