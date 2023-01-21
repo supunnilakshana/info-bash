@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:infobash_view/models/point_tablemode.dart';
 import '../../constants/initdata.dart';
 import '../../models/ballModel.dart';
 import '../../models/matchModel.dart';
@@ -105,12 +106,12 @@ class FbHandeler {
   }
 
 //get match details
-  static Future<List<MatchModel>> getallMatch() async {
+  static Future<List<MatchModel>> getallMatch(String path) async {
     List<MatchModel> enlist = [];
     MatchModel enmodel;
 
     QuerySnapshot querySnapshot = await firestoreInstance
-        .collection("/matchs/round1/data")
+        .collection(path)
         .orderBy("matchid", descending: false)
         .get();
     final data = querySnapshot.docs.map((doc) => doc.data()).toList();
@@ -120,6 +121,27 @@ class FbHandeler {
 
       enmodel = MatchModel.fromMap(
         a.id,
+        a.data() as Map<String, dynamic>,
+      );
+
+      enlist.add(enmodel);
+    }
+    return enlist;
+  }
+  //get point details
+  static Future<List<PointTableModel>> getallPoints(String path) async {
+    List<PointTableModel> enlist = [];
+    PointTableModel enmodel;
+
+    QuerySnapshot querySnapshot = await firestoreInstance
+        .collection(path)
+        .get();
+    final data = querySnapshot.docs.map((doc) => doc.data()).toList();
+    print(data);
+    for (int i = 0; i < querySnapshot.docs.length; i++) {
+      var a = querySnapshot.docs[i];
+
+      enmodel = PointTableModel.fromMap(
         a.data() as Map<String, dynamic>,
       );
 

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:infobash_view/constants/initdata.dart';
 import 'package:infobash_view/models/matchModel.dart';
+import 'package:infobash_view/models/point_tablemode.dart';
 import '../models/ballModel.dart';
 import '../models/pointsmodel.dart';
 import '../models/usermodel.dart';
@@ -10,9 +12,12 @@ class ViewModel extends ChangeNotifier {
   bool _loading = false;
   List<PointsTable> _pointsTable = [];
   List<MatchModel> _matchModel = [];
+  List<MatchModel> _semiMatchModel = [];
+  List<MatchModel> _finalMatchModel = [];
   RegisterTeam? _selectedTeam;
   List<RegisterTeam> _registerTeam = [];
   List<BallModel> _ballModel =  [];
+
   MatchModel? _selectedMatch;
   bool _appUpdate =  false;
 
@@ -21,9 +26,12 @@ class ViewModel extends ChangeNotifier {
   List<PointsTable> get pointsTable => _pointsTable;
   List<RegisterTeam> get registerTeam => _registerTeam;
   List<MatchModel> get matchModel => _matchModel;
+  List<MatchModel> get semiMatchModel => _semiMatchModel;
+  List<MatchModel> get finalMatchModel => _finalMatchModel;
   RegisterTeam? get selectedTeam => _selectedTeam;
   MatchModel? get selectedMatch => _selectedMatch;
   List<BallModel> get ballModel => _ballModel;
+
 
   ViewModel() {
     getPointsData();
@@ -47,6 +55,12 @@ class ViewModel extends ChangeNotifier {
   }
   setMatchListModel(List<MatchModel> matchModel) async {
     _matchModel = matchModel;
+  }
+  setSemiMatchListModel(List<MatchModel> semiMatchModel) async {
+    _semiMatchModel = semiMatchModel;
+  }
+  setFinalMatchListModel(List<MatchModel> finalMatchModel) async {
+    _finalMatchModel = finalMatchModel;
   }
   setTeamListModel(List<RegisterTeam> registerTeam) async {
     _registerTeam = registerTeam;
@@ -89,7 +103,21 @@ class ViewModel extends ChangeNotifier {
 
   getMatchesData() async {
     setLoading(true);
-    final _doc = await FbHandeler.getallMatch();
+    final _doc = await FbHandeler.getallMatch(CollectionPath.matchsround1);
+    setMatchListModel(_doc);
+    setLoading(false);
+  }
+
+  getSemiMatchesData() async {
+    setLoading(true);
+    final _doc = await FbHandeler.getallMatch(CollectionPath.matchpathsemi);
+    setMatchListModel(_doc);
+    setLoading(false);
+  }
+
+  getFinalMatchesData() async {
+    setLoading(true);
+    final _doc = await FbHandeler.getallMatch(CollectionPath.matchpathfinal);
     setMatchListModel(_doc);
     setLoading(false);
   }

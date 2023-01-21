@@ -17,7 +17,7 @@ class _MoreCardState extends State<MoreCard> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), bottomRight: Radius.circular(20))),
-      color: kPrimaryColorlight,
+      color: kPrimaryColordark,
       margin: EdgeInsets.only(left: 10, right: 10,top: 10),
       elevation: 4,
       child: ListTile(

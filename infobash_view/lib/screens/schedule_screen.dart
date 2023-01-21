@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:infobash_view/constants/constraints.dart';
 import 'package:infobash_view/constants/navigation_utils.dart';
 import 'package:infobash_view/models/ballModel.dart';
 import 'package:infobash_view/models/matchModel.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import '../view_model/view_model.dart';
 import 'components/app_loading.dart';
@@ -46,8 +48,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         body: TabBarView(
           children: [
             _buildRoundOne(teamViewModel),
-            _buildSemiFinal(),
-            _buildFinal(),
+            _buildSemiFinal(teamViewModel),
+            _buildFinal(teamViewModel),
           ],
         ),
       ),
@@ -58,6 +60,10 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     if (viewModel.loading) {
       return Container(child: AppLoading());
     }
+    if(viewModel.matchModel.isEmpty){
+      return Center(
+        child: Lottie.asset("assets/animations/nodata.json"),
+      );}
     return Expanded(
         child: ListView.builder(
             itemBuilder: (context, index) {
@@ -76,7 +82,63 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             },
             itemCount: viewModel.matchModel.length));
   }
+  _uiSemi(ViewModel viewModel) {
+    if (viewModel.loading) {
+      return Container(child: AppLoading());
+    }
+    if(viewModel.semiMatchModel.isEmpty){
+      return Center(
+        child: Lottie.asset("assets/animations/nodata.json"),
+      );
 
+    }
+    return Expanded(
+        child: ListView.builder(
+            itemBuilder: (context, index) {
+              MatchModel matchModel = viewModel.semiMatchModel[index];
+
+              return GestureDetector(
+                onTap: () {
+                  viewModel.setSelectedMatch(matchModel);
+
+                  openBallDetails(context, matchModel.id!, matchModel);
+                },
+                child: ScheduleListRow(
+                  matchModel: matchModel,
+                ),
+              );
+            },
+            itemCount: viewModel.semiMatchModel.length));
+  }
+
+  _uiFinal(ViewModel viewModel) {
+    if (viewModel.loading) {
+      return Container(child: AppLoading());
+    }
+    if(viewModel.finalMatchModel.isEmpty){
+      return Center(
+        child: Lottie.asset("assets/animations/nodata.json"),
+      );
+
+    }
+    return Expanded(
+        child: ListView.builder(
+            itemBuilder: (context, index) {
+              MatchModel matchModel = viewModel.finalMatchModel[index];
+
+              return GestureDetector(
+                onTap: () {
+                  viewModel.setSelectedMatch(matchModel);
+
+                  openBallDetails(context, matchModel.id!, matchModel);
+                },
+                child: ScheduleListRow(
+                  matchModel: matchModel,
+                ),
+              );
+            },
+            itemCount: viewModel.finalMatchModel.length));
+  }
   Widget _buildRoundOne(ViewModel teamViewModel) {
     return Container(
       padding: EdgeInsets.all(20),
@@ -88,19 +150,23 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     );
   }
 
-  Widget _buildSemiFinal() {
+  Widget _buildSemiFinal(ViewModel teamViewModel) {
     return Container(
         padding: EdgeInsets.all(20),
-        child: Center(
-          child: Text("No Data"),
+        child:Column(
+          children: [
+            _uiSemi(teamViewModel)
+          ],
         ));
   }
 
-  Widget _buildFinal() {
+  Widget _buildFinal(ViewModel teamViewModel) {
     return Container(
         padding: EdgeInsets.all(20),
-        child: Center(
-          child: Text("No Data"),
+        child: Column(
+          children: [
+            _uiFinal(teamViewModel)
+          ],
         ));
   }
 }

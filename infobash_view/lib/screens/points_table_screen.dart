@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:infobash_view/constants/initdata.dart';
 import 'package:infobash_view/models/pointsmodel.dart';
+import 'package:infobash_view/services/firebase/fb_handeler.dart';
 import 'package:infobash_view/view_model/view_model.dart';
 import 'package:provider/provider.dart';
 import '../constants/constraints.dart';
+import '../models/matchModel.dart';
 import 'components/app_loading.dart';
 
 class PointsTableScreen extends StatefulWidget {
@@ -14,6 +17,16 @@ class PointsTableScreen extends StatefulWidget {
 }
 
 class _PointsTableScreenState extends State<PointsTableScreen> {
+  List<MatchModel> list =[];
+  @override
+  void initState() {
+    // TODO: implement initState
+    print("===============0");
+    print(FbHandeler.getallMatch(CollectionPath.grouppath));
+    super.initState();
+  }
+  
+  
   @override
   Widget build(BuildContext context) {
     ViewModel viewModel = context.watch<ViewModel>();
@@ -27,33 +40,34 @@ class _PointsTableScreenState extends State<PointsTableScreen> {
             Image.asset("assets/icons/app_icon.png"),
           ],
         ),
-        body: buildPointsTable(viewModel));
+        //body: buildPointsTable(viewModel));
+    );
   }
 
-  Widget buildPointsTable(ViewModel viewModel) {
-    if (viewModel.loading) {
-      return Container(child: AppLoading());
-    }
-    final columns = ['Teams', 'P', 'W', 'L', 'Pts', 'NRR'];
-    return DataTable(
-        columns: getColumns(columns), rows: getRows(viewModel.pointsTable));
-  }
+  // Widget buildPointsTable(ViewModel viewModel) {
+  //   if (viewModel.loading) {
+  //     return Container(child: AppLoading());
+  //   }
+  //   final columns = ['Teams', 'P', 'W', 'L', 'Pts', 'NRR'];
+  //   return DataTable(
+  //       columns: getColumns(columns), rows: getRows(viewModel.matchModel));
+  // }
 
   List<DataColumn> getColumns(List<String> columns) =>
       columns.map((String column) => DataColumn(label: Text(column))).toList();
 
-  List<DataRow> getRows(List<PointsTable> points) =>
-      points.map((PointsTable pointsTable) {
-        final cells = [
-          pointsTable.teamName,
-          pointsTable.p,
-          pointsTable.w,
-          pointsTable.l,
-          pointsTable.pts,
-          pointsTable.nrr
-        ];
-        return DataRow(cells: getCells(cells));
-      }).toList();
+  // List<DataRow> getRows(List<PointTa> matchModel) =>
+  //     matchModel.map((PointsTable pointsTable) {
+  //       final cells = [
+  //         pointsTable.teamName,
+  //         pointsTable.p,
+  //         pointsTable.w,
+  //         pointsTable.l,
+  //         pointsTable.pts,
+  //         pointsTable.nrr
+  //       ];
+  //       return DataRow(cells: getCells(cells));
+  //     }).toList();
 
   List<DataCell> getCells(List<dynamic> cells) =>
       cells.map((data) => DataCell(Text('$data'))).toList();
