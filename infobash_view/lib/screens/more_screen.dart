@@ -39,7 +39,7 @@ class _MoreScreenState extends State<MoreScreen> {
               function: () {
                 openTeams(context);
               }),
-          MoreCard(text: "Photos", function: () {}),
+          // MoreCard(text: "Photos", function: () {}),
           MoreCard(
               text: "Points Table",
               function: () {

@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:infobash_view/constants/constraints.dart';
 
 class CardView extends StatelessWidget {
-  const CardView(
-      {Key? key,
-      required this.function,
-      required this.matchNumber,
-      required this.team1,
-      required this.team2,
-      required this.total,
-      required this.wicket,
-      required this.overs,
-      required this.balls,
-      required this.decision})
-      : super(key: key);
+  CardView({
+    Key? key,
+    required this.function,
+    required this.matchNumber,
+    required this.team1,
+    required this.team2,
+    required this.team1Tot,
+    required this.team1Wicket,
+    required this.date,
+    required this.team2Tot,
+    required this.team2Wicket,
+    this.winTeam
+  }) : super(key: key);
 
   final String matchNumber;
   final String team1;
   final String team2;
-  final String total;
-  final String wicket;
-  final String overs;
-  final String balls;
-  final String decision;
+  final String team1Tot;
+  final String team1Wicket;
+  final String team2Tot;
+  final String team2Wicket;
+  final String date;
+  String? winTeam;
 
   final Function function;
 
@@ -49,14 +52,19 @@ class CardView extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                   vertical: size.height * 0.02, horizontal: size.width * 0.03),
               child: Container(
-                height: size.height * 0.18,
+                height: size.height * 0.14,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                      "Date : ${date}",
+                      style: TextStyle(color: kPrimaryColordark, fontSize: 22),
+                    ),
                     Row(
                       children: [
                         Text(
                           "$matchNumber match",
-                          style: TextStyle(color: Colors.black12, fontSize: 22),
+                          style: TextStyle(color: kPrimaryColordark, fontSize: 22),
                         ),
                       ],
                     ),
@@ -70,7 +78,7 @@ class CardView extends StatelessWidget {
                             style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                           Text(
-                            "$total - $wicket ($overs.$balls)",
+                            "${team1Tot} - ${team1Wicket}",
                             style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                         ],
@@ -79,9 +87,14 @@ class CardView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             team2,
+                            style: TextStyle(color: Colors.black, fontSize: 20),
+                          ),
+                          Text(
+                            "${team2Tot} - ${team2Wicket}",
                             style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                         ],
@@ -91,10 +104,7 @@ class CardView extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Row(
                         children: [
-                          Text(
-                            "$decision opt to bat",
-                            style: TextStyle(color: Colors.red, fontSize: 15),
-                          ),
+
                         ],
                       ),
                     ),

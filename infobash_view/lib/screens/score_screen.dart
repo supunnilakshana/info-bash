@@ -30,16 +30,16 @@ class _ScoreScreenState extends State<ScoreScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CardView(
-                function: () {},
-                matchNumber: "4",
-                team1: "Team 1",
-                team2: "Team 2",
-                total: "24",
-                wicket: "4",
-                overs: "3",
-                balls: "3",
-                decision: "Team 1"),
+            // CardView(
+            //     function: () {},
+            //     matchNumber: "4",
+            //     team1: "Team 1",
+            //     team2: "Team 2",
+            //     total: "24",
+            //     wicket: "4",
+            //     overs: "3",
+            //     balls: "3",
+            //     decision: "Team 1"),
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Divider(

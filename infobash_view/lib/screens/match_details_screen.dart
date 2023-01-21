@@ -4,6 +4,7 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:infobash_view/constants/initdata.dart';
 import 'package:infobash_view/models/matchModel.dart';
+import 'package:infobash_view/screens/components/card.dart';
 import 'package:provider/provider.dart';
 
 import 'package:infobash_view/models/ballModel.dart';
@@ -56,7 +57,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("More"),
+        title: Text("Match"),
         toolbarHeight: size.height * 0.09,
         backgroundColor: kPrimaryColordark,
         actions: [
@@ -81,7 +82,6 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                 } else {
                   return Column(
                     children: [
-                      Text(matchModel.datetime),
                       StreamBuilder(
                         stream: ballStream,
                         builder: (context, snapshotball) {
@@ -181,12 +181,31 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                                           Matchstatustype.end)
                                         Column(
                                           children: [
-                                            Text(
-                                                "inig 1   ${score1}/${wickets1}"),
-                                            Text(
-                                                "inig 2   ${score2}/${wickets2}"),
-                                            Text(
-                                                "winn team   ${score2}/${wickets2}"),
+                                            CardView(
+                                              function: () {},
+                                              matchNumber:
+                                                  matchModel.matchid.toString(),
+                                              team1: (matchModel.inning1) ==
+                                                      (matchModel.team1.teamId)
+                                                  ? matchModel.team1.teamName
+                                                  : "null",
+                                              team2: (matchModel.inning2) ==
+                                                      (matchModel.team2.teamId)
+                                                  ? matchModel.team2.teamName
+                                                  : "null",
+                                              team1Tot: score1.toString(),
+                                              team1Wicket: wickets1.toString(),
+                                              team2Tot: score2.toString(),
+                                              team2Wicket: wickets2.toString(),
+                                              date: matchModel.datetime,
+                                            ),
+                                            // Text(matchModel.datetime),
+                                            // Text(
+                                            //     "inig 1   ${score1}/${wickets1}"),
+                                            // Text(
+                                            //     "inig 2   ${score2}/${wickets2}"),
+                                            // Text(
+                                            //     "winn team   ${score2}/${wickets2}"),
                                           ],
                                         ),
                                     ],
@@ -198,11 +217,14 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Container(
-                                            color: Colors.blue,
+                                            color: kPrimaryColordark,
                                             constraints: BoxConstraints.expand(
                                                 height: 50),
-                                            child: TabBar(tabs: [
-                                              Tab(text: "Inning 1"),
+                                            child: TabBar(
+                                                indicatorColor: Colors.white,
+                                                indicatorWeight: 4,
+                                                tabs: [
+                                              Tab(text: "Inning 1",),
                                               Tab(text: "Inning 2"),
                                             ]),
                                           ),
@@ -219,6 +241,16 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                                                     return ListTile(
                                                       title: Text(
                                                           "${ballmodel1.overno} . ${ballmodel1.bno} "),
+                                                      trailing: Container(
+                                                          width:30,
+                                                          height: 30,
+                                                          child:boundaryimg(ballmodel1.runtype)!=""?
+                                                          Image.asset(boundaryimg(ballmodel1.runtype)):Container()
+
+
+
+                                                        ),
+
                                                     );
                                                   },
                                                 )
@@ -283,4 +315,19 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
       ),
     );
   }
-}
+ String boundaryimg(String type){
+    String img="";
+    if(Marktype.boundaryfour==type){
+      img="";
+    }else    if(Marktype.six==type){
+      img="";
+    }else{
+      img="";
+    }
+return img;
+  }
+
+
+
+
+  }
