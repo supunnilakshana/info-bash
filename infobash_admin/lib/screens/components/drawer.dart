@@ -64,19 +64,6 @@ class MenuDrawer extends StatelessWidget {
             Card(
               elevation: 0,
               child: ListTile(
-                leading: const Icon(
-                  Icons.schedule,
-                  color: kPrimaryColordark,
-                ),
-                title: const Text('Session schedule'),
-                onTap: () {
-                  openSessionSchedule(context);
-                },
-              ),
-            ),
-            Card(
-              elevation: 0,
-              child: ListTile(
                   leading: const Icon(
                     Icons.dashboard_customize,
                     color: kPrimaryColordark,
