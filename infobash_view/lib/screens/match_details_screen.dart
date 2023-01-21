@@ -159,10 +159,18 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
                             if (ining1ballst.isNotEmpty) {
                               over1 = ining1ballst.last.overno;
                               ball1 = ining1ballst.last.bno;
+                              if (ball1 == int.parse(matchModel.bpo)) {
+                                ball1 = 0;
+                                over1++;
+                              }
                             }
                             if (ining2ballst.isNotEmpty) {
                               over2 = ining2ballst.last.overno;
                               ball2 = ining2ballst.last.bno;
+                              if (ball2 == int.parse(matchModel.bpo)) {
+                                ball2 = 0;
+                                over2++;
+                              }
                             }
                             return Expanded(
                               child: Column(
