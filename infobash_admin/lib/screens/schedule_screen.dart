@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:infobash_admin/constants/initdata.dart';
 import 'package:infobash_admin/screens/components/drawer.dart';
+import 'package:infobash_admin/screens/home/tabbarviews/match_screen.dart';
 import 'package:infobash_admin/screens/match/matchstarting/match_start_screen.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -46,12 +48,14 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
-            RefreshIndicator(
-                onRefresh: () {}, child: _buildRoundOne(teamViewModel)),
-            _buildSemiFinal(teamViewModel),
-            _buildFinal(teamViewModel),
+            MatchShowScreen(matchtype: Matchtype.round1),
+            MatchShowScreen(matchtype: Matchtype.semi),
+            MatchShowScreen(matchtype: Matchtype.mfinal)
+            // _buildRoundOne(teamViewModel),
+            // _buildSemiFinal(teamViewModel),
+            // _buildFinal(teamViewModel),
           ],
         ),
       ),
@@ -86,7 +90,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   _uiSemi(ViewModel viewModel) {
     if (viewModel.loading) {
-      return Container(child: AppLoading());
+      return Container(child: const AppLoading());
     }
     if (viewModel.semiMatchModel.isEmpty) {
       return Center(
@@ -117,7 +121,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   _uiFinal(ViewModel viewModel) {
     if (viewModel.loading) {
-      return Container(child: AppLoading());
+      return Container(child: const AppLoading());
     }
     if (viewModel.finalMatchModel.isEmpty) {
       return Center(

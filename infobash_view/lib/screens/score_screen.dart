@@ -1,11 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, unnecessary_brace_in_string_interps
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_format/date_format.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infobash_view/constants/initdata.dart';
 import 'package:infobash_view/models/matchModel.dart';
 import 'package:infobash_view/screens/components/card.dart';
+import 'package:infobash_view/screens/timescreen.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
@@ -69,7 +71,9 @@ class _ScoreScreenState extends State<ScoreScreen> {
                 QuerySnapshot querySnapshot1 = snapshot.data as QuerySnapshot;
 
                 if (querySnapshot1.docs.isEmpty) {
-                  return Container(); //Todo: add timer
+                  return Container(
+                    child: const TimeScreen(innodata: true),
+                  ); //Todo: add timer
                 }
                 final d = querySnapshot1.docs.first;
 
@@ -525,7 +529,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
                             return const Text('Something went wrong');
                           }
                           return const Center(
-                              child: const CircularProgressIndicator());
+                              child: CupertinoActivityIndicator());
                         },
                       )
 

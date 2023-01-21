@@ -115,7 +115,6 @@ class FbHandeler {
 
     QuerySnapshot querySnapshot = await firestoreInstance
         .collection(CollectionPath.matchpath)
-        .orderBy('matchid', descending: false)
         .where('matchtype', isEqualTo: type)
         .get();
     final data = querySnapshot.docs.map((doc) => doc.data()).toList();
@@ -130,6 +129,7 @@ class FbHandeler {
 
       enlist.add(enmodel);
     }
+    enlist.sort((a, b) => a.matchid.compareTo(b.matchid));
     return enlist;
   }
 

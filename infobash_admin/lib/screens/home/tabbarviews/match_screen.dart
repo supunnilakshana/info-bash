@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:infobash_view/constants/constraints.dart';
-import 'package:infobash_view/models/matchModel.dart';
-import 'package:infobash_view/services/firebase/fb_handeler.dart';
+import 'package:infobash_admin/models/matchModel.dart';
+import 'package:infobash_admin/services/firebase/fb_handeler.dart';
+
 import 'package:lottie/lottie.dart';
 
-import '../../constants/navigation_utils.dart';
-import '../components/match_list_row.dart';
+import '../../components/match_list_row.dart';
+import '../../match/matchstarting/match_start_screen.dart';
 
 class MatchShowScreen extends StatefulWidget {
   final String matchtype;
@@ -36,6 +36,7 @@ class _MatchShowScreenState extends State<MatchShowScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<MatchModel> data = snapshot.data as List<MatchModel>;
+
             if (data.isNotEmpty) {
               return ListView.builder(
                   shrinkWrap: true,
@@ -44,15 +45,21 @@ class _MatchShowScreenState extends State<MatchShowScreen> {
 
                     return GestureDetector(
                       onTap: () {
-                        openBallDetails(context, matchModel.id!, matchModel);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MatchStartedScreen(
+                                      matchModelw: matchModel,
+                                    )));
                       },
-                      child: ScheduleListRow(
+                      child: TeamListRow(
                         matchModel: matchModel,
                       ),
                     );
                   },
                   itemCount: data.length);
             } else {
+              print(data.length);
               return Center(
                 child: Lottie.asset("assets/animations/nodata.json",
                     width: size.height * 0.5),
