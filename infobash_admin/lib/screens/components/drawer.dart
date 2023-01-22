@@ -72,18 +72,18 @@ class MenuDrawer extends StatelessWidget {
                     openCustomMatch(context);
                   }),
             ),
-            Card(
-              elevation: 0,
-              child: ListTile(
-                  leading: const Icon(
-                    Icons.dashboard_customize,
-                    color: kPrimaryColordark,
-                  ),
-                  title: const Text('Test'),
-                  onTap: () {
-                    opentest(context);
-                  }),
-            ),
+            // Card(
+            //   elevation: 0,
+            //   child: ListTile(
+            //       leading: const Icon(
+            //         Icons.dashboard_customize,
+            //         color: kPrimaryColordark,
+            //       ),
+            //       title: const Text('Test'),
+            //       onTap: () {
+            //         opentest(context);
+            //       }),
+            // ),
 
             Card(
               elevation: 0,
