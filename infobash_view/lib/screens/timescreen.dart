@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class TimeScreen extends StatefulWidget {
 
 class _TimeScreenState extends State<TimeScreen> {
   bool isLoading = false;
-
+  bool istimeover = false;
   DateTime? date;
   Duration? remainDuration;
   String? remainDays;
@@ -26,8 +27,6 @@ class _TimeScreenState extends State<TimeScreen> {
   String? remainMinutes;
   @override
   void initState() {
-    // TODO: implement initState
-
     super.initState();
     print("initState");
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -38,23 +37,30 @@ class _TimeScreenState extends State<TimeScreen> {
   Future getTime() async {
     final userCollection = FirebaseFirestore.instance.collection('Time');
     DocumentSnapshot documentSnapshot = await userCollection.doc('uid').get();
-    if (this.mounted) {
-      setState(() {
-        date =
-            DateTime.parse(documentSnapshot.get('date')!.toDate().toString());
-        print(DateFormat('mm-hh-dd-MMM-yyy').format(date!));
-        remainDuration = date!.difference(DateTime.now());
-        String sDuration =
-            "${remainDuration!.inDays}:${remainDuration!.inHours.remainder(24)}:${(remainDuration!.inMinutes.remainder(60))}";
-        String strDigits(int n) => n.toString().padLeft(2, '0');
-        print(sDuration);
-        remainDays = strDigits(remainDuration!.inDays);
-        remainHours = strDigits(remainDuration!.inHours.remainder(24));
-        remainMinutes = strDigits(remainDuration!.inMinutes.remainder(60));
-        isLoading = true;
-        print(remainDuration);
-        getTime();
-      });
+    date = DateTime.parse(documentSnapshot.get('date')!.toDate().toString());
+    if (DateTime.now().isBefore(date!)) {
+      if (this.mounted) {
+        setState(() {
+          print(DateFormat('mm-hh-dd-MMM-yyy').format(date!));
+
+          print("object");
+          remainDuration = date!.difference(DateTime.now());
+          String sDuration =
+              "${remainDuration!.inDays}:${remainDuration!.inHours.remainder(24)}:${(remainDuration!.inMinutes.remainder(60))}";
+          String strDigits(int n) => n.toString().padLeft(2, '0');
+          print(sDuration);
+          remainDays = strDigits(remainDuration!.inDays);
+          remainHours = strDigits(remainDuration!.inHours.remainder(24));
+          remainMinutes = strDigits(remainDuration!.inMinutes.remainder(60));
+          isLoading = true;
+          print(remainDuration);
+          getTime();
+        });
+      }
+    } else {
+      isLoading = true;
+      istimeover = true;
+      setState(() {});
     }
   }
 
@@ -70,21 +76,24 @@ class _TimeScreenState extends State<TimeScreen> {
                     // Text('${days}:${hours}:${minutes}',style: TextStyle(
                     //   fontSize: 80
                     // ),),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _buildTimeCard(remainDays.toString(), 'Days'),
-                        Column(
-                          children: [_buildDot(), _buildDot()],
-                        ),
-                        _buildTimeCard(remainHours.toString(), 'Hours'),
-                        Column(
-                          children: [_buildDot(), _buildDot()],
-                        ),
-                        _buildTimeCard(remainMinutes.toString(), "Minutes"),
-                      ],
-                    )
+                    istimeover
+                        ? Container()
+                        : Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _buildTimeCard(remainDays.toString(), 'Days'),
+                              Column(
+                                children: [_buildDot(), _buildDot()],
+                              ),
+                              _buildTimeCard(remainHours.toString(), 'Hours'),
+                              Column(
+                                children: [_buildDot(), _buildDot()],
+                              ),
+                              _buildTimeCard(
+                                  remainMinutes.toString(), "Minutes"),
+                            ],
+                          )
                   ],
                 )
               : const Center(
@@ -107,7 +116,9 @@ class _TimeScreenState extends State<TimeScreen> {
           body: isLoading == true
               ? Column(
                   children: [
-                    Image.asset("assets/icons/app_icon.png"),
+                    istimeover
+                        ? Container()
+                        : Image.asset("assets/icons/app_icon.png"),
                     // Text('${days}:${hours}:${minutes}',style: TextStyle(
                     //   fontSize: 80
                     // ),),

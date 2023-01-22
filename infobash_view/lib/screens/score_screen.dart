@@ -185,29 +185,32 @@ class _ScoreScreenState extends State<ScoreScreen> {
                                         Column(
                                           children: [
                                             matchModel.inning1s ==
-                                                        Matchstatustype
-                                                            .ongoning ||
-                                                    matchModel.inning1s ==
-                                                        Matchstatustype.end
+                                                    Matchstatustype.ongoning
                                                 ? CardView(
                                                     function: () {},
-                                                    matchNumber: matchModel
-                                                        .matchid
-                                                        .toString(),
-                                                    team1: (matchModel.inning1) ==
-                                                            (matchModel
-                                                                .team1.teamId)
-                                                        ? matchModel
-                                                            .team1.teamName
-                                                        : matchModel
-                                                            .team2.teamName,
-                                                    team2: (matchModel.inning2) ==
-                                                            (matchModel
-                                                                .team2.teamId)
-                                                        ? matchModel
-                                                            .team1.teamName
-                                                        : matchModel
-                                                            .team2.teamName,
+                                                    matchNumber:
+                                                        matchModel
+                                                            .matchid
+                                                            .toString(),
+                                                    team1:
+                                                        (matchModel
+                                                                    .inning1) ==
+                                                                (matchModel.team1
+                                                                    .teamId)
+                                                            ? matchModel
+                                                                .team1.teamName
+                                                            : matchModel
+                                                                .team2.teamName,
+                                                    team2:
+                                                        (matchModel
+                                                                    .inning2) ==
+                                                                (matchModel
+                                                                    .team2
+                                                                    .teamId)
+                                                            ? matchModel
+                                                                .team1.teamName
+                                                            : matchModel
+                                                                .team2.teamName,
                                                     team1Tot: score1.toString(),
                                                     team1Wicket:
                                                         wickets1.toString(),
@@ -224,8 +227,10 @@ class _ScoreScreenState extends State<ScoreScreen> {
                                                         ? matchModel
                                                             .team1.teamName
                                                         : (matchModel.tosswin ==
-                                                                matchModel.team2.teamId)
-                                                            ? matchModel.team2.teamName
+                                                                matchModel.team2
+                                                                    .teamId)
+                                                            ? matchModel
+                                                                .team2.teamName
                                                             : '')
                                                 : Container(),
                                             matchModel.inning2s ==
@@ -559,7 +564,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
     String img = "";
     if (Marktype.boundaryfour == type) {
       img = "assets/icons/four.png";
-    } else if (Marktype.six == type) {
+    } else if (Marktype.boundarysix == type) {
       img = "assets/icons/six.png";
     } else {
       img = "";

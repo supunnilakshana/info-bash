@@ -3,10 +3,18 @@ import 'package:flutter/material.dart';
 class MatchCard extends StatefulWidget {
   final int? id;
   final String? team1;
+  final String? group;
   final String team2;
   final String? status;
 
-  const MatchCard({Key? key, this.team1, required this.team2, this.id, this.status}) : super(key: key);
+  const MatchCard(
+      {Key? key,
+      this.team1,
+      required this.team2,
+      this.id,
+      this.status,
+      this.group})
+      : super(key: key);
 
   @override
   State<MatchCard> createState() => _MatchCardState();
@@ -17,7 +25,6 @@ class _MatchCardState extends State<MatchCard> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Column(
-
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +34,7 @@ class _MatchCardState extends State<MatchCard> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
-                    "${widget.id} match",
+                    "${widget.id} match (Group ${widget.group})",
                     style: TextStyle(color: Colors.black12, fontSize: 22),
                   ),
                 ),
@@ -42,7 +49,6 @@ class _MatchCardState extends State<MatchCard> {
                     "${widget.team1}",
                     style: TextStyle(color: Colors.black, fontSize: 20),
                   ),
-
                 ],
               ),
             ),
@@ -68,6 +74,6 @@ class _MatchCardState extends State<MatchCard> {
           thickness: 2,
         )
       ],
-    ) ;
+    );
   }
 }

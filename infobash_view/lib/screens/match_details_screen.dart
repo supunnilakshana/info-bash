@@ -557,7 +557,7 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
     String img = "";
     if (Marktype.boundaryfour == type) {
       img = "assets/icons/four.png";
-    } else if (Marktype.six == type) {
+    } else if (Marktype.boundarysix == type) {
       img = "assets/icons/six.png";
     } else {
       img = "";

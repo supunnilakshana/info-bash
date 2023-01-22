@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:infobash_admin/screens/custom_match_screen.dart';
+import 'package:infobash_admin/screens/home/home_screen.dart';
 import 'package:infobash_admin/screens/home/round_start/round_start_view.dart';
 import 'package:infobash_admin/screens/match/match_creation_screen.dart';
 import 'package:infobash_admin/screens/requestscreen.dart';
@@ -34,12 +35,11 @@ void openSessionSchedule(BuildContext context) async {
 }
 
 void opentest(BuildContext context) async {
-  Navigator.push(context,
-      MaterialPageRoute(builder: (context) => const MatchCreationScreen()));
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => const HomeScreen()));
 }
+
 void openCustomMatch(BuildContext context) async {
-
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const CustomMatchScreen()));
-
+  Navigator.push(context,
+      MaterialPageRoute(builder: (context) => const CustomMatchScreen()));
 }

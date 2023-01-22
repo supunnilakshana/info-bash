@@ -5,7 +5,6 @@ import 'package:infobash_admin/constants/navigation_utils.dart';
 import 'package:infobash_admin/screens/components/popup_dilog.dart';
 import 'package:infobash_admin/screens/loginscreen.dart';
 import 'package:infobash_admin/services/auth/signin_mannager.dart';
-import 'package:provider/provider.dart';
 
 class MenuDrawer extends StatelessWidget {
   MenuDrawer({
@@ -82,6 +81,7 @@ class MenuDrawer extends StatelessWidget {
                   ),
                   title: const Text('Test'),
                   onTap: () {
+                    opentest(context);
                   }),
             ),
 

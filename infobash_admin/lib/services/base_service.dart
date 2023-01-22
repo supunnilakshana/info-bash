@@ -12,7 +12,9 @@ class BaseService {
   initgroupdata(int group) async {
     List<RegisterTeam> tempteamlist = await FbHandeler.getallTeam();
     List<RegisterTeamDto> teamlist = [];
+
     for (var element in tempteamlist) {
+      //print(element.teamName);
       teamlist.add(RegisterTeamDto(
           teamId: element.teamId!,
           teamName: element.teamName,
@@ -31,15 +33,19 @@ class BaseService {
           fPlayer3: element.fPlayer3,
           accept: element.accept));
     }
+    final tl1 = [teamlist[11], teamlist[5], teamlist[2]];
+    final tl2 = [teamlist[4], teamlist[6], teamlist[7]];
+    final tl3 = [teamlist[8], teamlist[3], teamlist[9]];
+    final tl4 = [teamlist[0], teamlist[1], teamlist[10]];
     int gcount = (teamlist.length / group).round();
-
+    final ml = [tl1, tl2, tl3, tl4];
     int s = 0;
     int e = gcount;
 
     for (var i = 1; i <= group; i++) {
       List<dynamic> teamlistd = [];
       List<dynamic> pointtable = [];
-      final glist = teamlist.sublist(s, e);
+      final glist = ml[i - 1]; // teamlist.sublist(s, e);
       for (var element in glist) {
         pointtable.add(PoinTableModel(
                 team: element,
@@ -69,18 +75,42 @@ class BaseService {
         e = teamlist.length;
       }
     }
+
+    //     final gmodel1 = GroupModel(
+    //       name: groupnamelist[0],
+    //       teamlist: tl1,
+    //     );
+    //     final gmodel2 = GroupModel(
+    //       name: groupnamelist[1],
+    //       teamlist: tl1,
+    //     );
+    //     final gmodel3 = GroupModel(
+    //       name: groupnamelist[2],
+    //       teamlist: tl1,
+    //     );
+    //     final gmodel4 = GroupModel(
+    //       name: groupnamelist[3],
+    //       teamlist: tl1,
+    //     );
+    //  await FbHandeler.createDocAuto(
+    //         gmodel1.toMap(tlist: teamlistd, plist: pointtable),
+    //         CollectionPath.grouppath);
   }
 
   makeround1match({required int over, required int bpo}) async {
     final group = await FbHandeler.getallGroup();
+    group.sort((a, b) => a.name.compareTo(b.name));
     int i = 1;
+    final olist = [0, 3, 6, 9, 1, 4, 7, 10, 2, 5, 8, 11];
     for (var element in group) {
       final bagOfItems = element.teamlist!,
           combos = Combinations(2, bagOfItems);
-
+      print(element.name);
       for (final combo in combos()) {
+        print(combo[0].teamName + "---" + combo[1].teamName);
+
         final matchmodl = MatchModel(
-            matchid: i,
+            matchid: olist[i - 1] + 1,
             team1: combo[0],
             team2: combo[1],
             groupid: element.name,
@@ -100,7 +130,7 @@ class BaseService {
         await FbHandeler.createDocAuto(
             matchmodl.toMap(), CollectionPath.matchsround1);
       }
+      print(i);
     }
-    print(i);
   }
 }

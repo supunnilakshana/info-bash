@@ -13,17 +13,22 @@ class ScheduleListRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-print(matchModel.id);
+    print(matchModel.id);
     return MatchCard(
-      id: matchModel.matchid,
-      team1: matchModel.team1.teamName.capitalize,
-      team2: matchModel.team2.teamName.capitalize.toString(),
-      status: (matchModel.matchstatus == Matchstatustype.ongoning)? "Match is ongoing.":
-      (matchModel.matchstatus == Matchstatustype.end)? "Match is end.":
-      (matchModel.matchstatus == Matchstatustype.draw)? "Match is Drawn.":
-      (matchModel.matchstatus == Matchstatustype.noresult)? "No Result":
-      (matchModel.matchstatus == Matchstatustype.notstared)? "Match is Not Started" : ''
-
-    );
+        group: matchModel.groupid,
+        id: matchModel.matchid,
+        team1: matchModel.team1.teamName.capitalize,
+        team2: matchModel.team2.teamName.capitalize.toString(),
+        status: (matchModel.matchstatus == Matchstatustype.ongoning)
+            ? "Match is ongoing."
+            : (matchModel.matchstatus == Matchstatustype.end)
+                ? "Match is end."
+                : (matchModel.matchstatus == Matchstatustype.draw)
+                    ? "Match is Drawn."
+                    : (matchModel.matchstatus == Matchstatustype.noresult)
+                        ? "No Result"
+                        : (matchModel.matchstatus == Matchstatustype.notstared)
+                            ? "Match is Not Started"
+                            : '');
   }
 }
